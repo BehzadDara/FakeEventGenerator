@@ -430,7 +430,11 @@ namespace FakeEventGenerator.Infrastructure
                    State = ItemState.NotFull,
                    CoordinateX = 70,
                    CoordinateY = 20,
-                   IsMovable = false
+                   IsMovable = false,
+                   MetaData = JsonSerializer.Serialize(new SofaMetaData
+                   {
+                       Capacity= 1
+                   })
                },
                new Item
                {
@@ -440,7 +444,11 @@ namespace FakeEventGenerator.Infrastructure
                    State = ItemState.NotFull,
                    CoordinateX = 70,
                    CoordinateY = 10,
-                   IsMovable = false
+                   IsMovable = false,
+                   MetaData = JsonSerializer.Serialize(new SofaMetaData
+                   {
+                       Capacity = 2
+                   })
                },
                new Item
                {
@@ -450,7 +458,11 @@ namespace FakeEventGenerator.Infrastructure
                    State = ItemState.NotFull,
                    CoordinateX = 60,
                    CoordinateY = 15,
-                   IsMovable = false
+                   IsMovable = false,
+                   MetaData = JsonSerializer.Serialize(new SofaMetaData
+                   {
+                       Capacity = 3
+                   })
                },
                new Item
                {
