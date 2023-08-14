@@ -1,7 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using FakeEventGenerator.Domain;
 using FakeEventGenerator.Infrastructure;
-using FakeEventGenerator.Infrastructure.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
