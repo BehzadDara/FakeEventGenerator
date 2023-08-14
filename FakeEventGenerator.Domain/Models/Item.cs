@@ -4,12 +4,19 @@ namespace FakeEventGenerator.Domain.Models
 {
     public class Item : Entity
     {
-        public ItemEnum Type { get; set; }
-
-        public ItemState State { get; private set; }
+        public string Name { get; set; } = string.Empty;
+        public string Description { get; set; } = string.Empty;
+        public ItemEnum Type { get; init; }
+        public ItemState State { get; set; }
         public int CoordinateX { get; set; }
         public int CoordinateY { get; set; }
+        public bool IsMovable { get; set; }
+        public string MetaData { get; set; } = string.Empty;
 
+        public bool IsInAPartOgHouse(PartOfHouse partOfHouse)
+        {
+            return Methods.IsAnItemInAPartOfHouse(this, partOfHouse);
+        }
 
         public ItemState ChangeState()
         {
@@ -18,7 +25,7 @@ namespace FakeEventGenerator.Domain.Models
                 ItemEnum.Openable => ChangeState(ItemState.Open, ItemState.Close),
                 ItemEnum.Pickable => ChangeState(ItemState.OnAir, ItemState.OnSurface),
                 ItemEnum.Usable => ChangeState(ItemState.BeUsing, ItemState.NotBeUsing),
-                ItemEnum.UseWithCapacity => ChangeState(ItemState.Full, ItemState.Empty),
+                ItemEnum.UseWithCapacity => ChangeState(ItemState.Full, ItemState.NotFull),
                 ItemEnum.Electronic => ChangeState(ItemState.On, ItemState.Off),
                 _ => throw new InvalidOperationException()
             };

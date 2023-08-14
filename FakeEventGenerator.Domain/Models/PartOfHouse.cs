@@ -1,5 +1,4 @@
 ﻿using FakeEventGenerator.Domain.Enums;
-using System.Collections.Generic;
 
 namespace FakeEventGenerator.Domain.Models
 {
@@ -12,10 +11,9 @@ namespace FakeEventGenerator.Domain.Models
         public int Coordinate2X { get; set; }
         public int Coordinate2Y { get; set; }
 
-        public bool IsInAPart(int coordinateX, int coordinateY)
+        public bool HasAnItem(Item item)
         {
-            return Coordinate1X < coordinateX && Coordinate1Y < coordinateY &&
-                Coordinate2X > coordinateX && Coordinate2Y > coordinateY;
+            return Methods.IsAnItemInAPartOfHouse(item, this);
         }
     }
 }

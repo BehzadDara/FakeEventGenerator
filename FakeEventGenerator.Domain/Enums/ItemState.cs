@@ -12,7 +12,7 @@
         NotBeUsing,
 
         Full,
-        Empty,
+        NotFull,
 
         On,
         Off,
