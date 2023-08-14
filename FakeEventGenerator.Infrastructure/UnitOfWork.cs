@@ -1,10 +1,8 @@
-﻿using FakeEventGenerator.Domain;
-using FakeEventGenerator.Domain.IRepositories;
-using FakeEventGenerator.Infrastructure.Repositories;
+﻿using FakeEventGenerator.Infrastructure.Repositories;
 
 namespace FakeEventGenerator.Infrastructure
 {
-    public class UnitOfWork : IUnitOfWork
+    public class UnitOfWork
     {
         private readonly FakeEventGeneratorDBContext _dBContext;
 
@@ -18,7 +16,7 @@ namespace FakeEventGenerator.Infrastructure
         }
 
         private EnvironmentRepository? environmentRepository;
-        public IEnvironmentRepository EnvironmentRepository
+        public EnvironmentRepository EnvironmentRepository
         {
             get
             {
@@ -28,12 +26,32 @@ namespace FakeEventGenerator.Infrastructure
         }
 
         private PartOfHouseRepository? partOfHouseRepository;
-        public IPartOfHouseRepository PartOfHouseRepository
+        public PartOfHouseRepository PartOfHouseRepository
         {
             get
             {
                 partOfHouseRepository ??= new PartOfHouseRepository(_dBContext);
                 return partOfHouseRepository;
+            }
+        }
+
+        private ItemRepository? itemRepository;
+        public ItemRepository ItemRepository
+        {
+            get
+            {
+                itemRepository ??= new ItemRepository(_dBContext);
+                return itemRepository;
+            }
+        }
+
+        private HumanRepository? humanRepository;
+        public HumanRepository HumanRepository
+        {
+            get
+            {
+                humanRepository ??= new HumanRepository(_dBContext);
+                return humanRepository;
             }
         }
 

@@ -611,6 +611,7 @@ namespace FakeEventGenerator.Infrastructure
             );
 
             #endregion
+
         }
     }
 }

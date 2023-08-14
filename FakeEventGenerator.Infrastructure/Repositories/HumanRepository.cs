@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FakeEventGenerator.Infrastructure.Repositories
 {
-    public class EnvironmentRepository : UpdateRepository<EnvironmentVariable>
+    public class HumanRepository : UpdateRepository<Human>
     {
-        public EnvironmentRepository(DbContext dbContext) : base(dbContext)
+        public HumanRepository(DbContext dbContext) : base(dbContext)
         {
         }
     }

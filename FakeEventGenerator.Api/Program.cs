@@ -1,6 +1,5 @@
 using Microsoft.EntityFrameworkCore;
 using FakeEventGenerator.Domain;
-using FakeEventGenerator.Domain.IRepositories;
 using FakeEventGenerator.Infrastructure;
 using FakeEventGenerator.Infrastructure.Repositories;
 
@@ -13,9 +12,7 @@ builder.Services.AddDbContext<FakeEventGeneratorDBContext>(options =>
     ServiceLifetime.Singleton);
 builder.Services.AddSingleton<DbContext>(provider => provider.GetService<FakeEventGeneratorDBContext>()!);
 
-builder.Services.AddScoped(typeof(IUnitOfWork), typeof(UnitOfWork));
-builder.Services.AddScoped(typeof(IEnvironmentRepository), typeof(EnvironmentRepository));
-builder.Services.AddScoped(typeof(IPartOfHouseRepository), typeof(PartOfHouseRepository));
+builder.Services.AddSingleton<UnitOfWork>();
 
 builder.Services.AddCors(options =>
 {
