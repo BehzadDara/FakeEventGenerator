@@ -15,6 +15,7 @@ builder.Services.AddSingleton<DbContext>(provider => provider.GetService<FakeEve
 
 builder.Services.AddScoped(typeof(IUnitOfWork), typeof(UnitOfWork));
 builder.Services.AddScoped(typeof(IEnvironmentRepository), typeof(EnvironmentRepository));
+builder.Services.AddScoped(typeof(IPartOfHouseRepository), typeof(PartOfHouseRepository));
 
 builder.Services.AddCors(options =>
 {
