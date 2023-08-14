@@ -2,9 +2,9 @@
 
 namespace FakeEventGenerator.Infrastructure.Repositories
 {
-    public abstract class UpdateRepository<T> : GetAllRepository<T> where T : class
+    public abstract class WriteRepository<T> : ReadRepository<T> where T : class
     {
-        protected UpdateRepository(DbContext dbContext) : base(dbContext)
+        protected WriteRepository(DbContext dbContext) : base(dbContext)
         {
         }
 
