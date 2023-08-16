@@ -6,6 +6,7 @@
 
         ItemPosition,
         ItemState,
+        ItemMetaData,
 
         HumanPosition,
         HumanFeelToDegree,

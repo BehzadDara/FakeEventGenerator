@@ -1,0 +1,6 @@
+{
+  "resultType": 0,
+  "caseStudy": "Sound",
+  "resultCaseType": 1,
+  "resultCaseChange": "35"
+}

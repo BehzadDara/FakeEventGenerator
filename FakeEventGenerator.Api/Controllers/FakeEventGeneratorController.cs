@@ -1,8 +1,11 @@
-﻿using FakeEventGenerator.Domain.Enums;
+﻿using FakeEventGenerator.Domain.DTOs;
+using FakeEventGenerator.Domain.Enums;
 using FakeEventGenerator.Domain.Models;
 using FakeEventGenerator.Domain.ViewModels;
 using FakeEventGenerator.Infrastructure;
+using FakeEventGenerator.Infrastructure.Migrations;
 using Microsoft.AspNetCore.Mvc;
+using System.Text.Json;
 
 namespace FakeEventGenerator.Api.Controllers
 {
@@ -39,8 +42,7 @@ namespace FakeEventGenerator.Api.Controllers
                 y.ResultType.Equals(input.ResultType) &&
                 y.CaseStudy.Equals(input.CaseStudy) &&
                 y.ResultCaseType.Equals(input.ResultCaseType) &&
-                y.ResultCaseChange.Equals(input.ResultCaseChangeFrom) &&
-                y.ResultCaseChange.Equals(input.ResultCaseChangeTo)
+                BeResultCaseChange(y.ResultType, y.ResultCaseChange, input.ResultCaseChange)
                 )
             ).ToList();
 
@@ -60,6 +62,23 @@ namespace FakeEventGenerator.Api.Controllers
             }
 
             return new();
+        }
+
+        private static bool BeResultCaseChange(CaseStudyEnum resultType, string resultCaseChange, string inputCaseChange)
+        {
+            if (resultType.Equals(CaseStudyEnum.ItemMetaData) || resultType.Equals(CaseStudyEnum.Environment))
+            {
+                var tmps = resultCaseChange.Split('-');
+
+                if (tmps.Length >= 2)
+                    return int.Parse(inputCaseChange) >= int.Parse(tmps[0]) && int.Parse(inputCaseChange) <= int.Parse(tmps[1]);
+                else
+                    return int.Parse(inputCaseChange) == int.Parse(tmps[0]);
+            }
+            else
+            {
+                return resultCaseChange.Equals(inputCaseChange);
+            }
         }
 
         private int GetTime()
@@ -371,6 +390,18 @@ namespace FakeEventGenerator.Api.Controllers
                     _unitOfWork.ItemRepository.Update(item);
                 }
 
+                else if (myResult.ResultType.Equals(CaseStudyEnum.ItemMetaData))
+                {
+                    var tmps = myResult.CaseStudy.Split('-');
+                    var item = items.First(x => x.Name.Equals(tmps[0]));
+
+                    var factor = myResult.ResultCaseType.Equals(ResultCaseEnum.Increase) ? 1 : -1;
+
+                    item.MetaData = ChangeMetaData(tmps[0], tmps[1], item.MetaData, factor * int.Parse(change[0]), factor * int.Parse(change[1]));
+
+                    _unitOfWork.ItemRepository.Update(item);
+                }
+
                 else if (myResult.ResultType.Equals(CaseStudyEnum.HumanPosition))
                 {
                     var human = humans.First(x => x.Name.Equals(myResult.CaseStudy));
@@ -407,5 +438,60 @@ namespace FakeEventGenerator.Api.Controllers
             _unitOfWork.Complete();
         }
 
+        private static string ChangeMetaData(string item, string field, string metaData, int fromChange, int toChange)
+        {
+            var change = Convert.ToInt32(Math.Floor((double)(fromChange + toChange) / 2));
+
+            string str = string.Empty;
+
+            if (item.Equals("AirConditioner"))
+            {
+                var result = JsonSerializer.Deserialize<AirConditionerMetaData>(metaData);
+                if (field.Equals("Temperature"))
+                    result!.Temperature += change;
+                else if (field.Equals("Speed"))
+                    result!.Speed += change;
+
+                str = JsonSerializer.Serialize(result);
+            }
+            else if (item.Equals("Lamp1") || item.Equals("Lamp2"))
+            {
+                var result = JsonSerializer.Deserialize<LampMetaData>(metaData);
+                if (field.Equals("Severity"))
+                    result!.Severity += change;
+
+                str = JsonSerializer.Serialize(result);
+            }
+            else if (item.Equals("Laptop"))
+            {
+                var result = JsonSerializer.Deserialize<LaptopMetaData>(metaData);
+                if (field.Equals("Charge"))
+                    result!.Charge += change;
+                else if (field.Equals("IsInCharge"))
+                    result!.IsInCharge = change > 0;
+
+                str = JsonSerializer.Serialize(result);
+            }
+            else if (item.Equals("Sofa"))
+            {
+                var result = JsonSerializer.Deserialize<SofaMetaData>(metaData);
+                if (field.Equals("Capacity"))
+                    result!.Capacity += change;
+
+                str = JsonSerializer.Serialize(result);
+            }
+            else if (item.Equals("TV"))
+            {
+                var result = JsonSerializer.Deserialize<TVMetaData>(metaData);
+                if (field.Equals("Sound"))
+                    result!.Sound += change;
+                else if (field.Equals("Channel"))
+                    result!.Channel += change;
+
+                str = JsonSerializer.Serialize(result);
+            }
+
+            return str;
+        }
     }
 }

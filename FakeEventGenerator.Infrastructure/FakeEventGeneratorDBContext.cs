@@ -296,7 +296,7 @@ namespace FakeEventGenerator.Infrastructure
                    IsMovable = false,
                    MetaData = JsonSerializer.Serialize(new AirConditionerMetaData
                    {
-                       Tempreture = 20,
+                       Temperature = 20,
                        Speed = 10
                    })
                },
@@ -311,7 +311,7 @@ namespace FakeEventGenerator.Infrastructure
                    IsMovable = false,
                    MetaData = JsonSerializer.Serialize(new AirConditionerMetaData
                    {
-                       Tempreture = 20,
+                       Temperature = 20,
                        Speed = 10
                    })
                },
@@ -422,7 +422,7 @@ namespace FakeEventGenerator.Infrastructure
                    MetaData = JsonSerializer.Serialize(new TVMetaData
                    {
                        Channel = 1,
-                       Sound = 20
+                       Sound = 60
                    })
                },
                new Item
@@ -528,7 +528,7 @@ namespace FakeEventGenerator.Infrastructure
                    IsMovable = false,
                    MetaData = JsonSerializer.Serialize(new AirConditionerMetaData
                    {
-                       Tempreture = 20,
+                       Temperature = 20,
                        Speed = 10
                    })
                },
@@ -621,7 +621,7 @@ namespace FakeEventGenerator.Infrastructure
                     CoordinateY = 65,
                     FeelToDegree = FeelToDegreeEnum.Medium,
                     BodyStatus = BodyStatusEnum.Stand,
-                    MentalStatus = MentalStatusEnum.Normal
+                    MentalStatus = MentalStatusEnum.Bored
                 }
             );
 
@@ -668,6 +668,7 @@ namespace FakeEventGenerator.Infrastructure
             modelBuilder.Entity<ActionAggregate>().HasMany(x => x.NextActions)
                 .WithOne(x => x.ActionAggregate).HasForeignKey(x => x.ActionAggregateId);
 
+            #region OpenBalconyWindow
             var guid1 = Guid.NewGuid();
             modelBuilder.Entity<ActionAggregate>().HasData(
                 new ActionAggregate
@@ -753,6 +754,14 @@ namespace FakeEventGenerator.Infrastructure
                     CaseStudy = "Human1",
                     ResultCaseType = ResultCaseEnum.Position,
                     ResultCaseChange = "25-79"
+                },                
+                new ActionResult
+                {
+                    ActionAggregateId = guid1,
+                    ResultType = CaseStudyEnum.ItemState,
+                    CaseStudy = "BalconyDoor1",
+                    ResultCaseType = ResultCaseEnum.State,
+                    ResultCaseChange = "Open"
                 }
             );
 
@@ -935,6 +944,573 @@ namespace FakeEventGenerator.Infrastructure
                     ResultCaseChange = "Normal"
                 }
             );
+            #endregion
+
+            #endregion
+
+            #region IncreaseSound
+            var guid5 = Guid.NewGuid();
+            modelBuilder.Entity<ActionAggregate>().HasData(
+                new ActionAggregate
+                {
+                    Id = guid5,
+                    Name = "Open-Bedroom2Door",
+                    Description = "Open Door Of Bedroom2",
+                    Delay = 1500,
+                    StartPossibility = 100
+                }
+            );
+
+            var guid6 = Guid.NewGuid();
+            modelBuilder.Entity<ActionAggregate>().HasData(
+                new ActionAggregate
+                {
+                    Id = guid6,
+                    Name = "Move-Corridor-Bedroom1",
+                    Description = "Move To Corridor Human2 Via Bedroom2",
+                    Delay = 500,
+                    StartPossibility = 100,
+                }
+            );
+
+            var guid7 = Guid.NewGuid();
+            modelBuilder.Entity<ActionAggregate>().HasData(
+                new ActionAggregate
+                {
+                    Id = guid7,
+                    Name = "Open-LivinRoomDoor",
+                    Description = "Open Window Of Balcony",
+                    Delay = 400,
+                    StartPossibility = 100
+                }
+            );
+
+            var guid8 = Guid.NewGuid();
+            modelBuilder.Entity<ActionAggregate>().HasData(
+                new ActionAggregate
+                {
+                    Id = guid8,
+                    Name = "Move-LivingRoom-Corridor",
+                    Description = "Move To LivingRoom Human2 Via Corridor",
+                    Delay = 100,
+                    StartPossibility = 100
+                }
+            );
+
+            var guid9 = Guid.NewGuid();
+            modelBuilder.Entity<ActionAggregate>().HasData(
+                new ActionAggregate
+                {
+                    Id = guid9,
+                    Name = "Sit-Sofa1",
+                    Description = "Sit On Sofa1",
+                    Delay = 800,
+                    StartPossibility = 100
+                }
+            );
+
+            var guid10 = Guid.NewGuid();
+            modelBuilder.Entity<ActionAggregate>().HasData(
+                new ActionAggregate
+                {
+                    Id = guid10,
+                    Name = "On-TV",
+                    Description = "Turn On TV",
+                    Delay = 200,
+                    StartPossibility = 100
+                }
+            );
+
+            var guid11 = Guid.NewGuid();
+            modelBuilder.Entity<ActionAggregate>().HasData(
+                new ActionAggregate
+                {
+                    Id = guid11,
+                    Name = "Increase-Sound",
+                    Description = "Increase Sound Of TV",
+                    Delay = 350,
+                    StartPossibility = 100
+                }
+            );
+
+            var guid12 = Guid.NewGuid();
+            modelBuilder.Entity<ActionAggregate>().HasData(
+                new ActionAggregate
+                {
+                    Id = guid12,
+                    Name = "Decrease-Sound",
+                    Description = "Decrease Sound Of TV",
+                    Delay = 350,
+                    StartPossibility = 100
+                }
+            );
+
+            #region One ActionAggregate
+            modelBuilder.Entity<ActionCondition>().HasData(
+                new ActionCondition
+                {
+                    ActionAggregateId = guid5,
+                    ConditionType = CaseStudyEnum.HumanPosition,
+                    CaseStudy = "Human2",
+                    ConditionCaseType = ConditionCaseEnum.IsIn,
+                    ConditionCaseExpectation = "Bedroom2"
+                },
+                new ActionCondition
+                {
+                    ActionAggregateId = guid5,
+                    ConditionType = CaseStudyEnum.HumanBodyStatus,
+                    CaseStudy = "Human2",
+                    ConditionCaseType = ConditionCaseEnum.StateIs,
+                    ConditionCaseExpectation = "Stand"
+                },
+                new ActionCondition
+                {
+                    ActionAggregateId = guid5,
+                    ConditionType = CaseStudyEnum.ItemState,
+                    CaseStudy = "Bedroom1Door",
+                    ConditionCaseType = ConditionCaseEnum.StateIs,
+                    ConditionCaseExpectation = "Close"
+                }
+            );
+
+            modelBuilder.Entity<ActionResult>().HasData(
+                new ActionResult
+                {
+                    ActionAggregateId = guid5,
+                    ResultType = CaseStudyEnum.HumanPosition,
+                    CaseStudy = "Human1",
+                    ResultCaseType = ResultCaseEnum.Position,
+                    ResultCaseChange = "75-51"
+                },
+                new ActionResult
+                {
+                    ActionAggregateId = guid5,
+                    ResultType = CaseStudyEnum.ItemState,
+                    CaseStudy = "Bedroom2Door",
+                    ResultCaseType = ResultCaseEnum.State,
+                    ResultCaseChange = "Open"
+                }
+            );
+
+            modelBuilder.Entity<NextAction>().HasData(
+                new NextAction
+                {
+                    Id = guid6,
+                    ActionAggregateId = guid5,
+                    //NumberOfActions = 1,
+                    Possibility = 100,
+                    Delay = 200
+                }
+            );
+            #endregion
+
+            #region One ActionAggregate
+
+            modelBuilder.Entity<ActionCondition>().HasData(
+                new ActionCondition
+                {
+                    ActionAggregateId = guid6,
+                    ConditionType = CaseStudyEnum.HumanPosition,
+                    CaseStudy = "Human2",
+                    ConditionCaseType = ConditionCaseEnum.IsIn,
+                    ConditionCaseExpectation = "Bedroom2"
+                },
+                new ActionCondition
+                {
+                    ActionAggregateId = guid6,
+                    ConditionType = CaseStudyEnum.HumanBodyStatus,
+                    CaseStudy = "Human2",
+                    ConditionCaseType = ConditionCaseEnum.StateIs,
+                    ConditionCaseExpectation = "Stand"
+                },
+                new ActionCondition
+                {
+                    ActionAggregateId = guid6,
+                    ConditionType = CaseStudyEnum.ItemState,
+                    CaseStudy = "Bedroom2Door",
+                    ConditionCaseType = ConditionCaseEnum.StateIs,
+                    ConditionCaseExpectation = "Open"
+                }
+            );
+
+            modelBuilder.Entity<ActionResult>().HasData(
+                new ActionResult
+                {
+                    ActionAggregateId = guid6,
+                    ResultType = CaseStudyEnum.HumanPosition,
+                    CaseStudy = "Human2",
+                    ResultCaseType = ResultCaseEnum.Position,
+                    ResultCaseChange = "75-49"
+                }
+            );
+
+            modelBuilder.Entity<NextAction>().HasData(
+                new NextAction
+                {
+                    Id = guid7,
+                    ActionAggregateId = guid6,
+                    //NumberOfActions = 1,
+                    Possibility = 100,
+                    Delay = 200
+                }
+            );
+            #endregion
+
+            #region One ActionAggregate
+            modelBuilder.Entity<ActionCondition>().HasData(
+                new ActionCondition
+                {
+                    ActionAggregateId = guid7,
+                    ConditionType = CaseStudyEnum.HumanPosition,
+                    CaseStudy = "Human2",
+                    ConditionCaseType = ConditionCaseEnum.IsIn,
+                    ConditionCaseExpectation = "Corridor"
+                },
+                new ActionCondition
+                {
+                    ActionAggregateId = guid7,
+                    ConditionType = CaseStudyEnum.HumanBodyStatus,
+                    CaseStudy = "Human2",
+                    ConditionCaseType = ConditionCaseEnum.StateIs,
+                    ConditionCaseExpectation = "Stand"
+                },
+                new ActionCondition
+                {
+                    ActionAggregateId = guid7,
+                    ConditionType = CaseStudyEnum.ItemState,
+                    CaseStudy = "LivingRoomDoor",
+                    ConditionCaseType = ConditionCaseEnum.StateIs,
+                    ConditionCaseExpectation = "Close"
+                }
+            );
+
+            modelBuilder.Entity<ActionResult>().HasData(
+                new ActionResult
+                {
+                    ActionAggregateId = guid7,
+                    ResultType = CaseStudyEnum.HumanPosition,
+                    CaseStudy = "Human2",
+                    ResultCaseType = ResultCaseEnum.Position,
+                    ResultCaseChange = "55-31"
+                },
+                new ActionResult
+                {
+                    ActionAggregateId = guid7,
+                    ResultType = CaseStudyEnum.ItemState,
+                    CaseStudy = "LivingRoomDoor",
+                    ResultCaseType = ResultCaseEnum.State,
+                    ResultCaseChange = "Open"
+                }
+            );
+
+            modelBuilder.Entity<NextAction>().HasData(
+                new NextAction
+                {
+                    Id = guid8,
+                    ActionAggregateId = guid7,
+                    //NumberOfActions = 1,
+                    Possibility = 100,
+                    Delay = 200
+                }
+            );
+            #endregion
+
+            #region One ActionAggregate
+
+            modelBuilder.Entity<ActionCondition>().HasData(
+                new ActionCondition
+                {
+                    ActionAggregateId = guid8,
+                    ConditionType = CaseStudyEnum.HumanPosition,
+                    CaseStudy = "Human2",
+                    ConditionCaseType = ConditionCaseEnum.IsIn,
+                    ConditionCaseExpectation = "Corridor"
+                },
+                new ActionCondition
+                {
+                    ActionAggregateId = guid8,
+                    ConditionType = CaseStudyEnum.HumanBodyStatus,
+                    CaseStudy = "Human2",
+                    ConditionCaseType = ConditionCaseEnum.StateIs,
+                    ConditionCaseExpectation = "Stand"
+                },
+                new ActionCondition
+                {
+                    ActionAggregateId = guid8,
+                    ConditionType = CaseStudyEnum.ItemState,
+                    CaseStudy = "LivingRoomDoor",
+                    ConditionCaseType = ConditionCaseEnum.StateIs,
+                    ConditionCaseExpectation = "Open"
+                }
+            );
+
+            modelBuilder.Entity<ActionResult>().HasData(
+                new ActionResult
+                {
+                    ActionAggregateId = guid8,
+                    ResultType = CaseStudyEnum.HumanPosition,
+                    CaseStudy = "Human2",
+                    ResultCaseType = ResultCaseEnum.Position,
+                    ResultCaseChange = "55-29"
+                }
+            );
+
+            modelBuilder.Entity<NextAction>().HasData(
+                new NextAction
+                {
+                    Id = guid9,
+                    ActionAggregateId = guid8,
+                    //NumberOfActions = 1,
+                    Possibility = 100,
+                    Delay = 200
+                }
+            );
+            #endregion
+
+            #region One ActionAggregate
+
+            modelBuilder.Entity<ActionCondition>().HasData(
+                new ActionCondition
+                {
+                    ActionAggregateId = guid9,
+                    ConditionType = CaseStudyEnum.HumanPosition,
+                    CaseStudy = "Human2",
+                    ConditionCaseType = ConditionCaseEnum.IsIn,
+                    ConditionCaseExpectation = "LivingRoom"
+                },
+                new ActionCondition
+                {
+                    ActionAggregateId = guid9,
+                    ConditionType = CaseStudyEnum.HumanBodyStatus,
+                    CaseStudy = "Human2",
+                    ConditionCaseType = ConditionCaseEnum.StateIs,
+                    ConditionCaseExpectation = "Stand"
+                }
+            );
+
+            modelBuilder.Entity<ActionResult>().HasData(
+                new ActionResult
+                {
+                    ActionAggregateId = guid9,
+                    ResultType = CaseStudyEnum.HumanPosition,
+                    CaseStudy = "Human2",
+                    ResultCaseType = ResultCaseEnum.Position,
+                    ResultCaseChange = "70-20"
+                },
+                new ActionResult
+                {
+                    ActionAggregateId = guid9,
+                    ResultType = CaseStudyEnum.ItemState,
+                    CaseStudy = "Sofa1",
+                    ResultCaseType = ResultCaseEnum.State,
+                    ResultCaseChange = "Full"
+                },
+                new ActionResult
+                {
+                    ActionAggregateId = guid9,
+                    ResultType = CaseStudyEnum.HumanBodyStatus,
+                    CaseStudy = "Human2",
+                    ResultCaseType = ResultCaseEnum.State,
+                    ResultCaseChange = "Sit"
+                }
+            );
+
+            modelBuilder.Entity<NextAction>().HasData(
+                new NextAction
+                {
+                    Id = guid10,
+                    ActionAggregateId = guid9,
+                    //NumberOfActions = 1,
+                    Possibility = 100,
+                    Delay = 200
+                }
+            );
+            #endregion
+            
+            #region One ActionAggregate
+
+            modelBuilder.Entity<ActionCondition>().HasData(
+                new ActionCondition
+                {
+                    ActionAggregateId = guid10,
+                    ConditionType = CaseStudyEnum.HumanPosition,
+                    CaseStudy = "Human2",
+                    ConditionCaseType = ConditionCaseEnum.IsIn,
+                    ConditionCaseExpectation = "LivingRoom"
+                },
+                new ActionCondition
+                {
+                    ActionAggregateId = guid10,
+                    ConditionType = CaseStudyEnum.HumanBodyStatus,
+                    CaseStudy = "Human2",
+                    ConditionCaseType = ConditionCaseEnum.StateIs,
+                    ConditionCaseExpectation = "Sit"
+                },
+                new ActionCondition
+                {
+                    ActionAggregateId = guid10,
+                    ConditionType = CaseStudyEnum.ItemState,
+                    CaseStudy = "TV",
+                    ConditionCaseType = ConditionCaseEnum.StateIs,
+                    ConditionCaseExpectation = "Off"
+                }
+            );
+
+            modelBuilder.Entity<ActionResult>().HasData(
+                new ActionResult
+                {
+                    ActionAggregateId = guid10,
+                    ResultType = CaseStudyEnum.MentalStatus,
+                    CaseStudy = "Human2",
+                    ResultCaseType = ResultCaseEnum.State,
+                    ResultCaseChange = "Normal"
+                },
+                new ActionResult
+                {
+                    ActionAggregateId = guid10,
+                    ResultType = CaseStudyEnum.ItemState,
+                    CaseStudy = "TV",
+                    ResultCaseType = ResultCaseEnum.State,
+                    ResultCaseChange = "On"
+                }
+            );
+
+            modelBuilder.Entity<NextAction>().HasData(
+                new NextAction
+                {
+                    Id = guid11,
+                    ActionAggregateId = guid10,
+                    //NumberOfActions = 1,
+                    Possibility = 100,
+                    Delay = 200
+                },
+                new NextAction
+                {
+                    Id = guid12,
+                    ActionAggregateId = guid10,
+                    //NumberOfActions = 1,
+                    Possibility = 100,
+                    Delay = 200
+                }
+            );
+            #endregion
+             
+            #region One ActionAggregate
+
+            modelBuilder.Entity<ActionCondition>().HasData(
+                new ActionCondition
+                {
+                    ActionAggregateId = guid11,
+                    ConditionType = CaseStudyEnum.HumanPosition,
+                    CaseStudy = "Human2",
+                    ConditionCaseType = ConditionCaseEnum.IsIn,
+                    ConditionCaseExpectation = "LivingRoom"
+                },
+                new ActionCondition
+                {
+                    ActionAggregateId = guid11,
+                    ConditionType = CaseStudyEnum.HumanBodyStatus,
+                    CaseStudy = "Human2",
+                    ConditionCaseType = ConditionCaseEnum.StateIs,
+                    ConditionCaseExpectation = "Sit"
+                },
+                new ActionCondition
+                {
+                    ActionAggregateId = guid11,
+                    ConditionType = CaseStudyEnum.ItemState,
+                    CaseStudy = "TV",
+                    ConditionCaseType = ConditionCaseEnum.StateIs,
+                    ConditionCaseExpectation = "On"
+                }
+            );
+
+            modelBuilder.Entity<ActionResult>().HasData(
+                new ActionResult
+                {
+                    ActionAggregateId = guid11,
+                    ResultType = CaseStudyEnum.Environment,
+                    CaseStudy = "Light",
+                    ResultCaseType = ResultCaseEnum.Increase,
+                    ResultCaseChange = "10"
+                },
+                new ActionResult
+                {
+                    ActionAggregateId = guid11,
+                    ResultType = CaseStudyEnum.Environment,
+                    CaseStudy = "Sound",
+                    ResultCaseType = ResultCaseEnum.Increase,
+                    ResultCaseChange = "10-40"
+                },
+                new ActionResult
+                {
+                    ActionAggregateId = guid11,
+                    ResultType = CaseStudyEnum.ItemMetaData,
+                    CaseStudy = "TV-Sound",
+                    ResultCaseType = ResultCaseEnum.Increase,
+                    ResultCaseChange = "10-40"
+                }
+            );
+
+            #endregion
+            
+            #region One ActionAggregate
+
+            modelBuilder.Entity<ActionCondition>().HasData(
+                new ActionCondition
+                {
+                    ActionAggregateId = guid12,
+                    ConditionType = CaseStudyEnum.HumanPosition,
+                    CaseStudy = "Human2",
+                    ConditionCaseType = ConditionCaseEnum.IsIn,
+                    ConditionCaseExpectation = "LivingRoom"
+                },
+                new ActionCondition
+                {
+                    ActionAggregateId = guid12,
+                    ConditionType = CaseStudyEnum.HumanBodyStatus,
+                    CaseStudy = "Human2",
+                    ConditionCaseType = ConditionCaseEnum.StateIs,
+                    ConditionCaseExpectation = "Sit"
+                },
+                new ActionCondition
+                {
+                    ActionAggregateId = guid12,
+                    ConditionType = CaseStudyEnum.ItemState,
+                    CaseStudy = "TV",
+                    ConditionCaseType = ConditionCaseEnum.StateIs,
+                    ConditionCaseExpectation = "On"
+                }
+            );
+
+            modelBuilder.Entity<ActionResult>().HasData(
+                new ActionResult
+                {
+                    ActionAggregateId = guid12,
+                    ResultType = CaseStudyEnum.Environment,
+                    CaseStudy = "Light",
+                    ResultCaseType = ResultCaseEnum.Increase,
+                    ResultCaseChange = "10"
+                },
+                new ActionResult
+                {
+                    ActionAggregateId = guid12,
+                    ResultType = CaseStudyEnum.Environment,
+                    CaseStudy = "Sound",
+                    ResultCaseType = ResultCaseEnum.Decrease,
+                    ResultCaseChange = "10-40"
+                },
+                new ActionResult
+                {
+                    ActionAggregateId = guid12,
+                    ResultType = CaseStudyEnum.ItemMetaData,
+                    CaseStudy = "TV-Sound",
+                    ResultCaseType = ResultCaseEnum.Decrease,
+                    ResultCaseChange = "10-40"
+                }
+            );
+
+            #endregion
+
             #endregion
 
             #endregion

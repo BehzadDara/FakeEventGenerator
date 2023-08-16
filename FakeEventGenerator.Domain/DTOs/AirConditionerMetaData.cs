@@ -2,7 +2,7 @@
 {
     public class AirConditionerMetaData
     {
-        public int Tempreture { get; set; }
+        public int Temperature { get; set; }
         public int Speed { get; set; }
     }
 }
