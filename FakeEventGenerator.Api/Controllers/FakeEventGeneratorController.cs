@@ -17,6 +17,11 @@ namespace FakeEventGenerator.Api.Controllers
         private readonly List<Human> humans = new();
         private readonly List<ActionAggregate> actionAggregates = new();
         private readonly Random random = new();
+
+
+        private List<int> times = new List<int>();
+        private int iterator = 0;
+        private int globalTime = 0;
         public FakeEventGeneratorController(UnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
@@ -41,134 +46,106 @@ namespace FakeEventGenerator.Api.Controllers
 
             foreach (var myAction in myActions)
             {
-                var result = GenerateFakeEvents(myAction, 0, true, true);
+                var result = GenerateNextFakeEvents(myAction, true, true, true);
                 if (result.Any())
-                    return result.OrderBy(x => x.Time).ToList();
+                {
+
+                    return result.Select(x => new ActionAggregateViewModel
+                    {
+                        Name = x.Name,
+                        Description = x.Description,
+                        Time = GetTime()
+                    }).ToList();
+                }
             }
 
             return new();
         }
 
-        private List<ActionAggregateViewModel> GenerateFakeEvents(ActionAggregate input, int time, bool lookAtNexts, bool lookAtPreviouses)
+        private int GetTime()
         {
-            var result = new List<ActionAggregateViewModel>();
+            var result = times[iterator];
+            iterator++;
+
+            return result;
+        }
+
+        private List<ActionAggregate> GenerateNextFakeEvents(ActionAggregate input, bool previousAvailable, bool nextAvailable, bool isOriginal)
+        {
+            var result = new List<ActionAggregate>();
 
             if (IsValidActionNow(input))
             {
-                time += input.Delay;
-                result.Add(new ActionAggregateViewModel
-                {
-                    Name = input.Name,
-                    Description = input.Description,
-                    Time = time
-                });
+                globalTime += input.Delay;
+                times.Add(globalTime);
 
-                foreach (var myResult in input.Results)
-                {
-                    var change = myResult.ResultCaseChange.Split('-');
-                    if (change.Last().IndexOf("IF") >= 0)
-                    {
-                        var c = change.Last().Split(":");
-                        change = change.SkipLast(1).ToArray();
+                result.Add(input);
+                SetResults(input.Results);
 
-                        if (c.Last().Equals("Day") || c.Last().Equals("Night"))
-                        {
-                            var h = DateTime.Now.Hour > 6 && DateTime.Now.Hour < 18 ? "Day" : "Night";
-
-                            if (!h.Equals(c.Last()))
-                            {
-                                continue;
-                            }
-                        }
-
-                    }
-
-                    if (myResult.ResultType.Equals(CaseStudyEnum.Environment))
-                    {
-                        var environmentVariable = environmentVariables.First(x => x.Type.ToString().Equals(myResult.ResultType));
-
-                        var factor = myResult.ResultCaseType.Equals(ResultCaseEnum.Increase) ? 1 : -1;
-                        environmentVariable.Value += factor * int.Parse(change.First());
-
-                        _unitOfWork.EnvironmentRepository.Update(environmentVariable);
-                    }
-
-                    else if (myResult.ResultType.Equals(CaseStudyEnum.ItemPosition))
-                    {
-                        var item = items.First(x => x.Name.Equals(myResult.CaseStudy));
-
-                        item.CoordinateX= int.Parse(change[0]);
-                        item.CoordinateX= int.Parse(change[1]);
-                        _unitOfWork.ItemRepository.Update(item);
-                    }
-
-                    else if (myResult.ResultType.Equals(CaseStudyEnum.ItemState))
-                    {
-                        var item = items.First(x => x.Name.Equals(myResult.CaseStudy));
-
-                        item.State = Enum.Parse<ItemState>(change.First());
-                        _unitOfWork.ItemRepository.Update(item);
-                    }
-
-                    else if (myResult.ResultType.Equals(CaseStudyEnum.HumanPosition))
-                    {
-                        var human = humans.First(x => x.Name.Equals(myResult.CaseStudy));
-
-                        human.CoordinateX = int.Parse(change[0]);
-                        human.CoordinateX = int.Parse(change[1]);
-                        _unitOfWork.HumanRepository.Update(human);
-                    }
-
-                    else if (myResult.ResultType.Equals(CaseStudyEnum.HumanBodyStatus))
-                    {
-                        var human = humans.First(x => x.Name.Equals(myResult.CaseStudy));
-
-                        human.BodyStatus = Enum.Parse<BodyStatusEnum>(change.First());
-                        _unitOfWork.HumanRepository.Update(human);
-                    }
-                }
-                _unitOfWork.Complete();
-
-                if (lookAtNexts)
+                if (nextAvailable)
                 {
                     foreach (var nextAction in input.NextActions)
                     {
                         if (nextAction.Possibility >= random.Next(0, 100))
                         {
-                            result.AddRange(GenerateFakeEvents(nextAction.ActionAggregate!, time + nextAction.Delay, true, false));
+                            var tmpTime = globalTime;
+                            globalTime += nextAction.Delay;
+                            result.AddRange(GenerateNextFakeEvents(nextAction.ActionAggregate!, false, true, false));
+                            globalTime = tmpTime;
                         }
                     }
                 }
 
             }
-            else
+            else if(previousAvailable)
             {
-                if (lookAtPreviouses)
-                {
-                    var backResult = new List<ActionAggregateViewModel>();
+                result = GeneratePreviousFakeEvents(input);
 
-                    var myPastActions = actionAggregates.Where(x => x.NextActions.Any(y => y.Id.Equals(input.Id)));
-                    foreach (var myAction in myPastActions)
+                if (isOriginal && result.Any()) {
+                    foreach (var nextAction in result.Last().NextActions)
                     {
-                        result = GenerateFakeEvents(myAction, time, false, true);
-                        if (result.Any())
-                            break;
-                    }
+                        var myAction = actionAggregates.First(x => x.Id.Equals(nextAction.Id));
 
-                    if (result.Any())
-                    {
-                        result.Add(new ActionAggregateViewModel
+                        var tmpTime = globalTime;
+                        globalTime += nextAction.Delay;
+                        var res = GenerateNextFakeEvents(myAction, false, true, false);
+                        globalTime = tmpTime;
+
+                        if (res.Any())
                         {
-                            Name = input.Name,
-                            Description = input.Description,
-                            Time = time
-                        });
-
-                        result.AddRange(GenerateFakeEvents(input, time, true, false));
+                            result.AddRange(res);
+                            break;
+                        }
                     }
-
                 }
+            }
 
+            return result;
+        }
+
+        private List<ActionAggregate> GeneratePreviousFakeEvents(ActionAggregate input)
+        {
+            var result = new List<ActionAggregate>();
+
+            var myActions = actionAggregates.Where(x => x.NextActions.Any(y => y.Id.Equals(input.Id))).ToList();
+            foreach (var myAction in myActions)
+            {
+                result = GenerateNextFakeEvents(myAction, true, false, false);
+                if (result.Any())
+                {
+                    var next = myAction.NextActions.First(x => x.Id.Equals(input.Id));
+                    globalTime += next.Delay;
+                    break;
+                }
+            }
+
+            if (result.Any())
+            {
+                globalTime += input.Delay;
+                times.Add(globalTime);
+
+                result.Add(input);
+                SetResults(input.Results);
             }
 
             return result;
@@ -235,7 +212,31 @@ namespace FakeEventGenerator.Api.Controllers
                 {
                     var human = humans.First(x => x.Name.Equals(myCondition.CaseStudy));
 
-                    var result = CheckStateConditionWithExpection
+                    var result = CheckBodyStatusConditionWithExpection
+                        (human, myCondition.ConditionCaseExpectation, myCondition.ConditionCaseType);
+                    if (!result)
+                    {
+                        return false;
+                    }
+                }
+
+                else if (myCondition.ConditionType.Equals(CaseStudyEnum.HumanFeelToDegree))
+                {
+                    var human = humans.First(x => x.Name.Equals(myCondition.CaseStudy));
+
+                    var result = CheckFeelToDegreeConditionWithExpection
+                        (human, myCondition.ConditionCaseExpectation, myCondition.ConditionCaseType);
+                    if (!result)
+                    {
+                        return false;
+                    }
+                }
+
+                else if (myCondition.ConditionType.Equals(CaseStudyEnum.MentalStatus))
+                {
+                    var human = humans.First(x => x.Name.Equals(myCondition.CaseStudy));
+
+                    var result = CheckMentalStatusConditionWithExpection
                         (human, myCondition.ConditionCaseExpectation, myCondition.ConditionCaseType);
                     if (!result)
                     {
@@ -285,20 +286,125 @@ namespace FakeEventGenerator.Api.Controllers
         {
             return conditionCaseType switch
             {
-                ConditionCaseEnum.IsIn => item.State.ToString().Equals(expection),
-                ConditionCaseEnum.IsNotIn => !item.State.ToString().Equals(expection),
+                ConditionCaseEnum.StateIs => item.State.ToString().Equals(expection),
+                ConditionCaseEnum.StateIsNot => !item.State.ToString().Equals(expection),
                 _ => false
             };
         }
 
-        private bool CheckStateConditionWithExpection(Human human, string expection, ConditionCaseEnum conditionCaseType)
+        private bool CheckBodyStatusConditionWithExpection(Human human, string expection, ConditionCaseEnum conditionCaseType)
         {
             return conditionCaseType switch
             {
-                ConditionCaseEnum.IsIn => human.BodyStatus.ToString().Equals(expection),
-                ConditionCaseEnum.IsNotIn => !human.BodyStatus.ToString().Equals(expection),
+                ConditionCaseEnum.StateIs => human.BodyStatus.ToString().Equals(expection),
+                ConditionCaseEnum.StateIsNot => !human.BodyStatus.ToString().Equals(expection),
                 _ => false
             };
+        }
+
+        private bool CheckFeelToDegreeConditionWithExpection(Human human, string expection, ConditionCaseEnum conditionCaseType)
+        {
+            return conditionCaseType switch
+            {
+                ConditionCaseEnum.StateIs => human.FeelToDegree.ToString().Equals(expection),
+                ConditionCaseEnum.StateIsNot => !human.FeelToDegree.ToString().Equals(expection),
+                _ => false
+            };
+        }
+
+        private bool CheckMentalStatusConditionWithExpection(Human human, string expection, ConditionCaseEnum conditionCaseType)
+        {
+            return conditionCaseType switch
+            {
+                ConditionCaseEnum.StateIs => human.MentalStatus.ToString().Equals(expection),
+                ConditionCaseEnum.StateIsNot => !human.MentalStatus.ToString().Equals(expection),
+                _ => false
+            };
+        }
+
+        private void SetResults(List<Domain.Models.ActionResult> input)
+        {
+            foreach (var myResult in input)
+            {
+                var change = myResult.ResultCaseChange.Split('-');
+                if (change.Last().IndexOf("IF") >= 0)
+                {
+                    var c = change.Last().Split(":");
+                    change = change.SkipLast(1).ToArray();
+
+                    if (c.Last().Equals("Day") || c.Last().Equals("Night"))
+                    {
+                        var h = DateTime.Now.Hour > 6 && DateTime.Now.Hour < 20 ? "Day" : "Night";
+
+                        if (!h.Equals(c.Last()))
+                        {
+                            continue;
+                        }
+                    }
+
+                }
+
+                if (myResult.ResultType.Equals(CaseStudyEnum.Environment))
+                {
+                    var environmentVariable = environmentVariables.First(x => x.Type.ToString().Equals(myResult.CaseStudy));
+
+                    var factor = myResult.ResultCaseType.Equals(ResultCaseEnum.Increase) ? 1 : -1;
+                    environmentVariable.Value += factor * int.Parse(change.First());
+
+                    _unitOfWork.EnvironmentRepository.Update(environmentVariable);
+                }
+
+                else if (myResult.ResultType.Equals(CaseStudyEnum.ItemPosition))
+                {
+                    var item = items.First(x => x.Name.Equals(myResult.CaseStudy));
+
+                    item.CoordinateX = int.Parse(change[0]);
+                    item.CoordinateY = int.Parse(change[1]);
+                    _unitOfWork.ItemRepository.Update(item);
+                }
+
+                else if (myResult.ResultType.Equals(CaseStudyEnum.ItemState))
+                {
+                    var item = items.First(x => x.Name.Equals(myResult.CaseStudy));
+
+                    item.State = Enum.Parse<ItemState>(change.First());
+                    _unitOfWork.ItemRepository.Update(item);
+                }
+
+                else if (myResult.ResultType.Equals(CaseStudyEnum.HumanPosition))
+                {
+                    var human = humans.First(x => x.Name.Equals(myResult.CaseStudy));
+
+                    human.CoordinateX = int.Parse(change[0]);
+                    human.CoordinateY = int.Parse(change[1]);
+                    _unitOfWork.HumanRepository.Update(human);
+                }
+
+                else if (myResult.ResultType.Equals(CaseStudyEnum.HumanBodyStatus))
+                {
+                    var human = humans.First(x => x.Name.Equals(myResult.CaseStudy));
+
+                    human.BodyStatus = Enum.Parse<BodyStatusEnum>(change.First());
+                    _unitOfWork.HumanRepository.Update(human);
+                }
+
+                else if (myResult.ResultType.Equals(CaseStudyEnum.HumanFeelToDegree))
+                {
+                    var human = humans.First(x => x.Name.Equals(myResult.CaseStudy));
+
+                    human.FeelToDegree = Enum.Parse<FeelToDegreeEnum>(change.First());
+                    _unitOfWork.HumanRepository.Update(human);
+                }
+
+                else if (myResult.ResultType.Equals(CaseStudyEnum.MentalStatus))
+                {
+                    var human = humans.First(x => x.Name.Equals(myResult.CaseStudy));
+
+                    human.MentalStatus = Enum.Parse<MentalStatusEnum>(change.First());
+                    _unitOfWork.HumanRepository.Update(human);
+                }
+            }
+            _unitOfWork.Complete();
         }
 
     }

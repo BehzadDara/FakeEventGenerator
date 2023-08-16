@@ -3,6 +3,7 @@ using FakeEventGenerator.Domain.Enums;
 using FakeEventGenerator.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using System;
 using System.Text.Json;
 
 namespace FakeEventGenerator.Infrastructure
@@ -611,7 +612,7 @@ namespace FakeEventGenerator.Infrastructure
                     CoordinateY = 74,
                     FeelToDegree = FeelToDegreeEnum.Medium,
                     BodyStatus = BodyStatusEnum.Stand,
-                    MentalStatus = MentalStatusEnum.Busy
+                    MentalStatus = MentalStatusEnum.Tired
                 },
                 new Human
                 {
@@ -667,13 +668,60 @@ namespace FakeEventGenerator.Infrastructure
             modelBuilder.Entity<ActionAggregate>().HasMany(x => x.NextActions)
                 .WithOne(x => x.ActionAggregate).HasForeignKey(x => x.ActionAggregateId);
 
+            var guid1 = Guid.NewGuid();
+            modelBuilder.Entity<ActionAggregate>().HasData(
+                new ActionAggregate
+                {
+                    Id = guid1,
+                    Name = "Open-BalconyDoor1",
+                    Description = "Open Door1 Of Balcony",
+                    Delay = 500,
+                    StartPossibility = 100
+                }
+            );
+
+            var guid2 = Guid.NewGuid();
+            modelBuilder.Entity<ActionAggregate>().HasData(
+                new ActionAggregate
+                {
+                    Id = guid2,
+                    Name = "Move-Balcony-Bedroom1",
+                    Description = "Move To Balcony Human1 Via Bedroom1",
+                    Delay = 500,
+                    StartPossibility = 100,
+                }
+            );
+
+            var guid3 = Guid.NewGuid();
+            modelBuilder.Entity<ActionAggregate>().HasData(
+                new ActionAggregate
+                {
+                    Id = guid3,
+                    Name = "Open-BalconyWindow",
+                    Description = "Open Window Of Balcony",
+                    Delay = 100,
+                    StartPossibility = 100
+                }
+            );
+
+            var guid4 = Guid.NewGuid();
+            modelBuilder.Entity<ActionAggregate>().HasData(
+                new ActionAggregate
+                {
+                    Id = guid4,
+                    Name = "Sit-BalconyWindow",
+                    Description = "Sit Under BalconyWindow",
+                    Delay = 50,
+                    StartPossibility = 100
+                }
+            );
+
             #region One ActionAggregate
-            GuidMaker();
 
             modelBuilder.Entity<ActionCondition>().HasData(
                 new ActionCondition
                 {
-                    ActionAggregateId = guid,
+                    ActionAggregateId = guid1,
                     ConditionType = CaseStudyEnum.HumanPosition,
                     CaseStudy = "Human1",
                     ConditionCaseType = ConditionCaseEnum.IsIn,
@@ -681,15 +729,15 @@ namespace FakeEventGenerator.Infrastructure
                 },
                 new ActionCondition
                 {
-                    ActionAggregateId = guid,
+                    ActionAggregateId = guid1,
                     ConditionType = CaseStudyEnum.HumanBodyStatus,
                     CaseStudy = "Human1",
                     ConditionCaseType = ConditionCaseEnum.StateIs,
-                    ConditionCaseExpectation = "BodyStatus-Stand"
+                    ConditionCaseExpectation = "Stand"
                 },
                 new ActionCondition
                 {
-                    ActionAggregateId = guid,
+                    ActionAggregateId = guid1,
                     ConditionType = CaseStudyEnum.ItemState,
                     CaseStudy = "BalconyDoor1",
                     ConditionCaseType = ConditionCaseEnum.StateIs,
@@ -700,7 +748,7 @@ namespace FakeEventGenerator.Infrastructure
             modelBuilder.Entity<ActionResult>().HasData(
                 new ActionResult
                 {
-                    ActionAggregateId = guid,
+                    ActionAggregateId = guid1,
                     ResultType = CaseStudyEnum.HumanPosition,
                     CaseStudy = "Human1",
                     ResultCaseType = ResultCaseEnum.Position,
@@ -711,32 +759,21 @@ namespace FakeEventGenerator.Infrastructure
             modelBuilder.Entity<NextAction>().HasData(
                 new NextAction
                 {
-                    ActionAggregateId = guid,
+                    Id = guid2,
+                    ActionAggregateId = guid1,
                     //NumberOfActions = 1,
                     Possibility = 100,
                     Delay = 200
                 }
             );
-
-            modelBuilder.Entity<ActionAggregate>().HasData(
-                new ActionAggregate
-                {
-                    Id = guid,
-                    Name = "Open-BalconyDoor1",
-                    Description = "Open Door1 Of Balcony",
-                    Delay = 500,
-                    StartPossibility = 100
-                }
-            );
             #endregion
             
             #region One ActionAggregate
-            GuidMaker();
 
             modelBuilder.Entity<ActionCondition>().HasData(
                 new ActionCondition
                 {
-                    ActionAggregateId = guid,
+                    ActionAggregateId = guid2,
                     ConditionType = CaseStudyEnum.HumanPosition,
                     CaseStudy = "Human1",
                     ConditionCaseType = ConditionCaseEnum.IsIn,
@@ -744,15 +781,15 @@ namespace FakeEventGenerator.Infrastructure
                 },
                 new ActionCondition
                 {
-                    ActionAggregateId = guid,
+                    ActionAggregateId = guid2,
                     ConditionType = CaseStudyEnum.HumanBodyStatus,
                     CaseStudy = "Human1",
                     ConditionCaseType = ConditionCaseEnum.StateIs,
-                    ConditionCaseExpectation = "BodyStatus-Stand"
+                    ConditionCaseExpectation = "Stand"
                 },
                 new ActionCondition
                 {
-                    ActionAggregateId = guid,
+                    ActionAggregateId = guid2,
                     ConditionType = CaseStudyEnum.ItemState,
                     CaseStudy = "BalconyDoor1",
                     ConditionCaseType = ConditionCaseEnum.StateIs,
@@ -763,7 +800,7 @@ namespace FakeEventGenerator.Infrastructure
             modelBuilder.Entity<ActionResult>().HasData(
                 new ActionResult
                 {
-                    ActionAggregateId = guid,
+                    ActionAggregateId = guid2,
                     ResultType = CaseStudyEnum.HumanPosition,
                     CaseStudy = "Human1",
                     ResultCaseType = ResultCaseEnum.Position,
@@ -774,32 +811,21 @@ namespace FakeEventGenerator.Infrastructure
             modelBuilder.Entity<NextAction>().HasData(
                 new NextAction
                 {
-                    ActionAggregateId = guid,
+                    Id = guid3,
+                    ActionAggregateId = guid2,
                     //NumberOfActions = 1,
                     Possibility = 100,
                     Delay = 200
                 }
             );
-
-            modelBuilder.Entity<ActionAggregate>().HasData(
-                new ActionAggregate
-                {
-                    Id = guid,
-                    Name = "Move-Balcony-Bedroom1",
-                    Description = "Move To Balcony Human1 Via Bedroom1",
-                    Delay = 500,
-                    StartPossibility = 100,
-                }
-            );
             #endregion
             
             #region One ActionAggregate
-            GuidMaker();
 
             modelBuilder.Entity<ActionCondition>().HasData(
                 new ActionCondition
                 {
-                    ActionAggregateId = guid,
+                    ActionAggregateId = guid3,
                     ConditionType = CaseStudyEnum.HumanPosition,
                     CaseStudy = "Human1",
                     ConditionCaseType = ConditionCaseEnum.IsIn,
@@ -807,18 +833,18 @@ namespace FakeEventGenerator.Infrastructure
                 },
                 new ActionCondition
                 {
-                    ActionAggregateId = guid,
+                    ActionAggregateId = guid3,
                     ConditionType = CaseStudyEnum.HumanBodyStatus,
                     CaseStudy = "Human1",
                     ConditionCaseType = ConditionCaseEnum.StateIs,
-                    ConditionCaseExpectation = "BodyStatus Stand"
+                    ConditionCaseExpectation = "Stand"
                 }
             );
 
             modelBuilder.Entity<ActionResult>().HasData(
                 new ActionResult
                 {
-                    ActionAggregateId = guid,
+                    ActionAggregateId = guid3,
                     ResultType = CaseStudyEnum.HumanPosition,
                     CaseStudy = "Human1",
                     ResultCaseType = ResultCaseEnum.Position,
@@ -826,7 +852,7 @@ namespace FakeEventGenerator.Infrastructure
                 },
                 new ActionResult
                 {
-                    ActionAggregateId = guid,
+                    ActionAggregateId = guid3,
                     ResultType = CaseStudyEnum.ItemState,
                     CaseStudy = "BalconyWindow",
                     ResultCaseType = ResultCaseEnum.State,
@@ -834,7 +860,7 @@ namespace FakeEventGenerator.Infrastructure
                 },
                 new ActionResult
                 {
-                    ActionAggregateId = guid,
+                    ActionAggregateId = guid3,
                     ResultType = CaseStudyEnum.Environment,
                     CaseStudy = "Light",
                     ResultCaseType = ResultCaseEnum.Increase,
@@ -842,14 +868,71 @@ namespace FakeEventGenerator.Infrastructure
                 }
             );
 
-            modelBuilder.Entity<ActionAggregate>().HasData(
-                new ActionAggregate
+            modelBuilder.Entity<NextAction>().HasData(
+                new NextAction
                 {
-                    Id = guid,
-                    Name = "Open-BalconyWindow",
-                    Description = "Open Window Of Balcony",
-                    Delay = 100,
-                    StartPossibility = 100
+                    Id = guid4,
+                    ActionAggregateId = guid3,
+                    //NumberOfActions = 1,
+                    Possibility = 100,
+                    Delay = 100
+                }
+            );
+            #endregion
+
+            #region One ActionAggregate
+
+            modelBuilder.Entity<ActionCondition>().HasData(
+                new ActionCondition
+                {
+                    ActionAggregateId = guid4,
+                    ConditionType = CaseStudyEnum.HumanPosition,
+                    CaseStudy = "Human1",
+                    ConditionCaseType = ConditionCaseEnum.IsIn,
+                    ConditionCaseExpectation = "Balcony"
+                },
+                new ActionCondition
+                {
+                    ActionAggregateId = guid4,
+                    ConditionType = CaseStudyEnum.HumanBodyStatus,
+                    CaseStudy = "Human1",
+                    ConditionCaseType = ConditionCaseEnum.StateIsNot,
+                    ConditionCaseExpectation = "Sit"
+                },
+                new ActionCondition
+                {
+                    ActionAggregateId = guid4,
+                    ConditionType = CaseStudyEnum.MentalStatus,
+                    CaseStudy = "Human1",
+                    ConditionCaseType = ConditionCaseEnum.StateIs,
+                    ConditionCaseExpectation = "Tired"
+                },
+                new ActionCondition
+                {
+                    ActionAggregateId = guid4,
+                    ConditionType = CaseStudyEnum.ItemState,
+                    CaseStudy = "BalconyWindow",
+                    ConditionCaseType = ConditionCaseEnum.StateIs,
+                    ConditionCaseExpectation = "Open"
+                }
+            );
+
+            modelBuilder.Entity<ActionResult>().HasData(
+                new ActionResult
+                {
+                    ActionAggregateId = guid4,
+                    ResultType = CaseStudyEnum.HumanBodyStatus,
+                    CaseStudy = "Human1",
+                    ResultCaseType = ResultCaseEnum.State,
+                    ResultCaseChange = "Sit"
+                },
+                new ActionResult
+                {
+                    ActionAggregateId = guid4,
+                    ResultType = CaseStudyEnum.MentalStatus,
+                    CaseStudy = "Human1",
+                    ResultCaseType = ResultCaseEnum.State,
+                    ResultCaseChange = "Normal"
                 }
             );
             #endregion
@@ -858,11 +941,6 @@ namespace FakeEventGenerator.Infrastructure
 
         }
 
-        private Guid guid;
-        private void GuidMaker()
-        {
-            guid = Guid.NewGuid();
-        }
     }
 
 }

@@ -160,9 +160,10 @@ namespace FakeEventGenerator.Infrastructure.Migrations
                 columns: new[] { "Id", "Delay", "Description", "Name", "StartPossibility" },
                 values: new object[,]
                 {
-                    { new Guid("3d90a288-5cf7-4589-b234-f4f32a94a76c"), 500, "Open Door1 Of Balcony", "Open-BalconyDoor1", 100 },
-                    { new Guid("3f50c444-1339-4851-ae67-92797ded432f"), 500, "Move To Balcony Human1 Via Bedroom1", "Move-Balcony-Bedroom1", 100 },
-                    { new Guid("53a6c5ba-628d-4e0b-aaa6-9f9347898323"), 100, "Open Window Of Balcony", "Open-BalconyWindow", 100 }
+                    { new Guid("330c8533-8390-48c4-8065-36d0322bba86"), 500, "Open Door1 Of Balcony", "Open-BalconyDoor1", 100 },
+                    { new Guid("444a4901-066b-4bee-9786-2a80e565c539"), 500, "Move To Balcony Human1 Via Bedroom1", "Move-Balcony-Bedroom1", 100 },
+                    { new Guid("4d49e450-ccd5-4dfc-9aec-d2c4b05a048c"), 100, "Open Window Of Balcony", "Open-BalconyWindow", 100 },
+                    { new Guid("d98c2485-7ad0-4d9d-92c8-594fba0ad286"), 50, "Sit Under BalconyWindow", "Sit-BalconyWindow", 100 }
                 });
 
             migrationBuilder.InsertData(
@@ -181,8 +182,8 @@ namespace FakeEventGenerator.Infrastructure.Migrations
                 columns: new[] { "Id", "BodyStatus", "CoordinateX", "CoordinateY", "FeelToDegree", "MentalStatus", "Name" },
                 values: new object[,]
                 {
-                    { new Guid("321beed9-358e-4b60-be28-20d7b9066793"), "Stand", 75, 65, "Medium", "Normal", "Human2" },
-                    { new Guid("fb065ded-e981-48a2-a082-30a5a2fb5887"), "Stand", 10, 74, "Medium", "Busy", "Human1" }
+                    { new Guid("0f7f7af7-f0e3-43ce-a27f-762a2ace33ee"), "Stand", 75, 65, "Medium", "Normal", "Human2" },
+                    { new Guid("14bb7a62-23ff-4a78-bb94-46c1ee3ea5e9"), "Stand", 10, 74, "Medium", "Tired", "Human1" }
                 });
 
             migrationBuilder.InsertData(
@@ -190,46 +191,46 @@ namespace FakeEventGenerator.Infrastructure.Migrations
                 columns: new[] { "Id", "CoordinateX", "CoordinateY", "Description", "IsMovable", "MetaData", "Name", "State", "Type" },
                 values: new object[,]
                 {
-                    { new Guid("00e2bfdb-d963-4f4d-b89f-095cba8d3832"), 90, 75, "Bedroom2 Chair", false, "", "Chair21", "NotBeUsing", "Usable" },
-                    { new Guid("05027df8-8cea-49db-9b7c-3c52491ab36e"), 55, 15, "LivingRoom Lamp", false, "", "Lamp4", "Off", "Electronic" },
-                    { new Guid("0d0bdd76-396f-405e-885e-df295b5af8e4"), 10, 79, "Bedroom1 Computer", false, "", "Computer", "Off", "Electronic" },
-                    { new Guid("11c01991-6b71-4ae4-854c-4dc2ae208b25"), 50, 40, "Corridor Lamp", false, "", "Lamp7", "Off", "Electronic" },
-                    { new Guid("19219064-e9b2-4676-bd2b-e1770bff4819"), 90, 79, "Bedroom2 Laptop", true, "{\"Charge\":90,\"IsInCharge\":false}", "Laptop", "Off", "Electronic" },
-                    { new Guid("1a296ac8-9110-4fda-b71f-37721efa10eb"), 40, 15, "LivingRoom Table", false, "", "Table", "NotBeUsing", "Usable" },
-                    { new Guid("1a3259b2-5737-4b82-97be-786611b8a0df"), 25, 65, "Bedroom1 Lamp", false, "{\"Severity\":20}", "Lamp1", "Off", "Electronic" },
-                    { new Guid("1a8497fe-3e02-492d-a79c-738082d3e6d1"), 45, 15, "LivingRoom Chair2", false, "", "Chair2", "NotBeUsing", "Usable" },
-                    { new Guid("1cf99f3d-6a30-4c7b-b05d-b9622e531744"), 40, 65, "Bedroom1 Bed", false, "", "Bedroom1Bed", "NotFull", "UseWithCapacity" },
-                    { new Guid("22d97ae6-74d3-45a5-981e-502ea79b7280"), 79, 15, "LivingRoom TV", false, "{\"Channel\":1,\"Sound\":20}", "TV", "Off", "Electronic" },
-                    { new Guid("2841db9a-6e23-4ae3-9833-28fb2e39a796"), 55, 0, "House Door", false, "", "HouseDoor", "Close", "Openable" },
-                    { new Guid("2bbf378b-f8b4-4657-88a5-c43f0b7a94c2"), 75, 50, "Bedroom2 Door", false, "", "Bedroom2Door", "Close", "Openable" },
-                    { new Guid("3833082c-00d9-4efe-86ca-6a43d51fb8f2"), 25, 80, "Balcony Door1", false, "", "BalconyDoor1", "Close", "Openable" },
-                    { new Guid("3a2c99e5-d563-4bd2-8a38-3e07918dba48"), 100, 65, "Bedroom2 Window", false, "", "Bedroom2Window", "Close", "Openable" },
-                    { new Guid("40dc254f-6384-4fe1-9570-ee7b381fdbe9"), 35, 15, "LivingRoom Chair1", false, "", "Chair1", "NotBeUsing", "Usable" },
-                    { new Guid("5592f0b2-9085-4774-b57b-8423e6dfc381"), 40, 10, "LivingRoom Chair3", false, "", "Chair3", "NotBeUsing", "Usable" },
-                    { new Guid("5a8fc718-90fd-4a64-92e8-efff24f4069e"), 70, 10, "LivingRoom Sofa2", false, "{\"Capacity\":2}", "Sofa2", "NotFull", "UseWithCapacity" },
-                    { new Guid("5d85416f-e96d-4cc9-bb09-52a765f3330f"), 75, 80, "Balcony Door2", false, "", "BalconyDoor2", "Close", "Openable" },
-                    { new Guid("5fd39c5f-f6a3-475e-9774-b5e8e875bd66"), 40, 29, "LivingRoom AirConditioner", false, "{\"Tempreture\":20,\"Speed\":10}", "AirConditioner3", "Off", "Electronic" },
-                    { new Guid("61f404b7-983f-483e-8e9c-485af9907498"), 70, 20, "LivingRoom Sofa1", false, "{\"Capacity\":1}", "Sofa1", "NotFull", "UseWithCapacity" },
-                    { new Guid("6369fcbb-b420-476c-9e43-82c00921345f"), 60, 65, "Bedroom2 Bed", false, "{\"Tempreture\":20,\"Speed\":10}", "Bedroom2Bed", "NotFull", "UseWithCapacity" },
-                    { new Guid("6b855050-db16-4ba1-a942-28b64d9353eb"), 90, 15, "Bathroom Lamp", false, "", "Lamp5", "Off", "Electronic" },
-                    { new Guid("7c396700-4f8d-40a0-9412-3a6501a0a8c9"), 25, 1, "Kitchen DishWasher", false, "", "DishWasher", "NotBeUsing", "Usable" },
-                    { new Guid("7f224616-7357-42f8-a0ae-418ce2a2f8d0"), 15, 30, "Kitchen Door", false, "", "KitchenDoor", "Close", "Openable" },
-                    { new Guid("86c3351e-5d7b-49bb-bcf4-f1f4badc2772"), 60, 15, "LivingRoom Sofa3", false, "{\"Capacity\":3}", "Sofa3", "NotFull", "UseWithCapacity" },
-                    { new Guid("88eff959-6a62-46e4-8b96-81deed14dfa7"), 1, 15, "Kitchen Refrigerator", false, "", "Refrigerator", "Close", "Openable" },
-                    { new Guid("8bc9be23-a1c7-43b7-967b-26a444e3ac28"), 15, 15, "Kitchen Lamp", false, "", "Lamp3", "Off", "Electronic" },
-                    { new Guid("b61969ed-e087-43b0-8596-d582868bad22"), 49, 55, "Bedroom1 AirConditioner", false, "", "AirConditioner1", "Off", "Electronic" },
-                    { new Guid("c3e5dcab-fc68-4185-93ab-7be7065ce7a5"), 29, 15, "Kitchen WashingMachine", false, "", "WashingMachine", "NotBeUsing", "Usable" },
-                    { new Guid("d229d5b0-ddaa-4fbc-a768-fb0ebd51a8f3"), 51, 55, "Bedroom2 AirConditioner", false, "{\"Tempreture\":20,\"Speed\":10}", "AirConditioner2", "Off", "Electronic" },
-                    { new Guid("d6320cbf-97af-40d1-ae24-cc8e668f8b74"), 25, 50, "Bedroom1 Door", false, "", "Bedroom1Door", "Close", "Openable" },
-                    { new Guid("dda5f157-f911-42df-9426-0621ed8a9ac1"), 10, 75, "Bedroom1 Chair", false, "", "Chair11", "NotBeUsing", "Usable" },
-                    { new Guid("de2e5a80-8fdf-4fca-977e-46abddf8ea37"), 40, 20, "LivingRoom Chair4", false, "", "Chair4", "NotBeUsing", "Usable" },
-                    { new Guid("e3e6019b-06d7-476a-8864-bb502032f4a3"), 75, 65, "Bedroom2 Lamp", false, "{\"Severity\":20}", "Lamp2", "Off", "Electronic" },
-                    { new Guid("e746daa1-2723-4f70-813d-81f57744bb4a"), 50, 90, "Balcony Lamp", false, "", "Lamp6", "Off", "Electronic" },
-                    { new Guid("e7cde2cf-1457-4341-9f88-532939a38450"), 15, 1, "Kitchen Oven", false, "", "Oven", "NotBeUsing", "Usable" },
-                    { new Guid("f209ee75-a5f5-4636-997b-3fbac806863e"), 55, 30, "LivingRoom Door", false, "", "LivingRoomDoor", "Close", "Openable" },
-                    { new Guid("f5475a58-f287-46ed-ac8e-5e73d6951695"), 0, 65, "Bedroom1 Window", false, "", "Bedroom1Window", "Close", "Openable" },
-                    { new Guid("f64e15df-f473-4bc6-b4e1-f4f9c08fa5a0"), 90, 30, "Bathroom Door", false, "", "BathroomDoor", "Close", "Openable" },
-                    { new Guid("f81b11ed-9b88-475e-9eaf-9160cb6927ce"), 50, 100, "Balcony Window", false, "", "BalconyWindow", "Close", "Openable" }
+                    { new Guid("03833720-c84f-48f3-845f-cecaa95423ef"), 51, 55, "Bedroom2 AirConditioner", false, "{\"Tempreture\":20,\"Speed\":10}", "AirConditioner2", "Off", "Electronic" },
+                    { new Guid("18793e8f-eaeb-4af7-8a74-7b551fe0b350"), 35, 15, "LivingRoom Chair1", false, "", "Chair1", "NotBeUsing", "Usable" },
+                    { new Guid("1a62f8b2-5698-4d67-befe-d45192160f0e"), 55, 15, "LivingRoom Lamp", false, "", "Lamp4", "Off", "Electronic" },
+                    { new Guid("222b948c-cd40-49e1-b488-fca33f30ceb1"), 75, 50, "Bedroom2 Door", false, "", "Bedroom2Door", "Close", "Openable" },
+                    { new Guid("337a87f7-285a-4264-af1e-dce2ae6edc05"), 25, 65, "Bedroom1 Lamp", false, "{\"Severity\":20}", "Lamp1", "Off", "Electronic" },
+                    { new Guid("351357ee-47a8-4426-a79d-dc13d248af30"), 55, 30, "LivingRoom Door", false, "", "LivingRoomDoor", "Close", "Openable" },
+                    { new Guid("4d22cd79-3f6c-4cf5-abd4-764b01403c09"), 90, 75, "Bedroom2 Chair", false, "", "Chair21", "NotBeUsing", "Usable" },
+                    { new Guid("5194bfba-5ec7-44f3-bfce-dc69ba932d49"), 15, 30, "Kitchen Door", false, "", "KitchenDoor", "Close", "Openable" },
+                    { new Guid("5545f5e3-86a4-4622-aded-e876f116b71f"), 60, 65, "Bedroom2 Bed", false, "{\"Tempreture\":20,\"Speed\":10}", "Bedroom2Bed", "NotFull", "UseWithCapacity" },
+                    { new Guid("60ee9f38-825a-446f-a4f4-721c7d75c10e"), 29, 15, "Kitchen WashingMachine", false, "", "WashingMachine", "NotBeUsing", "Usable" },
+                    { new Guid("61fcc839-7b1c-41b9-ac3e-5597567cb45b"), 40, 65, "Bedroom1 Bed", false, "", "Bedroom1Bed", "NotFull", "UseWithCapacity" },
+                    { new Guid("813eaa5b-a46a-4fd7-af17-df9f1f2f2996"), 40, 15, "LivingRoom Table", false, "", "Table", "NotBeUsing", "Usable" },
+                    { new Guid("892f9226-af81-427c-800a-0a47f934cd96"), 0, 65, "Bedroom1 Window", false, "", "Bedroom1Window", "Close", "Openable" },
+                    { new Guid("8aaad363-add4-47e3-8b6a-9166a623df5e"), 25, 1, "Kitchen DishWasher", false, "", "DishWasher", "NotBeUsing", "Usable" },
+                    { new Guid("91fcd1cb-869e-40de-a531-91765f0fd6f3"), 75, 65, "Bedroom2 Lamp", false, "{\"Severity\":20}", "Lamp2", "Off", "Electronic" },
+                    { new Guid("98b4113a-cc22-4b29-b7b8-c117d7fce9c0"), 50, 40, "Corridor Lamp", false, "", "Lamp7", "Off", "Electronic" },
+                    { new Guid("9e0c6f82-f310-4134-9a8f-c171fcc4b61c"), 40, 29, "LivingRoom AirConditioner", false, "{\"Tempreture\":20,\"Speed\":10}", "AirConditioner3", "Off", "Electronic" },
+                    { new Guid("a2d5210e-cfe1-4453-89d4-cb748ed85c68"), 49, 55, "Bedroom1 AirConditioner", false, "", "AirConditioner1", "Off", "Electronic" },
+                    { new Guid("a4b0edd0-c007-4d16-a67e-64882197971a"), 15, 1, "Kitchen Oven", false, "", "Oven", "NotBeUsing", "Usable" },
+                    { new Guid("a69fd101-15b1-4561-a618-fcdb3cd4c2e6"), 1, 15, "Kitchen Refrigerator", false, "", "Refrigerator", "Close", "Openable" },
+                    { new Guid("b2184ad9-0644-4d8a-bf6d-8a245e650c8e"), 45, 15, "LivingRoom Chair2", false, "", "Chair2", "NotBeUsing", "Usable" },
+                    { new Guid("b516ff6a-bae6-453b-9e44-347e45423b4c"), 25, 80, "Balcony Door1", false, "", "BalconyDoor1", "Close", "Openable" },
+                    { new Guid("bd6b3d7b-5842-48fd-8746-f75b82d468a1"), 40, 20, "LivingRoom Chair4", false, "", "Chair4", "NotBeUsing", "Usable" },
+                    { new Guid("bd6be63c-d59f-4ced-b37f-f7e6d8b76949"), 50, 100, "Balcony Window", false, "", "BalconyWindow", "Close", "Openable" },
+                    { new Guid("bd8555e2-3bfb-485e-9584-7d553f1fdd64"), 70, 20, "LivingRoom Sofa1", false, "{\"Capacity\":1}", "Sofa1", "NotFull", "UseWithCapacity" },
+                    { new Guid("c91a2fb2-2c69-4ce3-a512-89cebd7106eb"), 55, 0, "House Door", false, "", "HouseDoor", "Close", "Openable" },
+                    { new Guid("cadd09d8-79ec-4c7b-a324-695b3f2dc5c0"), 25, 50, "Bedroom1 Door", false, "", "Bedroom1Door", "Close", "Openable" },
+                    { new Guid("cc0146c8-c5ba-45ff-95c9-6ddb8449fbcd"), 10, 75, "Bedroom1 Chair", false, "", "Chair11", "NotBeUsing", "Usable" },
+                    { new Guid("ccb64e2b-0115-4f9b-b2b3-94e88db5d161"), 90, 79, "Bedroom2 Laptop", true, "{\"Charge\":90,\"IsInCharge\":false}", "Laptop", "Off", "Electronic" },
+                    { new Guid("d5d22ce2-ed44-485a-9081-bc77897e953d"), 100, 65, "Bedroom2 Window", false, "", "Bedroom2Window", "Close", "Openable" },
+                    { new Guid("d9e462fe-0561-4823-ab2b-ada3ccf797fb"), 90, 15, "Bathroom Lamp", false, "", "Lamp5", "Off", "Electronic" },
+                    { new Guid("db0f80a5-209a-404a-b4cf-2e1a91f5b647"), 10, 79, "Bedroom1 Computer", false, "", "Computer", "Off", "Electronic" },
+                    { new Guid("e0f48fe6-c700-4aa1-8d84-800c75fa715a"), 60, 15, "LivingRoom Sofa3", false, "{\"Capacity\":3}", "Sofa3", "NotFull", "UseWithCapacity" },
+                    { new Guid("e91fdf09-2ef3-4c0b-8025-452b4846a4eb"), 50, 90, "Balcony Lamp", false, "", "Lamp6", "Off", "Electronic" },
+                    { new Guid("eab071be-e981-4b59-ad88-db19f5fb5488"), 75, 80, "Balcony Door2", false, "", "BalconyDoor2", "Close", "Openable" },
+                    { new Guid("ec87577d-82ac-466c-8be8-5f8469db4dca"), 90, 30, "Bathroom Door", false, "", "BathroomDoor", "Close", "Openable" },
+                    { new Guid("eca535f8-09bc-4e26-84f6-c3c06099e235"), 70, 10, "LivingRoom Sofa2", false, "{\"Capacity\":2}", "Sofa2", "NotFull", "UseWithCapacity" },
+                    { new Guid("f59f3682-5f46-4940-9153-b2664700d56b"), 40, 10, "LivingRoom Chair3", false, "", "Chair3", "NotBeUsing", "Usable" },
+                    { new Guid("f985353a-d9a6-4e54-af72-42cce33e4c93"), 79, 15, "LivingRoom TV", false, "{\"Channel\":1,\"Sound\":20}", "TV", "Off", "Electronic" },
+                    { new Guid("fec6eaf3-807a-45e5-b7a7-1f8ae0898e3c"), 15, 15, "Kitchen Lamp", false, "", "Lamp3", "Off", "Electronic" }
                 });
 
             migrationBuilder.InsertData(
@@ -252,14 +253,18 @@ namespace FakeEventGenerator.Infrastructure.Migrations
                 columns: new[] { "Id", "ActionAggregateId", "CaseStudy", "ConditionCaseExpectation", "ConditionCaseType", "ConditionType" },
                 values: new object[,]
                 {
-                    { new Guid("0efd6ae1-d2b0-404d-80e4-9b63bf740b32"), new Guid("3f50c444-1339-4851-ae67-92797ded432f"), "Human1", "BodyStatus-Stand", "StateIs", "State" },
-                    { new Guid("1857b7d1-b69e-4401-9ca0-f2713decbb14"), new Guid("53a6c5ba-628d-4e0b-aaa6-9f9347898323"), "Human", "Balcony", "IsIn", "Position" },
-                    { new Guid("463f01fc-1d15-420f-8117-7556697268a2"), new Guid("53a6c5ba-628d-4e0b-aaa6-9f9347898323"), "Human", "BodyStatus Stand", "StateIs", "State" },
-                    { new Guid("75d99ed8-166d-4d3b-b3c2-5fb8cc1f5f3f"), new Guid("3d90a288-5cf7-4589-b234-f4f32a94a76c"), "BalconyDoor1", "Close", "StateIs", "State" },
-                    { new Guid("76824ac4-df17-4410-a202-64200b0a69ce"), new Guid("3d90a288-5cf7-4589-b234-f4f32a94a76c"), "Human1", "BodyStatus-Stand", "StateIs", "State" },
-                    { new Guid("a9e7fdca-7f55-41df-9e56-02c30e0b65f7"), new Guid("3f50c444-1339-4851-ae67-92797ded432f"), "BalconyDoor1", "Open", "StateIs", "State" },
-                    { new Guid("b3836a5f-f721-4693-aaa2-1f5b529dcaad"), new Guid("3f50c444-1339-4851-ae67-92797ded432f"), "Human1", "Bedroom1", "IsIn", "Position" },
-                    { new Guid("c0eecd5a-4cf4-4d3c-8d59-080ebc3fc2f0"), new Guid("3d90a288-5cf7-4589-b234-f4f32a94a76c"), "Human1", "Bedroom1", "IsIn", "Position" }
+                    { new Guid("07c40895-7579-4948-b46a-2dfd98fe5c0b"), new Guid("444a4901-066b-4bee-9786-2a80e565c539"), "Human1", "Bedroom1", "IsIn", "HumanPosition" },
+                    { new Guid("0ae606cd-6ee2-4c69-b8ba-e18a7ad23e72"), new Guid("444a4901-066b-4bee-9786-2a80e565c539"), "Human1", "Stand", "StateIs", "HumanBodyStatus" },
+                    { new Guid("2f25a3f3-4bf5-49dd-afe7-33730d456641"), new Guid("d98c2485-7ad0-4d9d-92c8-594fba0ad286"), "Human1", "Sit", "StateIsNot", "HumanBodyStatus" },
+                    { new Guid("33fa3e5b-1fc3-45fc-a21b-b97fdbbf878b"), new Guid("d98c2485-7ad0-4d9d-92c8-594fba0ad286"), "BalconyWindow", "Open", "StateIs", "ItemState" },
+                    { new Guid("3c296e51-3209-4f0c-b76e-d2358a1d1fd4"), new Guid("444a4901-066b-4bee-9786-2a80e565c539"), "BalconyDoor1", "Open", "StateIs", "ItemState" },
+                    { new Guid("46d52c1a-5977-43ee-891d-52613868335a"), new Guid("330c8533-8390-48c4-8065-36d0322bba86"), "Human1", "Bedroom1", "IsIn", "HumanPosition" },
+                    { new Guid("5fdbfae9-aa23-43c9-bf13-6dbbd921df06"), new Guid("330c8533-8390-48c4-8065-36d0322bba86"), "BalconyDoor1", "Close", "StateIs", "ItemState" },
+                    { new Guid("8528c930-e8b5-4f7f-a70f-6bfa8c295201"), new Guid("4d49e450-ccd5-4dfc-9aec-d2c4b05a048c"), "Human1", "Balcony", "IsIn", "HumanPosition" },
+                    { new Guid("8dd870f8-799c-47a0-aaac-037e92d7cdfa"), new Guid("4d49e450-ccd5-4dfc-9aec-d2c4b05a048c"), "Human1", "Stand", "StateIs", "HumanBodyStatus" },
+                    { new Guid("c7c455a3-4b50-40a2-b87f-bf1c8203c129"), new Guid("d98c2485-7ad0-4d9d-92c8-594fba0ad286"), "Human1", "Tired", "StateIs", "MentalStatus" },
+                    { new Guid("d798ab23-7fbb-4d7f-8f16-ca28abf5b020"), new Guid("d98c2485-7ad0-4d9d-92c8-594fba0ad286"), "Human1", "Balcony", "IsIn", "HumanPosition" },
+                    { new Guid("ded7721a-c61c-4481-b841-a0ef35db4a03"), new Guid("330c8533-8390-48c4-8065-36d0322bba86"), "Human1", "Stand", "StateIs", "HumanBodyStatus" }
                 });
 
             migrationBuilder.InsertData(
@@ -267,11 +272,13 @@ namespace FakeEventGenerator.Infrastructure.Migrations
                 columns: new[] { "Id", "ActionAggregateId", "CaseStudy", "ResultCaseChange", "ResultCaseType", "ResultType" },
                 values: new object[,]
                 {
-                    { new Guid("3cb5b84c-ea94-43b3-aa21-c3064df33071"), new Guid("3d90a288-5cf7-4589-b234-f4f32a94a76c"), "Human1", "25-79", "Position", "Position" },
-                    { new Guid("7449caec-46eb-4f59-9cdf-5b4709db75d7"), new Guid("53a6c5ba-628d-4e0b-aaa6-9f9347898323"), "BalconyWindow", "Open", "State", "State" },
-                    { new Guid("a9e26610-9172-46e1-a29d-e4ff144c70b1"), new Guid("53a6c5ba-628d-4e0b-aaa6-9f9347898323"), "Human", "50-99", "Position", "Position" },
-                    { new Guid("d2ac77f8-187c-460f-89e3-3885b3315d35"), new Guid("53a6c5ba-628d-4e0b-aaa6-9f9347898323"), "Light", "20-IF:Day", "Increase", "Environment" },
-                    { new Guid("db5e04c1-cbd0-4560-979d-546755abfea6"), new Guid("3f50c444-1339-4851-ae67-92797ded432f"), "Human1", "25-81", "Position", "Position" }
+                    { new Guid("03fff1c9-cd4a-4337-810c-8510a6218dc7"), new Guid("d98c2485-7ad0-4d9d-92c8-594fba0ad286"), "Human1", "Normal", "State", "MentalStatus" },
+                    { new Guid("0c9a02f5-7998-44e0-9e96-93ead303633b"), new Guid("444a4901-066b-4bee-9786-2a80e565c539"), "Human1", "25-81", "Position", "HumanPosition" },
+                    { new Guid("1813d626-b256-4de1-8d99-e2d3fae7d5be"), new Guid("4d49e450-ccd5-4dfc-9aec-d2c4b05a048c"), "BalconyWindow", "Open", "State", "ItemState" },
+                    { new Guid("4283e834-68e0-432a-89e6-a71ac030e38b"), new Guid("d98c2485-7ad0-4d9d-92c8-594fba0ad286"), "Human1", "Sit", "State", "HumanBodyStatus" },
+                    { new Guid("60510682-565c-4a79-952a-609c4827567b"), new Guid("4d49e450-ccd5-4dfc-9aec-d2c4b05a048c"), "Human1", "50-99", "Position", "HumanPosition" },
+                    { new Guid("6a316ec5-a09f-4628-a4e9-bdcb93d200b7"), new Guid("4d49e450-ccd5-4dfc-9aec-d2c4b05a048c"), "Light", "20-IF:Day", "Increase", "Environment" },
+                    { new Guid("f804eb21-3a1d-46eb-96c6-d769a1d86508"), new Guid("330c8533-8390-48c4-8065-36d0322bba86"), "Human1", "25-79", "Position", "HumanPosition" }
                 });
 
             migrationBuilder.InsertData(
@@ -279,8 +286,9 @@ namespace FakeEventGenerator.Infrastructure.Migrations
                 columns: new[] { "Id", "ActionAggregateId", "Delay", "Possibility" },
                 values: new object[,]
                 {
-                    { new Guid("a53a02ae-e731-46db-a0e6-de7a7742a5ee"), new Guid("3d90a288-5cf7-4589-b234-f4f32a94a76c"), 200, 100 },
-                    { new Guid("e2bbca44-ecc7-436e-89c6-a19fc20d8d8a"), new Guid("3f50c444-1339-4851-ae67-92797ded432f"), 200, 100 }
+                    { new Guid("444a4901-066b-4bee-9786-2a80e565c539"), new Guid("330c8533-8390-48c4-8065-36d0322bba86"), 200, 100 },
+                    { new Guid("4d49e450-ccd5-4dfc-9aec-d2c4b05a048c"), new Guid("444a4901-066b-4bee-9786-2a80e565c539"), 200, 100 },
+                    { new Guid("d98c2485-7ad0-4d9d-92c8-594fba0ad286"), new Guid("4d49e450-ccd5-4dfc-9aec-d2c4b05a048c"), 100, 100 }
                 });
 
             migrationBuilder.CreateIndex(
