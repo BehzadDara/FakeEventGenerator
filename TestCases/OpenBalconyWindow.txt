@@ -1,0 +1,7 @@
+{
+  "resultType": 2,
+  "caseStudy": "BalconyWindow",
+  "resultCaseType": 3,
+  "resultCaseChangeFrom": "Open",
+  "resultCaseChangeTo": "Open"
+}

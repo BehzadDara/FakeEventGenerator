@@ -8,7 +8,7 @@ namespace FakeEventGenerator.Infrastructure.Repositories
         {
         }
 
-        public void Update(T input)
+        public virtual void Update(T input)
         {
             Set.Update(input);
         }

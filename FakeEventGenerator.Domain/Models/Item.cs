@@ -15,7 +15,7 @@ namespace FakeEventGenerator.Domain.Models
 
         public bool IsInAPartOgHouse(PartOfHouse partOfHouse)
         {
-            return Methods.IsAnItemInAPartOfHouse(this, partOfHouse);
+            return Methods.IsAnItemInAPartOfHouse(this.CoordinateX, this.CoordinateY, partOfHouse);
         }
 
         public ItemState ChangeState()

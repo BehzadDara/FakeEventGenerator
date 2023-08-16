@@ -12,7 +12,7 @@ namespace FakeEventGenerator.Infrastructure.Repositories
 
         protected DbSet<T> Set => _dbContext.Set<T>();
 
-        public async Task<List<T>> GetAll()
+        public virtual async Task<List<T>> GetAll()
         {
             return await Set.ToListAsync();
         }

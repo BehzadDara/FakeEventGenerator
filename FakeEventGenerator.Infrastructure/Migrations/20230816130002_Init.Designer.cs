@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FakeEventGenerator.Infrastructure.Migrations
 {
     [DbContext(typeof(FakeEventGeneratorDBContext))]
-    [Migration("20230814182949_Init")]
+    [Migration("20230816130002_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -24,6 +24,242 @@ namespace FakeEventGenerator.Infrastructure.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("FakeEventGenerator.Domain.Models.ActionAggregate", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Delay")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("StartPossibility")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ActionAggregate");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("3d90a288-5cf7-4589-b234-f4f32a94a76c"),
+                            Delay = 500,
+                            Description = "Open Door1 Of Balcony",
+                            Name = "Open-BalconyDoor1",
+                            StartPossibility = 100
+                        },
+                        new
+                        {
+                            Id = new Guid("3f50c444-1339-4851-ae67-92797ded432f"),
+                            Delay = 500,
+                            Description = "Move To Balcony Human1 Via Bedroom1",
+                            Name = "Move-Balcony-Bedroom1",
+                            StartPossibility = 100
+                        },
+                        new
+                        {
+                            Id = new Guid("53a6c5ba-628d-4e0b-aaa6-9f9347898323"),
+                            Delay = 100,
+                            Description = "Open Window Of Balcony",
+                            Name = "Open-BalconyWindow",
+                            StartPossibility = 100
+                        });
+                });
+
+            modelBuilder.Entity("FakeEventGenerator.Domain.Models.ActionCondition", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ActionAggregateId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CaseStudy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ConditionCaseExpectation")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ConditionCaseType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ConditionType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ActionAggregateId");
+
+                    b.ToTable("ActionCondition");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("c0eecd5a-4cf4-4d3c-8d59-080ebc3fc2f0"),
+                            ActionAggregateId = new Guid("3d90a288-5cf7-4589-b234-f4f32a94a76c"),
+                            CaseStudy = "Human1",
+                            ConditionCaseExpectation = "Bedroom1",
+                            ConditionCaseType = "IsIn",
+                            ConditionType = "Position"
+                        },
+                        new
+                        {
+                            Id = new Guid("76824ac4-df17-4410-a202-64200b0a69ce"),
+                            ActionAggregateId = new Guid("3d90a288-5cf7-4589-b234-f4f32a94a76c"),
+                            CaseStudy = "Human1",
+                            ConditionCaseExpectation = "BodyStatus-Stand",
+                            ConditionCaseType = "StateIs",
+                            ConditionType = "State"
+                        },
+                        new
+                        {
+                            Id = new Guid("75d99ed8-166d-4d3b-b3c2-5fb8cc1f5f3f"),
+                            ActionAggregateId = new Guid("3d90a288-5cf7-4589-b234-f4f32a94a76c"),
+                            CaseStudy = "BalconyDoor1",
+                            ConditionCaseExpectation = "Close",
+                            ConditionCaseType = "StateIs",
+                            ConditionType = "State"
+                        },
+                        new
+                        {
+                            Id = new Guid("b3836a5f-f721-4693-aaa2-1f5b529dcaad"),
+                            ActionAggregateId = new Guid("3f50c444-1339-4851-ae67-92797ded432f"),
+                            CaseStudy = "Human1",
+                            ConditionCaseExpectation = "Bedroom1",
+                            ConditionCaseType = "IsIn",
+                            ConditionType = "Position"
+                        },
+                        new
+                        {
+                            Id = new Guid("0efd6ae1-d2b0-404d-80e4-9b63bf740b32"),
+                            ActionAggregateId = new Guid("3f50c444-1339-4851-ae67-92797ded432f"),
+                            CaseStudy = "Human1",
+                            ConditionCaseExpectation = "BodyStatus-Stand",
+                            ConditionCaseType = "StateIs",
+                            ConditionType = "State"
+                        },
+                        new
+                        {
+                            Id = new Guid("a9e7fdca-7f55-41df-9e56-02c30e0b65f7"),
+                            ActionAggregateId = new Guid("3f50c444-1339-4851-ae67-92797ded432f"),
+                            CaseStudy = "BalconyDoor1",
+                            ConditionCaseExpectation = "Open",
+                            ConditionCaseType = "StateIs",
+                            ConditionType = "State"
+                        },
+                        new
+                        {
+                            Id = new Guid("1857b7d1-b69e-4401-9ca0-f2713decbb14"),
+                            ActionAggregateId = new Guid("53a6c5ba-628d-4e0b-aaa6-9f9347898323"),
+                            CaseStudy = "Human",
+                            ConditionCaseExpectation = "Balcony",
+                            ConditionCaseType = "IsIn",
+                            ConditionType = "Position"
+                        },
+                        new
+                        {
+                            Id = new Guid("463f01fc-1d15-420f-8117-7556697268a2"),
+                            ActionAggregateId = new Guid("53a6c5ba-628d-4e0b-aaa6-9f9347898323"),
+                            CaseStudy = "Human",
+                            ConditionCaseExpectation = "BodyStatus Stand",
+                            ConditionCaseType = "StateIs",
+                            ConditionType = "State"
+                        });
+                });
+
+            modelBuilder.Entity("FakeEventGenerator.Domain.Models.ActionResult", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ActionAggregateId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CaseStudy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ResultCaseChange")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ResultCaseType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ResultType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ActionAggregateId");
+
+                    b.ToTable("ActionResult");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("3cb5b84c-ea94-43b3-aa21-c3064df33071"),
+                            ActionAggregateId = new Guid("3d90a288-5cf7-4589-b234-f4f32a94a76c"),
+                            CaseStudy = "Human1",
+                            ResultCaseChange = "25-79",
+                            ResultCaseType = "Position",
+                            ResultType = "Position"
+                        },
+                        new
+                        {
+                            Id = new Guid("db5e04c1-cbd0-4560-979d-546755abfea6"),
+                            ActionAggregateId = new Guid("3f50c444-1339-4851-ae67-92797ded432f"),
+                            CaseStudy = "Human1",
+                            ResultCaseChange = "25-81",
+                            ResultCaseType = "Position",
+                            ResultType = "Position"
+                        },
+                        new
+                        {
+                            Id = new Guid("a9e26610-9172-46e1-a29d-e4ff144c70b1"),
+                            ActionAggregateId = new Guid("53a6c5ba-628d-4e0b-aaa6-9f9347898323"),
+                            CaseStudy = "Human",
+                            ResultCaseChange = "50-99",
+                            ResultCaseType = "Position",
+                            ResultType = "Position"
+                        },
+                        new
+                        {
+                            Id = new Guid("7449caec-46eb-4f59-9cdf-5b4709db75d7"),
+                            ActionAggregateId = new Guid("53a6c5ba-628d-4e0b-aaa6-9f9347898323"),
+                            CaseStudy = "BalconyWindow",
+                            ResultCaseChange = "Open",
+                            ResultCaseType = "State",
+                            ResultType = "State"
+                        },
+                        new
+                        {
+                            Id = new Guid("d2ac77f8-187c-460f-89e3-3885b3315d35"),
+                            ActionAggregateId = new Guid("53a6c5ba-628d-4e0b-aaa6-9f9347898323"),
+                            CaseStudy = "Light",
+                            ResultCaseChange = "20-IF:Day",
+                            ResultCaseType = "Increase",
+                            ResultType = "Environment"
+                        });
+                });
 
             modelBuilder.Entity("FakeEventGenerator.Domain.Models.EnvironmentVariable", b =>
                 {
@@ -95,7 +331,7 @@ namespace FakeEventGenerator.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("3c2d0a3c-868a-4233-9e0c-d4737c4018cc"),
+                            Id = new Guid("fb065ded-e981-48a2-a082-30a5a2fb5887"),
                             BodyStatus = "Stand",
                             CoordinateX = 10,
                             CoordinateY = 74,
@@ -105,7 +341,7 @@ namespace FakeEventGenerator.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("c6ba5308-eb22-431e-8886-cd2b37ad7fc7"),
+                            Id = new Guid("321beed9-358e-4b60-be28-20d7b9066793"),
                             BodyStatus = "Stand",
                             CoordinateX = 75,
                             CoordinateY = 65,
@@ -157,151 +393,151 @@ namespace FakeEventGenerator.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("50e06a28-098a-40f0-9483-9841fe41f925"),
+                            Id = new Guid("2841db9a-6e23-4ae3-9833-28fb2e39a796"),
                             CoordinateX = 55,
                             CoordinateY = 0,
                             Description = "House Door",
                             IsMovable = false,
                             MetaData = "",
-                            Name = "Door",
+                            Name = "HouseDoor",
                             State = "Close",
                             Type = "Openable"
                         },
                         new
                         {
-                            Id = new Guid("43a35dff-ba06-43e8-bd58-4816fb50ba1d"),
+                            Id = new Guid("f209ee75-a5f5-4636-997b-3fbac806863e"),
                             CoordinateX = 55,
                             CoordinateY = 30,
                             Description = "LivingRoom Door",
                             IsMovable = false,
                             MetaData = "",
-                            Name = "Door",
+                            Name = "LivingRoomDoor",
                             State = "Close",
                             Type = "Openable"
                         },
                         new
                         {
-                            Id = new Guid("361fb835-b978-4e15-8bf4-c6e3f04abf51"),
+                            Id = new Guid("7f224616-7357-42f8-a0ae-418ce2a2f8d0"),
                             CoordinateX = 15,
                             CoordinateY = 30,
                             Description = "Kitchen Door",
                             IsMovable = false,
                             MetaData = "",
-                            Name = "Door",
+                            Name = "KitchenDoor",
                             State = "Close",
                             Type = "Openable"
                         },
                         new
                         {
-                            Id = new Guid("524eb5c5-689f-4b4f-9423-4931f0587e74"),
+                            Id = new Guid("f64e15df-f473-4bc6-b4e1-f4f9c08fa5a0"),
                             CoordinateX = 90,
                             CoordinateY = 30,
                             Description = "Bathroom Door",
                             IsMovable = false,
                             MetaData = "",
-                            Name = "Door",
+                            Name = "BathroomDoor",
                             State = "Close",
                             Type = "Openable"
                         },
                         new
                         {
-                            Id = new Guid("e30e350c-a035-42f0-8bfa-31924043a0b3"),
+                            Id = new Guid("d6320cbf-97af-40d1-ae24-cc8e668f8b74"),
                             CoordinateX = 25,
                             CoordinateY = 50,
                             Description = "Bedroom1 Door",
                             IsMovable = false,
                             MetaData = "",
-                            Name = "Door",
+                            Name = "Bedroom1Door",
                             State = "Close",
                             Type = "Openable"
                         },
                         new
                         {
-                            Id = new Guid("e2239a69-88cf-46d0-b41d-aa8350e08882"),
+                            Id = new Guid("2bbf378b-f8b4-4657-88a5-c43f0b7a94c2"),
                             CoordinateX = 75,
                             CoordinateY = 50,
                             Description = "Bedroom2 Door",
                             IsMovable = false,
                             MetaData = "",
-                            Name = "Door",
+                            Name = "Bedroom2Door",
                             State = "Close",
                             Type = "Openable"
                         },
                         new
                         {
-                            Id = new Guid("c98c422a-0361-4c9e-8586-ded65f83f01c"),
+                            Id = new Guid("3833082c-00d9-4efe-86ca-6a43d51fb8f2"),
                             CoordinateX = 25,
                             CoordinateY = 80,
                             Description = "Balcony Door1",
                             IsMovable = false,
                             MetaData = "",
-                            Name = "Door",
+                            Name = "BalconyDoor1",
                             State = "Close",
                             Type = "Openable"
                         },
                         new
                         {
-                            Id = new Guid("597ee846-e091-4eb8-9808-bad5f5a41d38"),
+                            Id = new Guid("5d85416f-e96d-4cc9-bb09-52a765f3330f"),
                             CoordinateX = 75,
                             CoordinateY = 80,
-                            Description = "Balcony Door1",
+                            Description = "Balcony Door2",
                             IsMovable = false,
                             MetaData = "",
-                            Name = "Door",
+                            Name = "BalconyDoor2",
                             State = "Close",
                             Type = "Openable"
                         },
                         new
                         {
-                            Id = new Guid("16189e20-a390-441d-9577-bb306619d303"),
+                            Id = new Guid("f5475a58-f287-46ed-ac8e-5e73d6951695"),
                             CoordinateX = 0,
                             CoordinateY = 65,
                             Description = "Bedroom1 Window",
                             IsMovable = false,
                             MetaData = "",
-                            Name = "Window",
+                            Name = "Bedroom1Window",
                             State = "Close",
                             Type = "Openable"
                         },
                         new
                         {
-                            Id = new Guid("fd55dba4-b7a9-4d5f-b049-67235ee3fb7d"),
+                            Id = new Guid("3a2c99e5-d563-4bd2-8a38-3e07918dba48"),
                             CoordinateX = 100,
                             CoordinateY = 65,
                             Description = "Bedroom2 Window",
                             IsMovable = false,
                             MetaData = "",
-                            Name = "Window",
+                            Name = "Bedroom2Window",
                             State = "Close",
                             Type = "Openable"
                         },
                         new
                         {
-                            Id = new Guid("37505a1f-06ba-4afa-9b66-766f9910dddc"),
+                            Id = new Guid("f81b11ed-9b88-475e-9eaf-9160cb6927ce"),
                             CoordinateX = 50,
                             CoordinateY = 100,
                             Description = "Balcony Window",
                             IsMovable = false,
                             MetaData = "",
-                            Name = "Window",
+                            Name = "BalconyWindow",
                             State = "Close",
                             Type = "Openable"
                         },
                         new
                         {
-                            Id = new Guid("136c2951-870c-44e4-9cea-621665bcafe7"),
+                            Id = new Guid("1cf99f3d-6a30-4c7b-b05d-b9622e531744"),
                             CoordinateX = 40,
                             CoordinateY = 65,
                             Description = "Bedroom1 Bed",
                             IsMovable = false,
                             MetaData = "",
-                            Name = "Bed",
+                            Name = "Bedroom1Bed",
                             State = "NotFull",
                             Type = "UseWithCapacity"
                         },
                         new
                         {
-                            Id = new Guid("94d61dc0-2e8d-40eb-8bcd-2569f75dc301"),
+                            Id = new Guid("b61969ed-e087-43b0-8596-d582868bad22"),
                             CoordinateX = 49,
                             CoordinateY = 55,
                             Description = "Bedroom1 AirConditioner",
@@ -313,7 +549,7 @@ namespace FakeEventGenerator.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("1cb48a6a-60b2-4ac5-ba48-467d1fc4aa38"),
+                            Id = new Guid("0d0bdd76-396f-405e-885e-df295b5af8e4"),
                             CoordinateX = 10,
                             CoordinateY = 79,
                             Description = "Bedroom1 Computer",
@@ -325,7 +561,7 @@ namespace FakeEventGenerator.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("30a68b44-99ed-44df-90e5-71378466423c"),
+                            Id = new Guid("dda5f157-f911-42df-9426-0621ed8a9ac1"),
                             CoordinateX = 10,
                             CoordinateY = 75,
                             Description = "Bedroom1 Chair",
@@ -337,7 +573,7 @@ namespace FakeEventGenerator.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("a4648e7c-5285-475b-820f-238d1ad41d08"),
+                            Id = new Guid("1a3259b2-5737-4b82-97be-786611b8a0df"),
                             CoordinateX = 25,
                             CoordinateY = 65,
                             Description = "Bedroom1 Lamp",
@@ -349,19 +585,19 @@ namespace FakeEventGenerator.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("c76a6f26-f861-4b42-9c62-4462024fbfdc"),
+                            Id = new Guid("6369fcbb-b420-476c-9e43-82c00921345f"),
                             CoordinateX = 60,
                             CoordinateY = 65,
                             Description = "Bedroom2 Bed",
                             IsMovable = false,
                             MetaData = "{\"Tempreture\":20,\"Speed\":10}",
-                            Name = "Bed",
+                            Name = "Bedroom2Bed",
                             State = "NotFull",
                             Type = "UseWithCapacity"
                         },
                         new
                         {
-                            Id = new Guid("46733dcc-b144-443c-8cf6-7bf6b0c60cf4"),
+                            Id = new Guid("d229d5b0-ddaa-4fbc-a768-fb0ebd51a8f3"),
                             CoordinateX = 51,
                             CoordinateY = 55,
                             Description = "Bedroom2 AirConditioner",
@@ -373,19 +609,19 @@ namespace FakeEventGenerator.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("f8455bc0-b929-4c0a-86ac-fe7e8eab92a3"),
+                            Id = new Guid("19219064-e9b2-4676-bd2b-e1770bff4819"),
                             CoordinateX = 90,
                             CoordinateY = 79,
                             Description = "Bedroom2 Laptop",
                             IsMovable = true,
-                            MetaData = "{\"Charge\":90}",
+                            MetaData = "{\"Charge\":90,\"IsInCharge\":false}",
                             Name = "Laptop",
                             State = "Off",
                             Type = "Electronic"
                         },
                         new
                         {
-                            Id = new Guid("18c35fe8-3e6f-49e3-8b19-1e8bd4b104dd"),
+                            Id = new Guid("00e2bfdb-d963-4f4d-b89f-095cba8d3832"),
                             CoordinateX = 90,
                             CoordinateY = 75,
                             Description = "Bedroom2 Chair",
@@ -397,7 +633,7 @@ namespace FakeEventGenerator.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("10b753a6-57ea-4372-83ef-d906b01c74a6"),
+                            Id = new Guid("e3e6019b-06d7-476a-8864-bb502032f4a3"),
                             CoordinateX = 75,
                             CoordinateY = 65,
                             Description = "Bedroom2 Lamp",
@@ -409,7 +645,7 @@ namespace FakeEventGenerator.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("ba7d9853-e268-4ec2-b0ce-c4289b3f5b3e"),
+                            Id = new Guid("e7cde2cf-1457-4341-9f88-532939a38450"),
                             CoordinateX = 15,
                             CoordinateY = 1,
                             Description = "Kitchen Oven",
@@ -421,7 +657,7 @@ namespace FakeEventGenerator.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("f47ed837-3454-433c-8f0f-e3108d2700ec"),
+                            Id = new Guid("88eff959-6a62-46e4-8b96-81deed14dfa7"),
                             CoordinateX = 1,
                             CoordinateY = 15,
                             Description = "Kitchen Refrigerator",
@@ -433,7 +669,7 @@ namespace FakeEventGenerator.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("d19ce36b-e4ec-4b89-9020-1c1dd1f284b6"),
+                            Id = new Guid("c3e5dcab-fc68-4185-93ab-7be7065ce7a5"),
                             CoordinateX = 29,
                             CoordinateY = 15,
                             Description = "Kitchen WashingMachine",
@@ -445,7 +681,7 @@ namespace FakeEventGenerator.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("3a6b7b33-ba8e-430b-8f54-c0160deccb2d"),
+                            Id = new Guid("7c396700-4f8d-40a0-9412-3a6501a0a8c9"),
                             CoordinateX = 25,
                             CoordinateY = 1,
                             Description = "Kitchen DishWasher",
@@ -457,7 +693,7 @@ namespace FakeEventGenerator.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("8042f5b4-b929-4641-877f-eebf201e43bc"),
+                            Id = new Guid("8bc9be23-a1c7-43b7-967b-26a444e3ac28"),
                             CoordinateX = 15,
                             CoordinateY = 15,
                             Description = "Kitchen Lamp",
@@ -469,7 +705,7 @@ namespace FakeEventGenerator.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("91e8e7a2-8caf-48b3-80f3-4198a4dc10b8"),
+                            Id = new Guid("22d97ae6-74d3-45a5-981e-502ea79b7280"),
                             CoordinateX = 79,
                             CoordinateY = 15,
                             Description = "LivingRoom TV",
@@ -481,43 +717,43 @@ namespace FakeEventGenerator.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("d67e7534-1ffe-43ab-80a7-671fb5e744b1"),
+                            Id = new Guid("61f404b7-983f-483e-8e9c-485af9907498"),
                             CoordinateX = 70,
                             CoordinateY = 20,
                             Description = "LivingRoom Sofa1",
                             IsMovable = false,
-                            MetaData = "",
+                            MetaData = "{\"Capacity\":1}",
                             Name = "Sofa1",
                             State = "NotFull",
                             Type = "UseWithCapacity"
                         },
                         new
                         {
-                            Id = new Guid("bc811814-6dcf-4f3d-a334-ab744bff475e"),
+                            Id = new Guid("5a8fc718-90fd-4a64-92e8-efff24f4069e"),
                             CoordinateX = 70,
                             CoordinateY = 10,
                             Description = "LivingRoom Sofa2",
                             IsMovable = false,
-                            MetaData = "",
+                            MetaData = "{\"Capacity\":2}",
                             Name = "Sofa2",
                             State = "NotFull",
                             Type = "UseWithCapacity"
                         },
                         new
                         {
-                            Id = new Guid("ba89e02a-c081-4d15-ab7a-8aa04261f7ce"),
+                            Id = new Guid("86c3351e-5d7b-49bb-bcf4-f1f4badc2772"),
                             CoordinateX = 60,
                             CoordinateY = 15,
                             Description = "LivingRoom Sofa3",
                             IsMovable = false,
-                            MetaData = "",
+                            MetaData = "{\"Capacity\":3}",
                             Name = "Sofa3",
                             State = "NotFull",
                             Type = "UseWithCapacity"
                         },
                         new
                         {
-                            Id = new Guid("2164b445-7313-4028-bec3-ec5eef661df2"),
+                            Id = new Guid("1a296ac8-9110-4fda-b71f-37721efa10eb"),
                             CoordinateX = 40,
                             CoordinateY = 15,
                             Description = "LivingRoom Table",
@@ -529,7 +765,7 @@ namespace FakeEventGenerator.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("c0f1e100-8ea0-48ec-876c-de9b0f734599"),
+                            Id = new Guid("40dc254f-6384-4fe1-9570-ee7b381fdbe9"),
                             CoordinateX = 35,
                             CoordinateY = 15,
                             Description = "LivingRoom Chair1",
@@ -541,7 +777,7 @@ namespace FakeEventGenerator.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("a90a860a-9683-46c9-8ab3-cd94b64c3355"),
+                            Id = new Guid("1a8497fe-3e02-492d-a79c-738082d3e6d1"),
                             CoordinateX = 45,
                             CoordinateY = 15,
                             Description = "LivingRoom Chair2",
@@ -553,7 +789,7 @@ namespace FakeEventGenerator.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("8348e3ee-c646-43f6-a98e-56ed2ad7167e"),
+                            Id = new Guid("5592f0b2-9085-4774-b57b-8423e6dfc381"),
                             CoordinateX = 40,
                             CoordinateY = 10,
                             Description = "LivingRoom Chair3",
@@ -565,7 +801,7 @@ namespace FakeEventGenerator.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("813fb3b9-0d03-4f42-9854-690516eb8abc"),
+                            Id = new Guid("de2e5a80-8fdf-4fca-977e-46abddf8ea37"),
                             CoordinateX = 40,
                             CoordinateY = 20,
                             Description = "LivingRoom Chair4",
@@ -577,7 +813,7 @@ namespace FakeEventGenerator.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("9802903f-666d-47a8-9077-8921ba275bcc"),
+                            Id = new Guid("5fd39c5f-f6a3-475e-9774-b5e8e875bd66"),
                             CoordinateX = 40,
                             CoordinateY = 29,
                             Description = "LivingRoom AirConditioner",
@@ -589,7 +825,7 @@ namespace FakeEventGenerator.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("dad4e662-0055-4f64-b138-c623b543d986"),
+                            Id = new Guid("05027df8-8cea-49db-9b7c-3c52491ab36e"),
                             CoordinateX = 55,
                             CoordinateY = 15,
                             Description = "LivingRoom Lamp",
@@ -601,7 +837,7 @@ namespace FakeEventGenerator.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("2ea68b9a-608f-4905-bc9e-c12d4ca59be1"),
+                            Id = new Guid("6b855050-db16-4ba1-a942-28b64d9353eb"),
                             CoordinateX = 90,
                             CoordinateY = 15,
                             Description = "Bathroom Lamp",
@@ -613,7 +849,7 @@ namespace FakeEventGenerator.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("60103d9a-7924-4cf3-9d92-d288aab5f5c0"),
+                            Id = new Guid("e746daa1-2723-4f70-813d-81f57744bb4a"),
                             CoordinateX = 50,
                             CoordinateY = 90,
                             Description = "Balcony Lamp",
@@ -625,7 +861,7 @@ namespace FakeEventGenerator.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("91cf5265-9fc4-4f2c-8040-16bd4a66836c"),
+                            Id = new Guid("11c01991-6b71-4ae4-854c-4dc2ae208b25"),
                             CoordinateX = 50,
                             CoordinateY = 40,
                             Description = "Corridor Lamp",
@@ -634,6 +870,44 @@ namespace FakeEventGenerator.Infrastructure.Migrations
                             Name = "Lamp7",
                             State = "Off",
                             Type = "Electronic"
+                        });
+                });
+
+            modelBuilder.Entity("FakeEventGenerator.Domain.Models.NextAction", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ActionAggregateId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Delay")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Possibility")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ActionAggregateId");
+
+                    b.ToTable("NextAction");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("a53a02ae-e731-46db-a0e6-de7a7742a5ee"),
+                            ActionAggregateId = new Guid("3d90a288-5cf7-4589-b234-f4f32a94a76c"),
+                            Delay = 200,
+                            Possibility = 100
+                        },
+                        new
+                        {
+                            Id = new Guid("e2bbca44-ecc7-436e-89c6-a19fc20d8d8a"),
+                            ActionAggregateId = new Guid("3f50c444-1339-4851-ae67-92797ded432f"),
+                            Delay = 200,
+                            Possibility = 100
                         });
                 });
 
@@ -723,6 +997,48 @@ namespace FakeEventGenerator.Infrastructure.Migrations
                             Coordinate2X = 100,
                             Coordinate2Y = 100
                         });
+                });
+
+            modelBuilder.Entity("FakeEventGenerator.Domain.Models.ActionCondition", b =>
+                {
+                    b.HasOne("FakeEventGenerator.Domain.Models.ActionAggregate", "ActionAggregate")
+                        .WithMany("Conditions")
+                        .HasForeignKey("ActionAggregateId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ActionAggregate");
+                });
+
+            modelBuilder.Entity("FakeEventGenerator.Domain.Models.ActionResult", b =>
+                {
+                    b.HasOne("FakeEventGenerator.Domain.Models.ActionAggregate", "ActionAggregate")
+                        .WithMany("Results")
+                        .HasForeignKey("ActionAggregateId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ActionAggregate");
+                });
+
+            modelBuilder.Entity("FakeEventGenerator.Domain.Models.NextAction", b =>
+                {
+                    b.HasOne("FakeEventGenerator.Domain.Models.ActionAggregate", "ActionAggregate")
+                        .WithMany("NextActions")
+                        .HasForeignKey("ActionAggregateId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ActionAggregate");
+                });
+
+            modelBuilder.Entity("FakeEventGenerator.Domain.Models.ActionAggregate", b =>
+                {
+                    b.Navigation("Conditions");
+
+                    b.Navigation("NextActions");
+
+                    b.Navigation("Results");
                 });
 #pragma warning restore 612, 618
         }

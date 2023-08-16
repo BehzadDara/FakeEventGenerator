@@ -13,7 +13,12 @@ namespace FakeEventGenerator.Domain.Models
 
         public bool HasAnItem(Item item)
         {
-            return Methods.IsAnItemInAPartOfHouse(item, this);
+            return Methods.IsAnItemInAPartOfHouse(item.CoordinateX, item.CoordinateY, this);
+        }
+
+        public bool HasAHuman(Human human)
+        {
+            return Methods.IsAnItemInAPartOfHouse(human.CoordinateX, human.CoordinateY, this);
         }
     }
 }

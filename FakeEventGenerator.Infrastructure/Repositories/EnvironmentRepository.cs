@@ -1,4 +1,5 @@
-﻿using FakeEventGenerator.Domain.Models;
+﻿using FakeEventGenerator.Domain.Enums;
+using FakeEventGenerator.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace FakeEventGenerator.Infrastructure.Repositories

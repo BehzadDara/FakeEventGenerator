@@ -55,5 +55,15 @@ namespace FakeEventGenerator.Infrastructure
             }
         }
 
+        private ActionRepository? actionRepository;
+        public ActionRepository ActionRepository
+        {
+            get
+            {
+                actionRepository ??= new ActionRepository(_dBContext);
+                return actionRepository;
+            }
+        }
+
     }
 }
