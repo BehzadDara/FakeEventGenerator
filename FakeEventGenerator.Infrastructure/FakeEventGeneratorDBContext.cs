@@ -2,8 +2,6 @@
 using FakeEventGenerator.Domain.Enums;
 using FakeEventGenerator.Domain.Models;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using System;
 using System.Text.Json;
 
 namespace FakeEventGenerator.Infrastructure
@@ -47,14 +45,14 @@ namespace FakeEventGenerator.Infrastructure
                    Coordinate2Y = 100
                },
 
-               new PartOfHouse { Type = PartOfHouseEnum.LivingRoom,
+               new PartOfHouse { Type = PartOfHouseEnum.Kitchen,
                    Coordinate1X = 0,
                    Coordinate1Y = 0,
                    Coordinate2X = 30,
                    Coordinate2Y = 30
                },
 
-               new PartOfHouse { Type = PartOfHouseEnum.Kitchen,
+               new PartOfHouse { Type = PartOfHouseEnum.LivingRoom,
                    Coordinate1X = 30,
                    Coordinate1Y = 0,
                    Coordinate2X = 80,
@@ -656,7 +654,7 @@ namespace FakeEventGenerator.Infrastructure
             #endregion
 
             #region NextAction
-            modelBuilder.Entity<NextAction>().HasKey(x => x.Id);
+            modelBuilder.Entity<NextAction>().HasKey(x => new { x.Id, x.ActionAggregateId });
             #endregion
 
             #region ActionAggregate
@@ -949,86 +947,14 @@ namespace FakeEventGenerator.Infrastructure
             #endregion
 
             #region IncreaseSound
-            var guid5 = Guid.NewGuid();
-            modelBuilder.Entity<ActionAggregate>().HasData(
-                new ActionAggregate
-                {
-                    Id = guid5,
-                    Name = "Open-Bedroom2Door",
-                    Description = "Open Door Of Bedroom2",
-                    Delay = 1500,
-                    StartPossibility = 100
-                }
-            );
-
-            var guid6 = Guid.NewGuid();
-            modelBuilder.Entity<ActionAggregate>().HasData(
-                new ActionAggregate
-                {
-                    Id = guid6,
-                    Name = "Move-Corridor-Bedroom1",
-                    Description = "Move To Corridor Human2 Via Bedroom2",
-                    Delay = 500,
-                    StartPossibility = 100,
-                }
-            );
-
-            var guid7 = Guid.NewGuid();
-            modelBuilder.Entity<ActionAggregate>().HasData(
-                new ActionAggregate
-                {
-                    Id = guid7,
-                    Name = "Open-LivinRoomDoor",
-                    Description = "Open Window Of Balcony",
-                    Delay = 400,
-                    StartPossibility = 100
-                }
-            );
-
-            var guid8 = Guid.NewGuid();
-            modelBuilder.Entity<ActionAggregate>().HasData(
-                new ActionAggregate
-                {
-                    Id = guid8,
-                    Name = "Move-LivingRoom-Corridor",
-                    Description = "Move To LivingRoom Human2 Via Corridor",
-                    Delay = 100,
-                    StartPossibility = 100
-                }
-            );
-
-            var guid9 = Guid.NewGuid();
-            modelBuilder.Entity<ActionAggregate>().HasData(
-                new ActionAggregate
-                {
-                    Id = guid9,
-                    Name = "Sit-Sofa1",
-                    Description = "Sit On Sofa1",
-                    Delay = 800,
-                    StartPossibility = 100
-                }
-            );
-
-            var guid10 = Guid.NewGuid();
-            modelBuilder.Entity<ActionAggregate>().HasData(
-                new ActionAggregate
-                {
-                    Id = guid10,
-                    Name = "On-TV",
-                    Description = "Turn On TV",
-                    Delay = 200,
-                    StartPossibility = 100
-                }
-            );
-
             var guid11 = Guid.NewGuid();
             modelBuilder.Entity<ActionAggregate>().HasData(
                 new ActionAggregate
                 {
                     Id = guid11,
-                    Name = "Increase-Sound",
-                    Description = "Increase Sound Of TV",
-                    Delay = 350,
+                    Name = "Open-Bedroom2Door",
+                    Description = "Open Door Of Bedroom2",
+                    Delay = 1500,
                     StartPossibility = 100
                 }
             );
@@ -1038,6 +964,78 @@ namespace FakeEventGenerator.Infrastructure
                 new ActionAggregate
                 {
                     Id = guid12,
+                    Name = "Move-Corridor-Bedroom1",
+                    Description = "Move To Corridor Human2 Via Bedroom2",
+                    Delay = 500,
+                    StartPossibility = 100,
+                }
+            );
+
+            var guid13 = Guid.NewGuid();
+            modelBuilder.Entity<ActionAggregate>().HasData(
+                new ActionAggregate
+                {
+                    Id = guid13,
+                    Name = "Open-LivinRoomDoor",
+                    Description = "Open Window Of Balcony",
+                    Delay = 400,
+                    StartPossibility = 100
+                }
+            );
+
+            var guid14 = Guid.NewGuid();
+            modelBuilder.Entity<ActionAggregate>().HasData(
+                new ActionAggregate
+                {
+                    Id = guid14,
+                    Name = "Move-LivingRoom-Corridor",
+                    Description = "Move To LivingRoom Human2 Via Corridor",
+                    Delay = 100,
+                    StartPossibility = 100
+                }
+            );
+
+            var guid15 = Guid.NewGuid();
+            modelBuilder.Entity<ActionAggregate>().HasData(
+                new ActionAggregate
+                {
+                    Id = guid15,
+                    Name = "Sit-Sofa1",
+                    Description = "Sit On Sofa1",
+                    Delay = 800,
+                    StartPossibility = 100
+                }
+            );
+
+            var guid16 = Guid.NewGuid();
+            modelBuilder.Entity<ActionAggregate>().HasData(
+                new ActionAggregate
+                {
+                    Id = guid16,
+                    Name = "On-TV",
+                    Description = "Turn On TV",
+                    Delay = 200,
+                    StartPossibility = 100
+                }
+            );
+
+            var guid17 = Guid.NewGuid();
+            modelBuilder.Entity<ActionAggregate>().HasData(
+                new ActionAggregate
+                {
+                    Id = guid17,
+                    Name = "Increase-Sound",
+                    Description = "Increase Sound Of TV",
+                    Delay = 350,
+                    StartPossibility = 100
+                }
+            );
+
+            var guid18 = Guid.NewGuid();
+            modelBuilder.Entity<ActionAggregate>().HasData(
+                new ActionAggregate
+                {
+                    Id = guid18,
                     Name = "Decrease-Sound",
                     Description = "Decrease Sound Of TV",
                     Delay = 350,
@@ -1049,7 +1047,7 @@ namespace FakeEventGenerator.Infrastructure
             modelBuilder.Entity<ActionCondition>().HasData(
                 new ActionCondition
                 {
-                    ActionAggregateId = guid5,
+                    ActionAggregateId = guid11,
                     ConditionType = CaseStudyEnum.HumanPosition,
                     CaseStudy = "Human2",
                     ConditionCaseType = ConditionCaseEnum.IsIn,
@@ -1057,7 +1055,7 @@ namespace FakeEventGenerator.Infrastructure
                 },
                 new ActionCondition
                 {
-                    ActionAggregateId = guid5,
+                    ActionAggregateId = guid11,
                     ConditionType = CaseStudyEnum.HumanBodyStatus,
                     CaseStudy = "Human2",
                     ConditionCaseType = ConditionCaseEnum.StateIs,
@@ -1065,7 +1063,7 @@ namespace FakeEventGenerator.Infrastructure
                 },
                 new ActionCondition
                 {
-                    ActionAggregateId = guid5,
+                    ActionAggregateId = guid11,
                     ConditionType = CaseStudyEnum.ItemState,
                     CaseStudy = "Bedroom1Door",
                     ConditionCaseType = ConditionCaseEnum.StateIs,
@@ -1076,7 +1074,7 @@ namespace FakeEventGenerator.Infrastructure
             modelBuilder.Entity<ActionResult>().HasData(
                 new ActionResult
                 {
-                    ActionAggregateId = guid5,
+                    ActionAggregateId = guid11,
                     ResultType = CaseStudyEnum.HumanPosition,
                     CaseStudy = "Human1",
                     ResultCaseType = ResultCaseEnum.Position,
@@ -1084,7 +1082,7 @@ namespace FakeEventGenerator.Infrastructure
                 },
                 new ActionResult
                 {
-                    ActionAggregateId = guid5,
+                    ActionAggregateId = guid11,
                     ResultType = CaseStudyEnum.ItemState,
                     CaseStudy = "Bedroom2Door",
                     ResultCaseType = ResultCaseEnum.State,
@@ -1095,8 +1093,8 @@ namespace FakeEventGenerator.Infrastructure
             modelBuilder.Entity<NextAction>().HasData(
                 new NextAction
                 {
-                    Id = guid6,
-                    ActionAggregateId = guid5,
+                    Id = guid12,
+                    ActionAggregateId = guid11,
                     //NumberOfActions = 1,
                     Possibility = 100,
                     Delay = 200
@@ -1109,7 +1107,7 @@ namespace FakeEventGenerator.Infrastructure
             modelBuilder.Entity<ActionCondition>().HasData(
                 new ActionCondition
                 {
-                    ActionAggregateId = guid6,
+                    ActionAggregateId = guid12,
                     ConditionType = CaseStudyEnum.HumanPosition,
                     CaseStudy = "Human2",
                     ConditionCaseType = ConditionCaseEnum.IsIn,
@@ -1117,7 +1115,7 @@ namespace FakeEventGenerator.Infrastructure
                 },
                 new ActionCondition
                 {
-                    ActionAggregateId = guid6,
+                    ActionAggregateId = guid12,
                     ConditionType = CaseStudyEnum.HumanBodyStatus,
                     CaseStudy = "Human2",
                     ConditionCaseType = ConditionCaseEnum.StateIs,
@@ -1125,7 +1123,7 @@ namespace FakeEventGenerator.Infrastructure
                 },
                 new ActionCondition
                 {
-                    ActionAggregateId = guid6,
+                    ActionAggregateId = guid12,
                     ConditionType = CaseStudyEnum.ItemState,
                     CaseStudy = "Bedroom2Door",
                     ConditionCaseType = ConditionCaseEnum.StateIs,
@@ -1136,7 +1134,7 @@ namespace FakeEventGenerator.Infrastructure
             modelBuilder.Entity<ActionResult>().HasData(
                 new ActionResult
                 {
-                    ActionAggregateId = guid6,
+                    ActionAggregateId = guid12,
                     ResultType = CaseStudyEnum.HumanPosition,
                     CaseStudy = "Human2",
                     ResultCaseType = ResultCaseEnum.Position,
@@ -1147,8 +1145,8 @@ namespace FakeEventGenerator.Infrastructure
             modelBuilder.Entity<NextAction>().HasData(
                 new NextAction
                 {
-                    Id = guid7,
-                    ActionAggregateId = guid6,
+                    Id = guid13,
+                    ActionAggregateId = guid12,
                     //NumberOfActions = 1,
                     Possibility = 100,
                     Delay = 200
@@ -1160,7 +1158,7 @@ namespace FakeEventGenerator.Infrastructure
             modelBuilder.Entity<ActionCondition>().HasData(
                 new ActionCondition
                 {
-                    ActionAggregateId = guid7,
+                    ActionAggregateId = guid13,
                     ConditionType = CaseStudyEnum.HumanPosition,
                     CaseStudy = "Human2",
                     ConditionCaseType = ConditionCaseEnum.IsIn,
@@ -1168,7 +1166,7 @@ namespace FakeEventGenerator.Infrastructure
                 },
                 new ActionCondition
                 {
-                    ActionAggregateId = guid7,
+                    ActionAggregateId = guid13,
                     ConditionType = CaseStudyEnum.HumanBodyStatus,
                     CaseStudy = "Human2",
                     ConditionCaseType = ConditionCaseEnum.StateIs,
@@ -1176,7 +1174,7 @@ namespace FakeEventGenerator.Infrastructure
                 },
                 new ActionCondition
                 {
-                    ActionAggregateId = guid7,
+                    ActionAggregateId = guid13,
                     ConditionType = CaseStudyEnum.ItemState,
                     CaseStudy = "LivingRoomDoor",
                     ConditionCaseType = ConditionCaseEnum.StateIs,
@@ -1187,7 +1185,7 @@ namespace FakeEventGenerator.Infrastructure
             modelBuilder.Entity<ActionResult>().HasData(
                 new ActionResult
                 {
-                    ActionAggregateId = guid7,
+                    ActionAggregateId = guid13,
                     ResultType = CaseStudyEnum.HumanPosition,
                     CaseStudy = "Human2",
                     ResultCaseType = ResultCaseEnum.Position,
@@ -1195,7 +1193,7 @@ namespace FakeEventGenerator.Infrastructure
                 },
                 new ActionResult
                 {
-                    ActionAggregateId = guid7,
+                    ActionAggregateId = guid13,
                     ResultType = CaseStudyEnum.ItemState,
                     CaseStudy = "LivingRoomDoor",
                     ResultCaseType = ResultCaseEnum.State,
@@ -1206,8 +1204,8 @@ namespace FakeEventGenerator.Infrastructure
             modelBuilder.Entity<NextAction>().HasData(
                 new NextAction
                 {
-                    Id = guid8,
-                    ActionAggregateId = guid7,
+                    Id = guid14,
+                    ActionAggregateId = guid13,
                     //NumberOfActions = 1,
                     Possibility = 100,
                     Delay = 200
@@ -1220,7 +1218,7 @@ namespace FakeEventGenerator.Infrastructure
             modelBuilder.Entity<ActionCondition>().HasData(
                 new ActionCondition
                 {
-                    ActionAggregateId = guid8,
+                    ActionAggregateId = guid14,
                     ConditionType = CaseStudyEnum.HumanPosition,
                     CaseStudy = "Human2",
                     ConditionCaseType = ConditionCaseEnum.IsIn,
@@ -1228,7 +1226,7 @@ namespace FakeEventGenerator.Infrastructure
                 },
                 new ActionCondition
                 {
-                    ActionAggregateId = guid8,
+                    ActionAggregateId = guid14,
                     ConditionType = CaseStudyEnum.HumanBodyStatus,
                     CaseStudy = "Human2",
                     ConditionCaseType = ConditionCaseEnum.StateIs,
@@ -1236,7 +1234,7 @@ namespace FakeEventGenerator.Infrastructure
                 },
                 new ActionCondition
                 {
-                    ActionAggregateId = guid8,
+                    ActionAggregateId = guid14,
                     ConditionType = CaseStudyEnum.ItemState,
                     CaseStudy = "LivingRoomDoor",
                     ConditionCaseType = ConditionCaseEnum.StateIs,
@@ -1247,7 +1245,7 @@ namespace FakeEventGenerator.Infrastructure
             modelBuilder.Entity<ActionResult>().HasData(
                 new ActionResult
                 {
-                    ActionAggregateId = guid8,
+                    ActionAggregateId = guid14,
                     ResultType = CaseStudyEnum.HumanPosition,
                     CaseStudy = "Human2",
                     ResultCaseType = ResultCaseEnum.Position,
@@ -1258,13 +1256,14 @@ namespace FakeEventGenerator.Infrastructure
             modelBuilder.Entity<NextAction>().HasData(
                 new NextAction
                 {
-                    Id = guid9,
-                    ActionAggregateId = guid8,
+                    Id = guid15,
+                    ActionAggregateId = guid14,
                     //NumberOfActions = 1,
                     Possibility = 100,
                     Delay = 200
                 }
             );
+
             #endregion
 
             #region One ActionAggregate
@@ -1272,7 +1271,7 @@ namespace FakeEventGenerator.Infrastructure
             modelBuilder.Entity<ActionCondition>().HasData(
                 new ActionCondition
                 {
-                    ActionAggregateId = guid9,
+                    ActionAggregateId = guid15,
                     ConditionType = CaseStudyEnum.HumanPosition,
                     CaseStudy = "Human2",
                     ConditionCaseType = ConditionCaseEnum.IsIn,
@@ -1280,7 +1279,7 @@ namespace FakeEventGenerator.Infrastructure
                 },
                 new ActionCondition
                 {
-                    ActionAggregateId = guid9,
+                    ActionAggregateId = guid15,
                     ConditionType = CaseStudyEnum.HumanBodyStatus,
                     CaseStudy = "Human2",
                     ConditionCaseType = ConditionCaseEnum.StateIs,
@@ -1291,7 +1290,7 @@ namespace FakeEventGenerator.Infrastructure
             modelBuilder.Entity<ActionResult>().HasData(
                 new ActionResult
                 {
-                    ActionAggregateId = guid9,
+                    ActionAggregateId = guid15,
                     ResultType = CaseStudyEnum.HumanPosition,
                     CaseStudy = "Human2",
                     ResultCaseType = ResultCaseEnum.Position,
@@ -1299,7 +1298,7 @@ namespace FakeEventGenerator.Infrastructure
                 },
                 new ActionResult
                 {
-                    ActionAggregateId = guid9,
+                    ActionAggregateId = guid15,
                     ResultType = CaseStudyEnum.ItemState,
                     CaseStudy = "Sofa1",
                     ResultCaseType = ResultCaseEnum.State,
@@ -1307,7 +1306,7 @@ namespace FakeEventGenerator.Infrastructure
                 },
                 new ActionResult
                 {
-                    ActionAggregateId = guid9,
+                    ActionAggregateId = guid15,
                     ResultType = CaseStudyEnum.HumanBodyStatus,
                     CaseStudy = "Human2",
                     ResultCaseType = ResultCaseEnum.State,
@@ -1318,8 +1317,8 @@ namespace FakeEventGenerator.Infrastructure
             modelBuilder.Entity<NextAction>().HasData(
                 new NextAction
                 {
-                    Id = guid10,
-                    ActionAggregateId = guid9,
+                    Id = guid16,
+                    ActionAggregateId = guid15,
                     //NumberOfActions = 1,
                     Possibility = 100,
                     Delay = 200
@@ -1332,7 +1331,7 @@ namespace FakeEventGenerator.Infrastructure
             modelBuilder.Entity<ActionCondition>().HasData(
                 new ActionCondition
                 {
-                    ActionAggregateId = guid10,
+                    ActionAggregateId = guid16,
                     ConditionType = CaseStudyEnum.HumanPosition,
                     CaseStudy = "Human2",
                     ConditionCaseType = ConditionCaseEnum.IsIn,
@@ -1340,7 +1339,7 @@ namespace FakeEventGenerator.Infrastructure
                 },
                 new ActionCondition
                 {
-                    ActionAggregateId = guid10,
+                    ActionAggregateId = guid16,
                     ConditionType = CaseStudyEnum.HumanBodyStatus,
                     CaseStudy = "Human2",
                     ConditionCaseType = ConditionCaseEnum.StateIs,
@@ -1348,7 +1347,7 @@ namespace FakeEventGenerator.Infrastructure
                 },
                 new ActionCondition
                 {
-                    ActionAggregateId = guid10,
+                    ActionAggregateId = guid16,
                     ConditionType = CaseStudyEnum.ItemState,
                     CaseStudy = "TV",
                     ConditionCaseType = ConditionCaseEnum.StateIs,
@@ -1359,7 +1358,7 @@ namespace FakeEventGenerator.Infrastructure
             modelBuilder.Entity<ActionResult>().HasData(
                 new ActionResult
                 {
-                    ActionAggregateId = guid10,
+                    ActionAggregateId = guid16,
                     ResultType = CaseStudyEnum.MentalStatus,
                     CaseStudy = "Human2",
                     ResultCaseType = ResultCaseEnum.State,
@@ -1367,7 +1366,7 @@ namespace FakeEventGenerator.Infrastructure
                 },
                 new ActionResult
                 {
-                    ActionAggregateId = guid10,
+                    ActionAggregateId = guid16,
                     ResultType = CaseStudyEnum.ItemState,
                     CaseStudy = "TV",
                     ResultCaseType = ResultCaseEnum.State,
@@ -1378,16 +1377,16 @@ namespace FakeEventGenerator.Infrastructure
             modelBuilder.Entity<NextAction>().HasData(
                 new NextAction
                 {
-                    Id = guid11,
-                    ActionAggregateId = guid10,
+                    Id = guid17,
+                    ActionAggregateId = guid16,
                     //NumberOfActions = 1,
                     Possibility = 100,
                     Delay = 200
                 },
                 new NextAction
                 {
-                    Id = guid12,
-                    ActionAggregateId = guid10,
+                    Id = guid18,
+                    ActionAggregateId = guid16,
                     //NumberOfActions = 1,
                     Possibility = 100,
                     Delay = 200
@@ -1400,7 +1399,7 @@ namespace FakeEventGenerator.Infrastructure
             modelBuilder.Entity<ActionCondition>().HasData(
                 new ActionCondition
                 {
-                    ActionAggregateId = guid11,
+                    ActionAggregateId = guid17,
                     ConditionType = CaseStudyEnum.HumanPosition,
                     CaseStudy = "Human2",
                     ConditionCaseType = ConditionCaseEnum.IsIn,
@@ -1408,7 +1407,7 @@ namespace FakeEventGenerator.Infrastructure
                 },
                 new ActionCondition
                 {
-                    ActionAggregateId = guid11,
+                    ActionAggregateId = guid17,
                     ConditionType = CaseStudyEnum.HumanBodyStatus,
                     CaseStudy = "Human2",
                     ConditionCaseType = ConditionCaseEnum.StateIs,
@@ -1416,7 +1415,7 @@ namespace FakeEventGenerator.Infrastructure
                 },
                 new ActionCondition
                 {
-                    ActionAggregateId = guid11,
+                    ActionAggregateId = guid17,
                     ConditionType = CaseStudyEnum.ItemState,
                     CaseStudy = "TV",
                     ConditionCaseType = ConditionCaseEnum.StateIs,
@@ -1427,7 +1426,7 @@ namespace FakeEventGenerator.Infrastructure
             modelBuilder.Entity<ActionResult>().HasData(
                 new ActionResult
                 {
-                    ActionAggregateId = guid11,
+                    ActionAggregateId = guid17,
                     ResultType = CaseStudyEnum.Environment,
                     CaseStudy = "Light",
                     ResultCaseType = ResultCaseEnum.Increase,
@@ -1435,7 +1434,7 @@ namespace FakeEventGenerator.Infrastructure
                 },
                 new ActionResult
                 {
-                    ActionAggregateId = guid11,
+                    ActionAggregateId = guid17,
                     ResultType = CaseStudyEnum.Environment,
                     CaseStudy = "Sound",
                     ResultCaseType = ResultCaseEnum.Increase,
@@ -1443,7 +1442,7 @@ namespace FakeEventGenerator.Infrastructure
                 },
                 new ActionResult
                 {
-                    ActionAggregateId = guid11,
+                    ActionAggregateId = guid17,
                     ResultType = CaseStudyEnum.ItemMetaData,
                     CaseStudy = "TV-Sound",
                     ResultCaseType = ResultCaseEnum.Increase,
@@ -1458,7 +1457,7 @@ namespace FakeEventGenerator.Infrastructure
             modelBuilder.Entity<ActionCondition>().HasData(
                 new ActionCondition
                 {
-                    ActionAggregateId = guid12,
+                    ActionAggregateId = guid18,
                     ConditionType = CaseStudyEnum.HumanPosition,
                     CaseStudy = "Human2",
                     ConditionCaseType = ConditionCaseEnum.IsIn,
@@ -1466,7 +1465,7 @@ namespace FakeEventGenerator.Infrastructure
                 },
                 new ActionCondition
                 {
-                    ActionAggregateId = guid12,
+                    ActionAggregateId = guid18,
                     ConditionType = CaseStudyEnum.HumanBodyStatus,
                     CaseStudy = "Human2",
                     ConditionCaseType = ConditionCaseEnum.StateIs,
@@ -1474,7 +1473,7 @@ namespace FakeEventGenerator.Infrastructure
                 },
                 new ActionCondition
                 {
-                    ActionAggregateId = guid12,
+                    ActionAggregateId = guid18,
                     ConditionType = CaseStudyEnum.ItemState,
                     CaseStudy = "TV",
                     ConditionCaseType = ConditionCaseEnum.StateIs,
@@ -1485,7 +1484,7 @@ namespace FakeEventGenerator.Infrastructure
             modelBuilder.Entity<ActionResult>().HasData(
                 new ActionResult
                 {
-                    ActionAggregateId = guid12,
+                    ActionAggregateId = guid18,
                     ResultType = CaseStudyEnum.Environment,
                     CaseStudy = "Light",
                     ResultCaseType = ResultCaseEnum.Increase,
@@ -1493,7 +1492,7 @@ namespace FakeEventGenerator.Infrastructure
                 },
                 new ActionResult
                 {
-                    ActionAggregateId = guid12,
+                    ActionAggregateId = guid18,
                     ResultType = CaseStudyEnum.Environment,
                     CaseStudy = "Sound",
                     ResultCaseType = ResultCaseEnum.Decrease,
@@ -1501,7 +1500,7 @@ namespace FakeEventGenerator.Infrastructure
                 },
                 new ActionResult
                 {
-                    ActionAggregateId = guid12,
+                    ActionAggregateId = guid18,
                     ResultType = CaseStudyEnum.ItemMetaData,
                     CaseStudy = "TV-Sound",
                     ResultCaseType = ResultCaseEnum.Decrease,
@@ -1509,6 +1508,210 @@ namespace FakeEventGenerator.Infrastructure
                 }
             );
 
+            #endregion
+
+            #endregion
+            
+            #region HumanFeelCold
+            var guid25 = Guid.NewGuid();
+            modelBuilder.Entity<ActionAggregate>().HasData(
+                new ActionAggregate
+                {
+                    Id = guid25,
+                    Name = "On-AirConditioner3",
+                    Description = "Turn On AirConditioner3",
+                    Delay = 600,
+                    StartPossibility = 100
+                }
+            );
+
+            var guid26 = Guid.NewGuid();
+            modelBuilder.Entity<ActionAggregate>().HasData(
+                new ActionAggregate
+                {
+                    Id = guid26,
+                    Name = "Decrease-Degree",
+                    Description = "Decrease Degree Of AirConditioner3",
+                    Delay = 200,
+                    StartPossibility = 100
+                }
+            );
+
+            var guid27 = Guid.NewGuid();
+            modelBuilder.Entity<ActionAggregate>().HasData(
+                new ActionAggregate
+                {
+                    Id = guid27,
+                    Name = "Stand-LivingRoom",
+                    Description = "Human2 Stand In LivingRoom",
+                    Delay = 200,
+                    StartPossibility = 100
+                }
+            );
+
+            modelBuilder.Entity<NextAction>().HasData(
+                new NextAction
+                {
+                    Id = guid25,
+                    ActionAggregateId = guid14,
+                    //NumberOfActions = 1,
+                    Possibility = 100,
+                    Delay = 350
+                }
+            );
+
+            #region One ActionAggregate
+
+            modelBuilder.Entity<ActionCondition>().HasData(
+                new ActionCondition
+                {
+                    ActionAggregateId = guid25,
+                    ConditionType = CaseStudyEnum.HumanPosition,
+                    CaseStudy = "Human2",
+                    ConditionCaseType = ConditionCaseEnum.IsIn,
+                    ConditionCaseExpectation = "LivingRoom"
+                },
+                new ActionCondition
+                {
+                    ActionAggregateId = guid25,
+                    ConditionType = CaseStudyEnum.HumanBodyStatus,
+                    CaseStudy = "Human2",
+                    ConditionCaseType = ConditionCaseEnum.StateIs,
+                    ConditionCaseExpectation = "Stand"
+                }
+            );
+
+            modelBuilder.Entity<ActionResult>().HasData(
+                new ActionResult
+                {
+                    ActionAggregateId = guid25,
+                    ResultType = CaseStudyEnum.HumanPosition,
+                    CaseStudy = "Human2",
+                    ResultCaseType = ResultCaseEnum.Position,
+                    ResultCaseChange = "40-28"
+                },
+                new ActionResult
+                {
+                    ActionAggregateId = guid25,
+                    ResultType = CaseStudyEnum.ItemState,
+                    CaseStudy = "AirConditioner3",
+                    ResultCaseType = ResultCaseEnum.State,
+                    ResultCaseChange = "On"
+                }
+            );
+
+            modelBuilder.Entity<NextAction>().HasData(
+                new NextAction
+                {
+                    Id = guid26,
+                    ActionAggregateId = guid25,
+                    //NumberOfActions = 1,
+                    Possibility = 100,
+                    Delay = 200
+                }
+            );
+            #endregion
+            
+            #region One ActionAggregate
+
+            modelBuilder.Entity<ActionCondition>().HasData(
+                new ActionCondition
+                {
+                    ActionAggregateId = guid26,
+                    ConditionType = CaseStudyEnum.HumanPosition,
+                    CaseStudy = "Human2",
+                    ConditionCaseType = ConditionCaseEnum.IsIn,
+                    ConditionCaseExpectation = "LivingRoom"
+                },
+                new ActionCondition
+                {
+                    ActionAggregateId = guid26,
+                    ConditionType = CaseStudyEnum.HumanBodyStatus,
+                    CaseStudy = "Human2",
+                    ConditionCaseType = ConditionCaseEnum.StateIs,
+                    ConditionCaseExpectation = "Stand"
+                },
+                new ActionCondition
+                {
+                    ActionAggregateId = guid26,
+                    ConditionType = CaseStudyEnum.ItemState,
+                    CaseStudy = "AirConditioner3",
+                    ConditionCaseType = ConditionCaseEnum.StateIs,
+                    ConditionCaseExpectation = "On"
+                }
+            );
+
+            modelBuilder.Entity<ActionResult>().HasData(
+                new ActionResult
+                {
+                    ActionAggregateId = guid26,
+                    ResultType = CaseStudyEnum.HumanFeelToDegree,
+                    CaseStudy = "Human2",
+                    ResultCaseType = ResultCaseEnum.State,
+                    ResultCaseChange = "Cold"
+                },
+                new ActionResult
+                {
+                    ActionAggregateId = guid26,
+                    ResultType = CaseStudyEnum.ItemMetaData,
+                    CaseStudy = "AirConditioner3-Temperature",
+                    ResultCaseType = ResultCaseEnum.Decrease,
+                    ResultCaseChange = "5-15"
+                },
+                new ActionResult
+                {
+                    ActionAggregateId = guid26,
+                    ResultType = CaseStudyEnum.Environment,
+                    CaseStudy = "Degree",
+                    ResultCaseType = ResultCaseEnum.Decrease,
+                    ResultCaseChange = "7"
+                }
+            );
+
+            #endregion
+
+            #region One ActionAggregate
+
+            modelBuilder.Entity<ActionCondition>().HasData(
+                new ActionCondition
+                {
+                    ActionAggregateId = guid27,
+                    ConditionType = CaseStudyEnum.HumanPosition,
+                    CaseStudy = "Human2",
+                    ConditionCaseType = ConditionCaseEnum.IsIn,
+                    ConditionCaseExpectation = "LivingRoom"
+                },
+                new ActionCondition
+                {
+                    ActionAggregateId = guid27,
+                    ConditionType = CaseStudyEnum.HumanBodyStatus,
+                    CaseStudy = "Human2",
+                    ConditionCaseType = ConditionCaseEnum.StateIsNot,
+                    ConditionCaseExpectation = "Stand"
+                }
+            );
+
+            modelBuilder.Entity<ActionResult>().HasData(
+                new ActionResult
+                {
+                    ActionAggregateId = guid27,
+                    ResultType = CaseStudyEnum.HumanBodyStatus,
+                    CaseStudy = "Human2",
+                    ResultCaseType = ResultCaseEnum.State,
+                    ResultCaseChange = "Stand"
+                }
+            );
+
+            modelBuilder.Entity<NextAction>().HasData(
+                new NextAction
+                {
+                    Id = guid25,
+                    ActionAggregateId = guid27,
+                    //NumberOfActions = 1,
+                    Possibility = 100,
+                    Delay = 200
+                }
+            );
             #endregion
 
             #endregion

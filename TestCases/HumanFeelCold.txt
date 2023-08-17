@@ -1,0 +1,6 @@
+{
+  "resultType": 5,
+  "caseStudy": "Human2",
+  "resultCaseType": 3,
+  "resultCaseChange": "Cold"
+}

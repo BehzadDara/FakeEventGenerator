@@ -3,7 +3,6 @@ using FakeEventGenerator.Domain.Enums;
 using FakeEventGenerator.Domain.Models;
 using FakeEventGenerator.Domain.ViewModels;
 using FakeEventGenerator.Infrastructure;
-using FakeEventGenerator.Infrastructure.Migrations;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
 
@@ -29,7 +28,8 @@ namespace FakeEventGenerator.Api.Controllers
         {
             _unitOfWork = unitOfWork;
             environmentVariables = _unitOfWork.EnvironmentRepository.GetAll().Result;
-            partsOfHouse = _unitOfWork.PartOfHouseRepository.GetAll().Result;
+            partsOfHouse = _unitOfWork.PartOfHouseRepository.GetAll().Result
+                .OrderBy(x => x.Type.Equals(PartOfHouseEnum.House)).ToList();
             items = _unitOfWork.ItemRepository.GetAll().Result;
             humans = _unitOfWork.HumanRepository.GetAll().Result;
             actionAggregates = _unitOfWork.ActionRepository.GetAll().Result;

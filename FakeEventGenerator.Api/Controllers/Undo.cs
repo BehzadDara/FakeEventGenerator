@@ -14,19 +14,14 @@ namespace FakeEventGenerator.Api.Controllers
     {
         private readonly UnitOfWork _unitOfWork;
         private readonly List<EnvironmentVariable> environmentVariables = new();
-        private readonly List<PartOfHouse> partsOfHouse = new();
         private readonly List<Item> items = new();
         private readonly List<Human> humans = new();
-        private readonly List<ActionAggregate> actionAggregates = new();
-        private readonly Random random = new();
         public UndoController(UnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
             environmentVariables = _unitOfWork.EnvironmentRepository.GetAll().Result;
-            partsOfHouse = _unitOfWork.PartOfHouseRepository.GetAll().Result;
             items = _unitOfWork.ItemRepository.GetAll().Result;
             humans = _unitOfWork.HumanRepository.GetAll().Result;
-            actionAggregates = _unitOfWork.ActionRepository.GetAll().Result;
         }
 
         [HttpGet]
@@ -87,6 +82,39 @@ namespace FakeEventGenerator.Api.Controllers
             var sound = environmentVariables.First(x => x.Type.Equals(EnvironmentVariableEnum.Sound));
             sound.Value = 60;
             _unitOfWork.EnvironmentRepository.Update(sound);
+
+            _unitOfWork.Complete();
+        }
+
+        [HttpGet]
+        public void HumanFeelCold()
+        {
+            var human2 = humans.First(x => x.Name.Equals("Human2"));
+            human2.CoordinateX = 75;
+            human2.CoordinateY = 65;
+            human2.FeelToDegree = FeelToDegreeEnum.Medium;
+            _unitOfWork.HumanRepository.Update(human2);
+
+            var bedroom2Door = items.First(x => x.Name.Equals("Bedroom2Door"));
+            bedroom2Door.State = ItemState.Close;
+            _unitOfWork.ItemRepository.Update(bedroom2Door);
+
+            var livingRoomDoor = items.First(x => x.Name.Equals("LivingRoomDoor"));
+            livingRoomDoor.State = ItemState.Close;
+            _unitOfWork.ItemRepository.Update(livingRoomDoor);
+
+            var airConditioner = items.First(x => x.Name.Equals("AirConditioner3"));
+            airConditioner.State = ItemState.Off;
+            airConditioner.MetaData = JsonSerializer.Serialize(new AirConditionerMetaData
+            {
+                Temperature = 20,
+                Speed = 10
+            });
+            _unitOfWork.ItemRepository.Update(airConditioner);
+
+            var degree = environmentVariables.First(x => x.Type.Equals(EnvironmentVariableEnum.Degree));
+            degree.Value = 20;
+            _unitOfWork.EnvironmentRepository.Update(degree);
 
             _unitOfWork.Complete();
         }
