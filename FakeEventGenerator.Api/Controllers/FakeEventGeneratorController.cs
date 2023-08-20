@@ -51,7 +51,28 @@ namespace FakeEventGenerator.Api.Controllers
                 var result = GenerateNextFakeEvents(myAction, true, true, true);
                 if (result.Any())
                 {
+                    return result.Select(x => new ActionAggregateViewModel
+                    {
+                        Name = x.Name,
+                        Description = x.Description,
+                        Time = GetTime()
+                    }).ToList();
+                }
+            }
 
+            return new();
+        }
+        
+        [HttpGet]
+        public List<ActionAggregateViewModel> Get(string input)
+        {
+            var myAction = actionAggregates.FirstOrDefault(x => x.Name.Equals(input));
+
+            if (myAction is not null)
+            {
+                var result = GenerateNextFakeEvents(myAction, true, true, true);
+                if (result.Any())
+                {
                     return result.Select(x => new ActionAggregateViewModel
                     {
                         Name = x.Name,
