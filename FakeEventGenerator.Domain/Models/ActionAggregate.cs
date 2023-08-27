@@ -7,7 +7,7 @@
         public int Delay { get; set; }
         public List<ActionCondition> Conditions { get; set; } = new();
         public List<ActionResult> Results { get; set; } = new();
-        public int StartPossibility { get; set; }
+        public int EndPossibility { get; set; }
         public List<NextAction> NextActions { get; set; } = new();
     }
 }

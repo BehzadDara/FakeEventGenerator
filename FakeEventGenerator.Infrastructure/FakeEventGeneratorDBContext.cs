@@ -675,7 +675,7 @@ namespace FakeEventGenerator.Infrastructure
                     Name = "Open-BalconyDoor1",
                     Description = "Open Door1 Of Balcony",
                     Delay = 500,
-                    StartPossibility = 100
+                    EndPossibility = 100
                 }
             );
 
@@ -687,7 +687,7 @@ namespace FakeEventGenerator.Infrastructure
                     Name = "Move-Balcony-Bedroom1",
                     Description = "Move To Balcony Human1 Via Bedroom1",
                     Delay = 500,
-                    StartPossibility = 100,
+                    EndPossibility = 100,
                 }
             );
 
@@ -699,7 +699,7 @@ namespace FakeEventGenerator.Infrastructure
                     Name = "Open-BalconyWindow",
                     Description = "Open Window Of Balcony",
                     Delay = 100,
-                    StartPossibility = 100
+                    EndPossibility = 100
                 }
             );
 
@@ -711,7 +711,7 @@ namespace FakeEventGenerator.Infrastructure
                     Name = "Sit-BalconyWindow",
                     Description = "Sit Under BalconyWindow",
                     Delay = 50,
-                    StartPossibility = 100
+                    EndPossibility = 100
                 }
             );
 
@@ -955,7 +955,7 @@ namespace FakeEventGenerator.Infrastructure
                     Name = "Open-Bedroom2Door",
                     Description = "Open Door Of Bedroom2",
                     Delay = 1500,
-                    StartPossibility = 100
+                    EndPossibility = 100
                 }
             );
 
@@ -967,7 +967,7 @@ namespace FakeEventGenerator.Infrastructure
                     Name = "Move-Corridor-Bedroom1",
                     Description = "Move To Corridor Human2 Via Bedroom2",
                     Delay = 500,
-                    StartPossibility = 100,
+                    EndPossibility = 100,
                 }
             );
 
@@ -979,7 +979,7 @@ namespace FakeEventGenerator.Infrastructure
                     Name = "Open-LivinRoomDoor",
                     Description = "Open Window Of Balcony",
                     Delay = 400,
-                    StartPossibility = 100
+                    EndPossibility = 100
                 }
             );
 
@@ -991,7 +991,7 @@ namespace FakeEventGenerator.Infrastructure
                     Name = "Move-LivingRoom-Corridor",
                     Description = "Move To LivingRoom Human2 Via Corridor",
                     Delay = 100,
-                    StartPossibility = 100
+                    EndPossibility = 100
                 }
             );
 
@@ -1003,7 +1003,7 @@ namespace FakeEventGenerator.Infrastructure
                     Name = "Sit-Sofa1",
                     Description = "Sit On Sofa1",
                     Delay = 800,
-                    StartPossibility = 100
+                    EndPossibility = 100
                 }
             );
 
@@ -1015,7 +1015,7 @@ namespace FakeEventGenerator.Infrastructure
                     Name = "On-TV",
                     Description = "Turn On TV",
                     Delay = 200,
-                    StartPossibility = 100
+                    EndPossibility = 100
                 }
             );
 
@@ -1027,7 +1027,7 @@ namespace FakeEventGenerator.Infrastructure
                     Name = "Increase-Sound",
                     Description = "Increase Sound Of TV",
                     Delay = 350,
-                    StartPossibility = 100
+                    EndPossibility = 100
                 }
             );
 
@@ -1039,7 +1039,7 @@ namespace FakeEventGenerator.Infrastructure
                     Name = "Decrease-Sound",
                     Description = "Decrease Sound Of TV",
                     Delay = 350,
-                    StartPossibility = 100
+                    EndPossibility = 100
                 }
             );
 
@@ -1521,7 +1521,7 @@ namespace FakeEventGenerator.Infrastructure
                     Name = "On-AirConditioner3",
                     Description = "Turn On AirConditioner3",
                     Delay = 600,
-                    StartPossibility = 100
+                    EndPossibility = 100
                 }
             );
 
@@ -1533,7 +1533,7 @@ namespace FakeEventGenerator.Infrastructure
                     Name = "Decrease-Degree",
                     Description = "Decrease Degree Of AirConditioner3",
                     Delay = 200,
-                    StartPossibility = 100
+                    EndPossibility = 100
                 }
             );
 
@@ -1545,7 +1545,7 @@ namespace FakeEventGenerator.Infrastructure
                     Name = "Stand-LivingRoom",
                     Description = "Human2 Stand In LivingRoom",
                     Delay = 200,
-                    StartPossibility = 100
+                    EndPossibility = 100
                 }
             );
 

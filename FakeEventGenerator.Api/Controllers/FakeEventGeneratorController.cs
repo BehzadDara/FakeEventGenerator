@@ -142,6 +142,7 @@ namespace FakeEventGenerator.Api.Controllers
                 result = GeneratePreviousFakeEvents(input);
 
                 if (isOriginal && result.Any()) {
+                    // use probability of end and probability of nexts
                     foreach (var nextAction in result.Last().NextActions)
                     {
                         var myAction = actionAggregates.First(x => x.Id.Equals(nextAction.Id));
@@ -168,6 +169,7 @@ namespace FakeEventGenerator.Api.Controllers
             var result = new List<ActionAggregate>();
 
             var myActions = actionAggregates.Where(x => x.NextActions.Any(y => y.Id.Equals(input.Id))).ToList();
+            // which previous should be chosen
             foreach (var myAction in myActions)
             {
                 result = GenerateNextFakeEvents(myAction, true, false, false);
@@ -193,10 +195,10 @@ namespace FakeEventGenerator.Api.Controllers
 
         private bool IsValidActionNow(ActionAggregate myAction)
         {
-            if (myAction.StartPossibility < random.Next(0, 100))
+            /*if (myAction.EndPossibility > random.Next(0, 100))
             {
                 return false;
-            }
+            }*/
 
             foreach (var myCondition in myAction.Conditions)
             {
