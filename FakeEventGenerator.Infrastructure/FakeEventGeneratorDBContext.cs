@@ -1015,7 +1015,7 @@ namespace FakeEventGenerator.Infrastructure
                     Name = "On-TV",
                     Description = "Turn On TV",
                     Delay = 200,
-                    EndPossibility = 100
+                    EndPossibility = 50
                 }
             );
 
@@ -1259,7 +1259,7 @@ namespace FakeEventGenerator.Infrastructure
                     Id = guid15,
                     ActionAggregateId = guid14,
                     //NumberOfActions = 1,
-                    Possibility = 100,
+                    Possibility = 30,
                     Delay = 200
                 }
             );
@@ -1555,7 +1555,7 @@ namespace FakeEventGenerator.Infrastructure
                     Id = guid25,
                     ActionAggregateId = guid14,
                     //NumberOfActions = 1,
-                    Possibility = 100,
+                    Possibility = 70,
                     Delay = 350
                 }
             );
@@ -1606,7 +1606,15 @@ namespace FakeEventGenerator.Infrastructure
                     Id = guid26,
                     ActionAggregateId = guid25,
                     //NumberOfActions = 1,
-                    Possibility = 100,
+                    Possibility = 10,
+                    Delay = 200
+                },
+                new NextAction
+                {
+                    Id = guid15,
+                    ActionAggregateId = guid25,
+                    //NumberOfActions = 1,
+                    Possibility = 90,
                     Delay = 200
                 }
             );

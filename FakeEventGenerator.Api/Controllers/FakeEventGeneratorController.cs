@@ -21,7 +21,7 @@ namespace FakeEventGenerator.Api.Controllers
         private readonly Random random = new();
 
 
-        private List<int> times = new List<int>();
+        private readonly List<int> times = new();
         private int iterator = 0;
         private int globalTime = 0;
         public FakeEventGeneratorController(UnitOfWork unitOfWork)
@@ -49,9 +49,9 @@ namespace FakeEventGenerator.Api.Controllers
             foreach (var myAction in myActions)
             {
                 var result = GenerateNextFakeEvents(myAction, true, true, true);
-                if (result.Any())
+                if (result.ActionAggregates.Any())
                 {
-                    return result.Select(x => new ActionAggregateViewModel
+                    return result.ActionAggregates.Select(x => new ActionAggregateViewModel
                     {
                         Name = x.Name,
                         Description = x.Description,
@@ -71,9 +71,9 @@ namespace FakeEventGenerator.Api.Controllers
             if (myAction is not null)
             {
                 var result = GenerateNextFakeEvents(myAction, true, true, true);
-                if (result.Any())
+                if (result.ActionAggregates.Any())
                 {
-                    return result.Select(x => new ActionAggregateViewModel
+                    return result.ActionAggregates.Select(x => new ActionAggregateViewModel
                     {
                         Name = x.Name,
                         Description = x.Description,
@@ -110,9 +110,9 @@ namespace FakeEventGenerator.Api.Controllers
             return result;
         }
 
-        private List<ActionAggregate> GenerateNextFakeEvents(ActionAggregate input, bool previousAvailable, bool nextAvailable, bool isOriginal)
+        private ActionOutputList GenerateNextFakeEvents(ActionAggregate input, bool previousAvailable, bool nextAvailable, bool isOriginal)
         {
-            var result = new List<ActionAggregate>();
+            var result = new ActionOutputList();
 
             if (IsValidActionNow(input))
             {
@@ -122,16 +122,25 @@ namespace FakeEventGenerator.Api.Controllers
                 result.Add(input);
                 SetResults(input.Results);
 
+                if (input.EndPossibility < random.Next(0, 100))
+                {
+                    return result;
+                }
+
                 if (nextAvailable)
                 {
-                    foreach (var nextAction in input.NextActions)
+                    var nextActions = input.NextActions.OrderByDescending(x => x.Possibility + random.Next(0, 100)).ToList();
+
+                    foreach (var nextAction in nextActions)
                     {
-                        if (nextAction.Possibility >= random.Next(0, 100))
+                        var tmpTime = globalTime;
+                        globalTime += nextAction.Delay;
+                        result = GenerateNextFakeEvents(nextAction.ActionAggregate!, false, true, false);
+                        globalTime = tmpTime;
+
+                        if (result.ActionAggregates.Any())
                         {
-                            var tmpTime = globalTime;
-                            globalTime += nextAction.Delay;
-                            result.AddRange(GenerateNextFakeEvents(nextAction.ActionAggregate!, false, true, false));
-                            globalTime = tmpTime;
+                            break;
                         }
                     }
                 }
@@ -141,9 +150,12 @@ namespace FakeEventGenerator.Api.Controllers
             {
                 result = GeneratePreviousFakeEvents(input);
 
-                if (isOriginal && result.Any()) {
-                    // use probability of end and probability of nexts
-                    foreach (var nextAction in result.Last().NextActions)
+                if (isOriginal && result.ActionAggregates.Any() && result.ActionAggregates.Last().EndPossibility < random.Next(0, 100)) 
+                {
+                    var nextActions = result.ActionAggregates.Last().NextActions;
+                    nextActions = nextActions.OrderByDescending(x => x.Possibility + random.Next(0, 100)).ToList();
+
+                    foreach (var nextAction in nextActions)
                     {
                         var myAction = actionAggregates.First(x => x.Id.Equals(nextAction.Id));
 
@@ -152,9 +164,9 @@ namespace FakeEventGenerator.Api.Controllers
                         var res = GenerateNextFakeEvents(myAction, false, true, false);
                         globalTime = tmpTime;
 
-                        if (res.Any())
+                        if (res.ActionAggregates.Any())
                         {
-                            result.AddRange(res);
+                            result.AddRange(res.ActionAggregates);
                             break;
                         }
                     }
@@ -164,16 +176,24 @@ namespace FakeEventGenerator.Api.Controllers
             return result;
         }
 
-        private List<ActionAggregate> GeneratePreviousFakeEvents(ActionAggregate input)
+        private ActionOutputList GeneratePreviousFakeEvents(ActionAggregate input)
         {
-            var result = new List<ActionAggregate>();
+            var result = new ActionOutputList();
 
-            var myActions = actionAggregates.Where(x => x.NextActions.Any(y => y.Id.Equals(input.Id))).ToList();
-            // which previous should be chosen
+            var myPreviousActionChooses = actionAggregates
+                            .Where(x => x.NextActions.Any(y => y.Id.Equals(input.Id)))
+                            .Select(x => new PreviousActionChoose { Action = x, Possibility = x.NextActions.First(y => y.Id.Equals(input.Id)).Possibility })
+                            .ToList();
+
+            var myActions = myPreviousActionChooses
+                            .OrderByDescending(x => x.Possibility + random.Next(0, 100))
+                            .Select(x => x.Action)
+                            .ToList();
+
             foreach (var myAction in myActions)
             {
                 result = GenerateNextFakeEvents(myAction, true, false, false);
-                if (result.Any())
+                if (result.ActionAggregates.Any())
                 {
                     var next = myAction.NextActions.First(x => x.Id.Equals(input.Id));
                     globalTime += next.Delay;
@@ -181,7 +201,7 @@ namespace FakeEventGenerator.Api.Controllers
                 }
             }
 
-            if (result.Any())
+            if (result.ActionAggregates.Any())
             {
                 globalTime += input.Delay;
                 times.Add(globalTime);
@@ -195,11 +215,6 @@ namespace FakeEventGenerator.Api.Controllers
 
         private bool IsValidActionNow(ActionAggregate myAction)
         {
-            /*if (myAction.EndPossibility > random.Next(0, 100))
-            {
-                return false;
-            }*/
-
             foreach (var myCondition in myAction.Conditions)
             {
                 if (myCondition.ConditionType.Equals(CaseStudyEnum.Environment))
