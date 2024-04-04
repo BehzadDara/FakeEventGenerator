@@ -116,7 +116,9 @@ namespace FakeEventGenerator.Api.Controllers
 
             if (IsValidActionNow(input))
             {
-                globalTime += input.Delay;
+                var factor = Math.Round(new Random().NextDouble() * 2 + 1, 2);
+                globalTime += (int)(factor * input.Delay);
+
                 times.Add(globalTime);
 
                 result.Add(input);
@@ -134,7 +136,10 @@ namespace FakeEventGenerator.Api.Controllers
                     foreach (var nextAction in nextActions)
                     {
                         var tmpTime = globalTime;
-                        globalTime += nextAction.Delay;
+
+                        var factor2 = Math.Round(new Random().NextDouble() * 2 + 1, 2);
+                        globalTime += (int)(factor2 * nextAction.Delay);
+
                         result = GenerateNextFakeEvents(nextAction.ActionAggregate!, false, true, false);
                         globalTime = tmpTime;
 
@@ -160,7 +165,10 @@ namespace FakeEventGenerator.Api.Controllers
                         var myAction = actionAggregates.First(x => x.Id.Equals(nextAction.Id));
 
                         var tmpTime = globalTime;
-                        globalTime += nextAction.Delay;
+
+                        var factor = Math.Round(new Random().NextDouble() * 2 + 1, 2);
+                        globalTime += (int)(factor * nextAction.Delay);
+
                         var res = GenerateNextFakeEvents(myAction, false, true, false);
                         globalTime = tmpTime;
 
@@ -196,6 +204,10 @@ namespace FakeEventGenerator.Api.Controllers
                 if (result.ActionAggregates.Any())
                 {
                     var next = myAction.NextActions.First(x => x.Id.Equals(input.Id));
+
+                    var factor = Math.Round(new Random().NextDouble() * 2 + 1, 2);
+                    globalTime += (int)(factor * next.Delay);
+
                     globalTime += next.Delay;
                     break;
                 }
