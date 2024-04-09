@@ -14,7 +14,6 @@ namespace FakeEventGenerator.Api.Controllers
     {
         private readonly UnitOfWork _unitOfWork;
         private readonly List<EnvironmentVariable> environmentVariables = new();
-        private readonly List<PartOfHouse> partsOfHouse = new();
         private readonly List<Item> items = new();
         private readonly List<Human> humans = new();
         private readonly List<ActionAggregate> actionAggregates = new();
@@ -28,8 +27,6 @@ namespace FakeEventGenerator.Api.Controllers
         {
             _unitOfWork = unitOfWork;
             environmentVariables = _unitOfWork.EnvironmentRepository.GetAll().Result;
-            partsOfHouse = _unitOfWork.PartOfHouseRepository.GetAll().Result
-                .OrderBy(x => x.Type.Equals(PartOfHouseEnum.House)).ToList();
             items = _unitOfWork.ItemRepository.GetAll().Result;
             humans = _unitOfWork.HumanRepository.GetAll().Result;
             actionAggregates = _unitOfWork.ActionRepository.GetAll().Result;
@@ -329,24 +326,22 @@ namespace FakeEventGenerator.Api.Controllers
             };
         }
 
-        private bool CheckPositionConditionWithExpection(Item item, string expection, ConditionCaseEnum conditionCaseType)
+        private static bool CheckPositionConditionWithExpection(Item item, string expection, ConditionCaseEnum conditionCaseType)
         {
-            var partOfHouse = partsOfHouse.First(x => x.HasAnItem(item));
             return conditionCaseType switch
             {
-                ConditionCaseEnum.IsIn => partOfHouse.Type.ToString().Equals(expection),
-                ConditionCaseEnum.IsNotIn => !partOfHouse.Type.ToString().Equals(expection),
+                ConditionCaseEnum.IsIn => item.PartOfHouseEnum.ToString().Equals(expection),
+                ConditionCaseEnum.IsNotIn => !item.PartOfHouseEnum.ToString().Equals(expection),
                 _ => false
             };
         }
 
-        private bool CheckPositionConditionWithExpection(Human human, string expection, ConditionCaseEnum conditionCaseType)
+        private static bool CheckPositionConditionWithExpection(Human human, string expection, ConditionCaseEnum conditionCaseType)
         {
-            var partOfHouse = partsOfHouse.First(x => x.HasAHuman(human));
             return conditionCaseType switch
             {
-                ConditionCaseEnum.IsIn => partOfHouse.Type.ToString().Equals(expection),
-                ConditionCaseEnum.IsNotIn => !partOfHouse.Type.ToString().Equals(expection),
+                ConditionCaseEnum.IsIn => human.PartOfHouseEnum.ToString().Equals(expection),
+                ConditionCaseEnum.IsNotIn => !human.PartOfHouseEnum.ToString().Equals(expection),
                 _ => false
             };
         }
@@ -418,7 +413,7 @@ namespace FakeEventGenerator.Api.Controllers
                     var environmentVariable = environmentVariables.First(x => x.Type.ToString().Equals(myResult.CaseStudy));
 
                     var factor = myResult.ResultCaseType.Equals(ResultCaseEnum.Increase) ? 1 : -1;
-                    environmentVariable.Value += factor * int.Parse(change.First());
+                    environmentVariable.Value += factor * int.Parse(change[0]);
 
                     _unitOfWork.EnvironmentRepository.Update(environmentVariable);
                 }
@@ -427,8 +422,13 @@ namespace FakeEventGenerator.Api.Controllers
                 {
                     var item = items.First(x => x.Name.Equals(myResult.CaseStudy));
 
-                    item.CoordinateX = int.Parse(change[0]);
-                    item.CoordinateY = int.Parse(change[1]);
+                    var b = Enum.TryParse(change[0], out PartOfHouseEnum partOfHouseEnum);
+                    if (!b)
+                    {
+                        throw new Exception($"{change[0]} is not a part of house");
+                    }
+
+                    item.PartOfHouseEnum = partOfHouseEnum;
                     _unitOfWork.ItemRepository.Update(item);
                 }
 
@@ -436,7 +436,7 @@ namespace FakeEventGenerator.Api.Controllers
                 {
                     var item = items.First(x => x.Name.Equals(myResult.CaseStudy));
 
-                    item.State = Enum.Parse<ItemState>(change.First());
+                    item.State = Enum.Parse<ItemState>(change[0]);
                     _unitOfWork.ItemRepository.Update(item);
                 }
 
@@ -456,8 +456,13 @@ namespace FakeEventGenerator.Api.Controllers
                 {
                     var human = humans.First(x => x.Name.Equals(myResult.CaseStudy));
 
-                    human.CoordinateX = int.Parse(change[0]);
-                    human.CoordinateY = int.Parse(change[1]);
+                    var b = Enum.TryParse(change[0], out PartOfHouseEnum partOfHouseEnum);
+                    if (!b)
+                    {
+                        throw new Exception($"{change[0]} is not a part of house");
+                    }
+
+                    human.PartOfHouseEnum = partOfHouseEnum;
                     _unitOfWork.HumanRepository.Update(human);
                 }
 
@@ -465,7 +470,7 @@ namespace FakeEventGenerator.Api.Controllers
                 {
                     var human = humans.First(x => x.Name.Equals(myResult.CaseStudy));
 
-                    human.BodyStatus = Enum.Parse<BodyStatusEnum>(change.First());
+                    human.BodyStatus = Enum.Parse<BodyStatusEnum>(change[0]);
                     _unitOfWork.HumanRepository.Update(human);
                 }
 
@@ -473,7 +478,7 @@ namespace FakeEventGenerator.Api.Controllers
                 {
                     var human = humans.First(x => x.Name.Equals(myResult.CaseStudy));
 
-                    human.FeelToDegree = Enum.Parse<FeelToDegreeEnum>(change.First());
+                    human.FeelToDegree = Enum.Parse<FeelToDegreeEnum>(change[0]);
                     _unitOfWork.HumanRepository.Update(human);
                 }
 
@@ -481,7 +486,7 @@ namespace FakeEventGenerator.Api.Controllers
                 {
                     var human = humans.First(x => x.Name.Equals(myResult.CaseStudy));
 
-                    human.MentalStatus = Enum.Parse<MentalStatusEnum>(change.First());
+                    human.MentalStatus = Enum.Parse<MentalStatusEnum>(change[0]);
                     _unitOfWork.HumanRepository.Update(human);
                 }
             }

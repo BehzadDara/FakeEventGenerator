@@ -25,16 +25,6 @@ namespace FakeEventGenerator.Infrastructure
             }
         }
 
-        private PartOfHouseRepository? partOfHouseRepository;
-        public PartOfHouseRepository PartOfHouseRepository
-        {
-            get
-            {
-                partOfHouseRepository ??= new PartOfHouseRepository(_dBContext);
-                return partOfHouseRepository;
-            }
-        }
-
         private ItemRepository? itemRepository;
         public ItemRepository ItemRepository
         {

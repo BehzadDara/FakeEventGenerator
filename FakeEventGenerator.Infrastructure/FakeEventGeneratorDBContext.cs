@@ -29,74 +29,6 @@ namespace FakeEventGenerator.Infrastructure
                );
             #endregion
 
-            #region PartOfHouse
-            modelBuilder.Entity<PartOfHouse>().HasKey(x => x.Type);
-            modelBuilder.Entity<PartOfHouse>().Property(e => e.Type)
-                .HasConversion(
-                    v => v.ToString(),
-                    v => (PartOfHouseEnum)Enum.Parse(typeof(PartOfHouseEnum), v)
-                    );
-
-            modelBuilder.Entity<PartOfHouse>().HasData(
-               new PartOfHouse { Type = PartOfHouseEnum.House, 
-                   Coordinate1X = 0, 
-                   Coordinate1Y = 0, 
-                   Coordinate2X = 100,
-                   Coordinate2Y = 100
-               },
-
-               new PartOfHouse { Type = PartOfHouseEnum.Kitchen,
-                   Coordinate1X = 0,
-                   Coordinate1Y = 0,
-                   Coordinate2X = 30,
-                   Coordinate2Y = 30
-               },
-
-               new PartOfHouse { Type = PartOfHouseEnum.LivingRoom,
-                   Coordinate1X = 30,
-                   Coordinate1Y = 0,
-                   Coordinate2X = 80,
-                   Coordinate2Y = 30
-               },
-
-               new PartOfHouse { Type = PartOfHouseEnum.Bathroom,
-                   Coordinate1X = 80,
-                   Coordinate1Y = 0,
-                   Coordinate2X = 100,
-                   Coordinate2Y = 30
-               },
-
-               new PartOfHouse { Type = PartOfHouseEnum.Corridor,
-                   Coordinate1X = 0,
-                   Coordinate1Y = 30,
-                   Coordinate2X = 100,
-                   Coordinate2Y = 50
-               },
-
-               new PartOfHouse { Type = PartOfHouseEnum.Bedroom1,
-                   Coordinate1X = 0,
-                   Coordinate1Y = 50,
-                   Coordinate2X = 50,
-                   Coordinate2Y = 80
-               },
-
-               new PartOfHouse { Type = PartOfHouseEnum.Bedroom2,
-                   Coordinate1X = 50,
-                   Coordinate1Y = 50,
-                   Coordinate2X = 100,
-                   Coordinate2Y = 80
-               },
-
-               new PartOfHouse { Type = PartOfHouseEnum.Balcony,
-                   Coordinate1X = 0,
-                   Coordinate1Y = 80,
-                   Coordinate2X = 100,
-                   Coordinate2Y = 100
-               }
-
-            );
-            #endregion
-
             #region Item
             modelBuilder.Entity<Item>().HasKey(x => x.Id);
             modelBuilder.Entity<Item>().Property(e => e.Type)
@@ -118,8 +50,7 @@ namespace FakeEventGenerator.Infrastructure
                    Description = "House Door",
                    Type = ItemEnum.Openable,
                    State = ItemState.Close,
-                   CoordinateX = 55,
-                   CoordinateY = 0,
+                   PartOfHouseEnum = PartOfHouseEnum.LivingRoom,
                    IsMovable = false
                },
                new Item
@@ -128,8 +59,7 @@ namespace FakeEventGenerator.Infrastructure
                    Description = "LivingRoom Door",
                    Type = ItemEnum.Openable,
                    State = ItemState.Close,
-                   CoordinateX = 55,
-                   CoordinateY = 30,
+                   PartOfHouseEnum = PartOfHouseEnum.LivingRoom,
                    IsMovable = false
                },
                new Item
@@ -138,8 +68,7 @@ namespace FakeEventGenerator.Infrastructure
                    Description = "Kitchen Door",
                    Type = ItemEnum.Openable,
                    State = ItemState.Close,
-                   CoordinateX = 15,
-                   CoordinateY = 30,
+                   PartOfHouseEnum = PartOfHouseEnum.Kitchen,
                    IsMovable = false
                },
                new Item
@@ -148,8 +77,7 @@ namespace FakeEventGenerator.Infrastructure
                    Description = "Bathroom Door",
                    Type = ItemEnum.Openable,
                    State = ItemState.Close,
-                   CoordinateX = 90,
-                   CoordinateY = 30,
+                   PartOfHouseEnum = PartOfHouseEnum.Bathroom,
                    IsMovable = false
                },
                new Item
@@ -158,8 +86,7 @@ namespace FakeEventGenerator.Infrastructure
                    Description = "Bedroom1 Door",
                    Type = ItemEnum.Openable,
                    State = ItemState.Close,
-                   CoordinateX = 25,
-                   CoordinateY = 50,
+                   PartOfHouseEnum = PartOfHouseEnum.Bedroom1,
                    IsMovable = false
                },
                new Item
@@ -168,8 +95,7 @@ namespace FakeEventGenerator.Infrastructure
                    Description = "Bedroom2 Door",
                    Type = ItemEnum.Openable,
                    State = ItemState.Close,
-                   CoordinateX = 75,
-                   CoordinateY = 50,
+                   PartOfHouseEnum = PartOfHouseEnum.Bedroom2,
                    IsMovable = false
                },
                new Item
@@ -178,8 +104,7 @@ namespace FakeEventGenerator.Infrastructure
                    Description = "Balcony Door1",
                    Type = ItemEnum.Openable,
                    State = ItemState.Close,
-                   CoordinateX = 25,
-                   CoordinateY = 80,
+                   PartOfHouseEnum = PartOfHouseEnum.Balcony,
                    IsMovable = false
                },
                new Item
@@ -188,8 +113,7 @@ namespace FakeEventGenerator.Infrastructure
                    Description = "Balcony Door2",
                    Type = ItemEnum.Openable,
                    State = ItemState.Close,
-                   CoordinateX = 75,
-                   CoordinateY = 80,
+                   PartOfHouseEnum = PartOfHouseEnum.Balcony,
                    IsMovable = false
                },
             #endregion
@@ -201,8 +125,7 @@ namespace FakeEventGenerator.Infrastructure
                    Description = "Bedroom1 Window",
                    Type = ItemEnum.Openable,
                    State = ItemState.Close,
-                   CoordinateX = 0,
-                   CoordinateY = 65,
+                   PartOfHouseEnum = PartOfHouseEnum.Bedroom1,
                    IsMovable = false
                },
                new Item
@@ -211,8 +134,7 @@ namespace FakeEventGenerator.Infrastructure
                    Description = "Bedroom2 Window",
                    Type = ItemEnum.Openable,
                    State = ItemState.Close,
-                   CoordinateX = 100,
-                   CoordinateY = 65,
+                   PartOfHouseEnum = PartOfHouseEnum.Bedroom2,
                    IsMovable = false
                },
                new Item
@@ -221,8 +143,7 @@ namespace FakeEventGenerator.Infrastructure
                    Description = "Balcony Window",
                    Type = ItemEnum.Openable,
                    State = ItemState.Close,
-                   CoordinateX = 50,
-                   CoordinateY = 100,
+                   PartOfHouseEnum = PartOfHouseEnum.Balcony,
                    IsMovable = false
                },
             #endregion
@@ -234,8 +155,7 @@ namespace FakeEventGenerator.Infrastructure
                    Description = "Bedroom1 Bed",
                    Type = ItemEnum.UseWithCapacity,
                    State = ItemState.NotFull,
-                   CoordinateX = 40,
-                   CoordinateY = 65,
+                   PartOfHouseEnum = PartOfHouseEnum.Bedroom1,
                    IsMovable = false
                },
                new Item
@@ -244,8 +164,7 @@ namespace FakeEventGenerator.Infrastructure
                    Description = "Bedroom1 AirConditioner",
                    Type = ItemEnum.Electronic,
                    State = ItemState.Off,
-                   CoordinateX = 49,
-                   CoordinateY = 55,
+                   PartOfHouseEnum = PartOfHouseEnum.Bedroom1,
                    IsMovable = false
                },
                new Item
@@ -254,8 +173,7 @@ namespace FakeEventGenerator.Infrastructure
                    Description = "Bedroom1 Computer",
                    Type = ItemEnum.Electronic,
                    State = ItemState.Off,
-                   CoordinateX = 10,
-                   CoordinateY = 79,
+                   PartOfHouseEnum = PartOfHouseEnum.Bedroom1,
                    IsMovable = false
                },
                new Item
@@ -264,8 +182,7 @@ namespace FakeEventGenerator.Infrastructure
                    Description = "Bedroom1 Chair",
                    Type = ItemEnum.Usable,
                    State = ItemState.NotBeUsing,
-                   CoordinateX = 10,
-                   CoordinateY = 75,
+                   PartOfHouseEnum = PartOfHouseEnum.Bedroom1,
                    IsMovable = false
                },
                new Item
@@ -274,8 +191,7 @@ namespace FakeEventGenerator.Infrastructure
                    Description = "Bedroom1 Lamp",
                    Type = ItemEnum.Electronic,
                    State = ItemState.Off,
-                   CoordinateX = 25,
-                   CoordinateY = 65,
+                   PartOfHouseEnum = PartOfHouseEnum.Bedroom1,
                    IsMovable = false,
                    MetaData = JsonSerializer.Serialize(new LampMetaData
                    {
@@ -289,8 +205,7 @@ namespace FakeEventGenerator.Infrastructure
                    Description = "Bedroom2 Bed",
                    Type = ItemEnum.UseWithCapacity,
                    State = ItemState.NotFull,
-                   CoordinateX = 60,
-                   CoordinateY = 65,
+                   PartOfHouseEnum = PartOfHouseEnum.Bedroom2,
                    IsMovable = false,
                    MetaData = JsonSerializer.Serialize(new AirConditionerMetaData
                    {
@@ -304,8 +219,7 @@ namespace FakeEventGenerator.Infrastructure
                    Description = "Bedroom2 AirConditioner",
                    Type = ItemEnum.Electronic,
                    State = ItemState.Off,
-                   CoordinateX = 51,
-                   CoordinateY = 55,
+                   PartOfHouseEnum = PartOfHouseEnum.Bedroom2,
                    IsMovable = false,
                    MetaData = JsonSerializer.Serialize(new AirConditionerMetaData
                    {
@@ -319,8 +233,7 @@ namespace FakeEventGenerator.Infrastructure
                    Description = "Bedroom2 Laptop",
                    Type = ItemEnum.Electronic,
                    State = ItemState.Off,
-                   CoordinateX = 90,
-                   CoordinateY = 79,
+                   PartOfHouseEnum = PartOfHouseEnum.Bedroom2,
                    IsMovable = true,
                    MetaData = JsonSerializer.Serialize(new LaptopMetaData
                    {
@@ -334,8 +247,7 @@ namespace FakeEventGenerator.Infrastructure
                    Description = "Bedroom2 Chair",
                    Type = ItemEnum.Usable,
                    State = ItemState.NotBeUsing,
-                   CoordinateX = 90,
-                   CoordinateY = 75,
+                   PartOfHouseEnum = PartOfHouseEnum.Bedroom2,
                    IsMovable = false
                },
                new Item
@@ -344,8 +256,7 @@ namespace FakeEventGenerator.Infrastructure
                    Description = "Bedroom2 Lamp",
                    Type = ItemEnum.Electronic,
                    State = ItemState.Off,
-                   CoordinateX = 75,
-                   CoordinateY = 65,
+                   PartOfHouseEnum = PartOfHouseEnum.Bedroom2,
                    IsMovable = false,
                    MetaData = JsonSerializer.Serialize(new LampMetaData
                    {
@@ -361,8 +272,7 @@ namespace FakeEventGenerator.Infrastructure
                    Description = "Kitchen Oven",
                    Type = ItemEnum.Usable,
                    State = ItemState.NotBeUsing,
-                   CoordinateX = 15,
-                   CoordinateY = 1,
+                   PartOfHouseEnum = PartOfHouseEnum.Kitchen,
                    IsMovable = false
                },
                new Item
@@ -371,8 +281,7 @@ namespace FakeEventGenerator.Infrastructure
                    Description = "Kitchen Refrigerator",
                    Type = ItemEnum.Openable,
                    State = ItemState.Close,
-                   CoordinateX = 1,
-                   CoordinateY = 15,
+                   PartOfHouseEnum = PartOfHouseEnum.Kitchen,
                    IsMovable = false
                },
                new Item
@@ -381,8 +290,7 @@ namespace FakeEventGenerator.Infrastructure
                    Description = "Kitchen WashingMachine",
                    Type = ItemEnum.Usable,
                    State = ItemState.NotBeUsing,
-                   CoordinateX = 29,
-                   CoordinateY = 15,
+                   PartOfHouseEnum = PartOfHouseEnum.Kitchen,
                    IsMovable = false
                },
                new Item
@@ -391,8 +299,7 @@ namespace FakeEventGenerator.Infrastructure
                    Description = "Kitchen DishWasher",
                    Type = ItemEnum.Usable,
                    State = ItemState.NotBeUsing,
-                   CoordinateX = 25,
-                   CoordinateY = 1,
+                   PartOfHouseEnum = PartOfHouseEnum.Kitchen,
                    IsMovable = false
                },
                new Item
@@ -401,8 +308,7 @@ namespace FakeEventGenerator.Infrastructure
                    Description = "Kitchen Lamp",
                    Type = ItemEnum.Electronic,
                    State = ItemState.Off,
-                   CoordinateX = 15,
-                   CoordinateY = 15,
+                   PartOfHouseEnum = PartOfHouseEnum.Kitchen,
                    IsMovable = false
                },
             #endregion
@@ -414,8 +320,7 @@ namespace FakeEventGenerator.Infrastructure
                    Description = "LivingRoom TV",
                    Type = ItemEnum.Electronic,
                    State = ItemState.Off,
-                   CoordinateX = 79,
-                   CoordinateY = 15,
+                   PartOfHouseEnum = PartOfHouseEnum.LivingRoom,
                    IsMovable = false,
                    MetaData = JsonSerializer.Serialize(new TVMetaData
                    {
@@ -429,8 +334,7 @@ namespace FakeEventGenerator.Infrastructure
                    Description = "LivingRoom Sofa1",
                    Type = ItemEnum.UseWithCapacity,
                    State = ItemState.NotFull,
-                   CoordinateX = 70,
-                   CoordinateY = 20,
+                   PartOfHouseEnum = PartOfHouseEnum.LivingRoom,
                    IsMovable = false,
                    MetaData = JsonSerializer.Serialize(new SofaMetaData
                    {
@@ -443,8 +347,7 @@ namespace FakeEventGenerator.Infrastructure
                    Description = "LivingRoom Sofa2",
                    Type = ItemEnum.UseWithCapacity,
                    State = ItemState.NotFull,
-                   CoordinateX = 70,
-                   CoordinateY = 10,
+                   PartOfHouseEnum = PartOfHouseEnum.LivingRoom,
                    IsMovable = false,
                    MetaData = JsonSerializer.Serialize(new SofaMetaData
                    {
@@ -457,8 +360,7 @@ namespace FakeEventGenerator.Infrastructure
                    Description = "LivingRoom Sofa3",
                    Type = ItemEnum.UseWithCapacity,
                    State = ItemState.NotFull,
-                   CoordinateX = 60,
-                   CoordinateY = 15,
+                   PartOfHouseEnum = PartOfHouseEnum.LivingRoom,
                    IsMovable = false,
                    MetaData = JsonSerializer.Serialize(new SofaMetaData
                    {
@@ -471,8 +373,7 @@ namespace FakeEventGenerator.Infrastructure
                    Description = "LivingRoom Table",
                    Type = ItemEnum.Usable,
                    State = ItemState.NotBeUsing,
-                   CoordinateX = 40,
-                   CoordinateY = 15,
+                   PartOfHouseEnum = PartOfHouseEnum.LivingRoom,
                    IsMovable = false
                },
                new Item
@@ -481,8 +382,7 @@ namespace FakeEventGenerator.Infrastructure
                    Description = "LivingRoom Chair1",
                    Type = ItemEnum.Usable,
                    State = ItemState.NotBeUsing,
-                   CoordinateX = 35,
-                   CoordinateY = 15,
+                   PartOfHouseEnum = PartOfHouseEnum.LivingRoom,
                    IsMovable = false
                },
                new Item
@@ -491,8 +391,7 @@ namespace FakeEventGenerator.Infrastructure
                    Description = "LivingRoom Chair2",
                    Type = ItemEnum.Usable,
                    State = ItemState.NotBeUsing,
-                   CoordinateX = 45,
-                   CoordinateY = 15,
+                   PartOfHouseEnum = PartOfHouseEnum.LivingRoom,
                    IsMovable = false
                },
                new Item
@@ -501,8 +400,7 @@ namespace FakeEventGenerator.Infrastructure
                    Description = "LivingRoom Chair3",
                    Type = ItemEnum.Usable,
                    State = ItemState.NotBeUsing,
-                   CoordinateX = 40,
-                   CoordinateY = 10,
+                   PartOfHouseEnum = PartOfHouseEnum.LivingRoom,
                    IsMovable = false
                },
                new Item
@@ -511,8 +409,7 @@ namespace FakeEventGenerator.Infrastructure
                    Description = "LivingRoom Chair4",
                    Type = ItemEnum.Usable,
                    State = ItemState.NotBeUsing,
-                   CoordinateX = 40,
-                   CoordinateY = 20,
+                   PartOfHouseEnum = PartOfHouseEnum.LivingRoom,
                    IsMovable = false
                },
                new Item
@@ -521,8 +418,7 @@ namespace FakeEventGenerator.Infrastructure
                    Description = "LivingRoom AirConditioner",
                    Type = ItemEnum.Electronic,
                    State = ItemState.Off,
-                   CoordinateX = 40,
-                   CoordinateY = 29,
+                   PartOfHouseEnum = PartOfHouseEnum.LivingRoom,
                    IsMovable = false,
                    MetaData = JsonSerializer.Serialize(new AirConditionerMetaData
                    {
@@ -536,8 +432,7 @@ namespace FakeEventGenerator.Infrastructure
                    Description = "LivingRoom Lamp",
                    Type = ItemEnum.Electronic,
                    State = ItemState.Off,
-                   CoordinateX = 55,
-                   CoordinateY = 15,
+                   PartOfHouseEnum = PartOfHouseEnum.LivingRoom,
                    IsMovable = false
                },
             #endregion
@@ -549,8 +444,7 @@ namespace FakeEventGenerator.Infrastructure
                    Description = "Bathroom Lamp",
                    Type = ItemEnum.Electronic,
                    State = ItemState.Off,
-                   CoordinateX = 90,
-                   CoordinateY = 15,
+                   PartOfHouseEnum = PartOfHouseEnum.Bathroom,
                    IsMovable = false
                },
             #endregion
@@ -562,8 +456,7 @@ namespace FakeEventGenerator.Infrastructure
                    Description = "Balcony Lamp",
                    Type = ItemEnum.Electronic,
                    State = ItemState.Off,
-                   CoordinateX = 50,
-                   CoordinateY = 90,
+                   PartOfHouseEnum = PartOfHouseEnum.Balcony,
                    IsMovable = false
                },
             #endregion
@@ -575,8 +468,7 @@ namespace FakeEventGenerator.Infrastructure
                    Description = "Corridor Lamp",
                    Type = ItemEnum.Electronic,
                    State = ItemState.Off,
-                   CoordinateX = 50,
-                   CoordinateY = 40,
+                   PartOfHouseEnum = PartOfHouseEnum.Corridor,
                    IsMovable = false
                }
             #endregion
@@ -606,8 +498,7 @@ namespace FakeEventGenerator.Infrastructure
                 new Human
                 {
                     Name = "Human1",
-                    CoordinateX = 10,
-                    CoordinateY = 74,
+                    PartOfHouseEnum = PartOfHouseEnum.Bedroom1,
                     FeelToDegree = FeelToDegreeEnum.Medium,
                     BodyStatus = BodyStatusEnum.Stand,
                     MentalStatus = MentalStatusEnum.Tired
@@ -615,8 +506,7 @@ namespace FakeEventGenerator.Infrastructure
                 new Human
                 {
                     Name = "Human2",
-                    CoordinateX = 75,
-                    CoordinateY = 65,
+                    PartOfHouseEnum = PartOfHouseEnum.Bedroom2,
                     FeelToDegree = FeelToDegreeEnum.Medium,
                     BodyStatus = BodyStatusEnum.Stand,
                     MentalStatus = MentalStatusEnum.Bored
@@ -751,7 +641,7 @@ namespace FakeEventGenerator.Infrastructure
                     ResultType = CaseStudyEnum.HumanPosition,
                     CaseStudy = "Human1",
                     ResultCaseType = ResultCaseEnum.Position,
-                    ResultCaseChange = "25-79"
+                    ResultCaseChange = "Bedroom1"
                 },                
                 new ActionResult
                 {
@@ -811,7 +701,7 @@ namespace FakeEventGenerator.Infrastructure
                     ResultType = CaseStudyEnum.HumanPosition,
                     CaseStudy = "Human1",
                     ResultCaseType = ResultCaseEnum.Position,
-                    ResultCaseChange = "25-81"
+                    ResultCaseChange = "Balcony"
                 }
             );
 
@@ -855,7 +745,7 @@ namespace FakeEventGenerator.Infrastructure
                     ResultType = CaseStudyEnum.HumanPosition,
                     CaseStudy = "Human1",
                     ResultCaseType = ResultCaseEnum.Position,
-                    ResultCaseChange = "50-99"
+                    ResultCaseChange = "Balcony"
                 },
                 new ActionResult
                 {
@@ -977,7 +867,7 @@ namespace FakeEventGenerator.Infrastructure
                 {
                     Id = guid13,
                     Name = "Open-LivinRoomDoor",
-                    Description = "Open Window Of Balcony",
+                    Description = "Open Door Of LivingRoom",
                     Delay = 400,
                     EndPossibility = 100
                 }
@@ -1078,7 +968,7 @@ namespace FakeEventGenerator.Infrastructure
                     ResultType = CaseStudyEnum.HumanPosition,
                     CaseStudy = "Human1",
                     ResultCaseType = ResultCaseEnum.Position,
-                    ResultCaseChange = "75-51"
+                    ResultCaseChange = "Bedroom2"
                 },
                 new ActionResult
                 {
@@ -1138,7 +1028,7 @@ namespace FakeEventGenerator.Infrastructure
                     ResultType = CaseStudyEnum.HumanPosition,
                     CaseStudy = "Human2",
                     ResultCaseType = ResultCaseEnum.Position,
-                    ResultCaseChange = "75-49"
+                    ResultCaseChange = "Corridor"
                 }
             );
 
@@ -1189,7 +1079,7 @@ namespace FakeEventGenerator.Infrastructure
                     ResultType = CaseStudyEnum.HumanPosition,
                     CaseStudy = "Human2",
                     ResultCaseType = ResultCaseEnum.Position,
-                    ResultCaseChange = "55-31"
+                    ResultCaseChange = "Corridor"
                 },
                 new ActionResult
                 {
@@ -1249,7 +1139,7 @@ namespace FakeEventGenerator.Infrastructure
                     ResultType = CaseStudyEnum.HumanPosition,
                     CaseStudy = "Human2",
                     ResultCaseType = ResultCaseEnum.Position,
-                    ResultCaseChange = "55-29"
+                    ResultCaseChange = "LivingRoom"
                 }
             );
 
@@ -1294,7 +1184,7 @@ namespace FakeEventGenerator.Infrastructure
                     ResultType = CaseStudyEnum.HumanPosition,
                     CaseStudy = "Human2",
                     ResultCaseType = ResultCaseEnum.Position,
-                    ResultCaseChange = "70-20"
+                    ResultCaseChange = "LivingRoom"
                 },
                 new ActionResult
                 {
@@ -1588,7 +1478,7 @@ namespace FakeEventGenerator.Infrastructure
                     ResultType = CaseStudyEnum.HumanPosition,
                     CaseStudy = "Human2",
                     ResultCaseType = ResultCaseEnum.Position,
-                    ResultCaseChange = "40-28"
+                    ResultCaseChange = "LivingRoom"
                 },
                 new ActionResult
                 {
