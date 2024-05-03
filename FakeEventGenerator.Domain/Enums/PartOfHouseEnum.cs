@@ -2,7 +2,6 @@
 {
     public enum PartOfHouseEnum
     {
-        House,
         LivingRoom,
         Kitchen,
         Bedroom1,

@@ -28,7 +28,7 @@ namespace FakeEventGenerator.Api.Controllers
         public void OpenBalconyWindow()
         {
             var human1 = humans.First(x => x.Name.Equals("Human1"));
-            human1.PartOfHouseEnum = PartOfHouseEnum.Bedroom1;
+            human1.Location =  PartOfHouseEnum.Bedroom1;
             human1.BodyStatus = BodyStatusEnum.Stand;
             human1.MentalStatus = MentalStatusEnum.Tired;
             _unitOfWork.HumanRepository.Update(human1);
@@ -52,7 +52,7 @@ namespace FakeEventGenerator.Api.Controllers
         public void IncreaseOrDecreaseSound()
         {
             var human2 = humans.First(x => x.Name.Equals("Human2"));
-            human2.PartOfHouseEnum = PartOfHouseEnum.Bedroom2;
+            human2.Location =  PartOfHouseEnum.Bedroom2;
             human2.BodyStatus = BodyStatusEnum.Stand;
             human2.MentalStatus = MentalStatusEnum.Bored;
             _unitOfWork.HumanRepository.Update(human2);
@@ -88,7 +88,7 @@ namespace FakeEventGenerator.Api.Controllers
         public void HumanFeelCold()
         {
             var human2 = humans.First(x => x.Name.Equals("Human2"));
-            human2.PartOfHouseEnum = PartOfHouseEnum.Bedroom2;
+            human2.Location =  PartOfHouseEnum.Bedroom2;
             human2.FeelToDegree = FeelToDegreeEnum.Medium;
             _unitOfWork.HumanRepository.Update(human2);
 

@@ -330,8 +330,8 @@ namespace FakeEventGenerator.Api.Controllers
         {
             return conditionCaseType switch
             {
-                ConditionCaseEnum.IsIn => item.PartOfHouseEnum.ToString().Equals(expection),
-                ConditionCaseEnum.IsNotIn => !item.PartOfHouseEnum.ToString().Equals(expection),
+                ConditionCaseEnum.IsIn => item.Location.ToString().Equals(expection),
+                ConditionCaseEnum.IsNotIn => !item.Location.ToString().Equals(expection),
                 _ => false
             };
         }
@@ -340,8 +340,8 @@ namespace FakeEventGenerator.Api.Controllers
         {
             return conditionCaseType switch
             {
-                ConditionCaseEnum.IsIn => human.PartOfHouseEnum.ToString().Equals(expection),
-                ConditionCaseEnum.IsNotIn => !human.PartOfHouseEnum.ToString().Equals(expection),
+                ConditionCaseEnum.IsIn => human.Location.ToString().Equals(expection),
+                ConditionCaseEnum.IsNotIn => !human.Location.ToString().Equals(expection),
                 _ => false
             };
         }
@@ -428,7 +428,7 @@ namespace FakeEventGenerator.Api.Controllers
                         throw new Exception($"{change[0]} is not a part of house");
                     }
 
-                    item.PartOfHouseEnum = partOfHouseEnum;
+                    item.Location =  partOfHouseEnum;
                     _unitOfWork.ItemRepository.Update(item);
                 }
 
@@ -462,7 +462,7 @@ namespace FakeEventGenerator.Api.Controllers
                         throw new Exception($"{change[0]} is not a part of house");
                     }
 
-                    human.PartOfHouseEnum = partOfHouseEnum;
+                    human.Location =  partOfHouseEnum;
                     _unitOfWork.HumanRepository.Update(human);
                 }
 
