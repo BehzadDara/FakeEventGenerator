@@ -17,6 +17,7 @@ namespace FakeEventGenerator.Api.Controllers
         private readonly List<Item> items = new();
         private readonly List<Human> humans = new();
         private readonly List<ActionAggregate> actionAggregates = new();
+        private readonly ActionAggregate stopPoint;
         private readonly Random random = new();
 
 
@@ -30,6 +31,12 @@ namespace FakeEventGenerator.Api.Controllers
             items = _unitOfWork.ItemRepository.GetAll().Result;
             humans = _unitOfWork.HumanRepository.GetAll().Result;
             actionAggregates = _unitOfWork.ActionRepository.GetAll().Result;
+            stopPoint = actionAggregates.First(x => x.Results.Any(y =>
+                y.ResultType.Equals(CaseStudyEnum.HumanPosition) &&
+                y.CaseStudy.Equals("Human2") &&
+                y.ResultCaseType.Equals(ResultCaseEnum.Position) &&
+                BeResultCaseChange(y.ResultType, y.ResultCaseChange, "Kitchen")));
+
         }
 
         [HttpPost]
@@ -48,6 +55,9 @@ namespace FakeEventGenerator.Api.Controllers
                 var result = GenerateNextFakeEvents(myAction, true, true, true);
                 if (result.ActionAggregates.Any())
                 {
+                    var stopPointResult = GenerateNextFakeEvents(stopPoint, true, true, true);
+                    stopPointResult.ActionAggregates.ForEach(result.Add);
+
                     return result.ActionAggregates.Select(x => new ActionAggregateViewModel
                     {
                         Name = x.Name,
@@ -70,6 +80,9 @@ namespace FakeEventGenerator.Api.Controllers
                 var result = GenerateNextFakeEvents(myAction, true, true, true);
                 if (result.ActionAggregates.Any())
                 {
+                    var stopPointResult = GenerateNextFakeEvents(stopPoint, true, true, true);
+                    stopPointResult.ActionAggregates.ForEach(result.Add);
+
                     return result.ActionAggregates.Select(x => new ActionAggregateViewModel
                     {
                         Name = x.Name,

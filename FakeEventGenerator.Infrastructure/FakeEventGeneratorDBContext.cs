@@ -1614,6 +1614,152 @@ namespace FakeEventGenerator.Infrastructure
 
             #endregion
 
+
+            #region GoToKitchen
+            var guid101 = Guid.NewGuid();
+            modelBuilder.Entity<ActionAggregate>().HasData(
+                new ActionAggregate
+                {
+                    Id = guid101,
+                    Name = "Move-Corridor-LivingRoom",
+                    Description = "Move to corridor via livingroom",
+                    Delay = 2400,
+                    EndPossibility = 50
+                }
+            );
+
+            var guid102 = Guid.NewGuid();
+            modelBuilder.Entity<ActionAggregate>().HasData(
+                new ActionAggregate
+                {
+                    Id = guid102,
+                    Name = "Open-Kitchen-Door",
+                    Description = "Open door of the kitchen",
+                    Delay = 1100,
+                    EndPossibility = 100
+                }
+            );
+
+            var guid103 = Guid.NewGuid();
+            modelBuilder.Entity<ActionAggregate>().HasData(
+                new ActionAggregate
+                {
+                    Id = guid103,
+                    Name = "Move-Kitchen-Corridor",
+                    Description = "Move to kitchen form corridor",
+                    Delay = 500,
+                    EndPossibility = 100
+                }
+            );
+
+            #region One ActionAggregate
+
+            modelBuilder.Entity<ActionCondition>().HasData(
+                new ActionCondition
+                {
+                    ActionAggregateId = guid101,
+                    ConditionType = CaseStudyEnum.HumanPosition,
+                    CaseStudy = "Human2",
+                    ConditionCaseType = ConditionCaseEnum.IsIn,
+                    ConditionCaseExpectation = "LivingRoom"
+                }
+            );
+
+            modelBuilder.Entity<ActionResult>().HasData(
+                new ActionResult
+                {
+                    ActionAggregateId = guid101,
+                    ResultType = CaseStudyEnum.HumanPosition,
+                    CaseStudy = "Human2",
+                    ResultCaseType = ResultCaseEnum.Position,
+                    ResultCaseChange = "Corridor"
+                }
+            );
+
+            modelBuilder.Entity<NextAction>().HasData(
+                new NextAction
+                {
+                    Id = guid102,
+                    ActionAggregateId = guid101,
+                    //NumberOfActions = 1,
+                    Possibility = 100,
+                    Delay = 200
+                }
+            );
+            #endregion
+
+            #region One ActionAggregate
+
+            modelBuilder.Entity<ActionCondition>().HasData(
+                new ActionCondition
+                {
+                    ActionAggregateId = guid102,
+                    ConditionType = CaseStudyEnum.HumanPosition,
+                    CaseStudy = "Human2",
+                    ConditionCaseType = ConditionCaseEnum.IsIn,
+                    ConditionCaseExpectation = "Corridor"
+                }
+            );
+
+            modelBuilder.Entity<ActionResult>().HasData(
+                new ActionResult
+                {
+                    ActionAggregateId = guid102,
+                    ResultType = CaseStudyEnum.ItemState,
+                    CaseStudy = "KitchenDoor",
+                    ResultCaseType = ResultCaseEnum.State,
+                    ResultCaseChange = "Open"
+                }
+            );
+
+            modelBuilder.Entity<NextAction>().HasData(
+                new NextAction
+                {
+                    Id = guid103,
+                    ActionAggregateId = guid102,
+                    //NumberOfActions = 1,
+                    Possibility = 100,
+                    Delay = 300
+                }
+            );
+
+            #endregion
+
+            #region One ActionAggregate
+
+            modelBuilder.Entity<ActionCondition>().HasData(
+                new ActionCondition
+                {
+                    ActionAggregateId = guid103,
+                    ConditionType = CaseStudyEnum.HumanPosition,
+                    CaseStudy = "Human2",
+                    ConditionCaseType = ConditionCaseEnum.IsIn,
+                    ConditionCaseExpectation = "Corridor"
+                },
+                new ActionCondition
+                {
+                    ActionAggregateId = guid103,
+                    ConditionType = CaseStudyEnum.ItemState,
+                    CaseStudy = "KitchenDoor",
+                    ConditionCaseType = ConditionCaseEnum.StateIs,
+                    ConditionCaseExpectation = "Open"
+                }
+            );
+
+            modelBuilder.Entity<ActionResult>().HasData(
+                new ActionResult
+                {
+                    ActionAggregateId = guid103,
+                    ResultType = CaseStudyEnum.HumanPosition,
+                    CaseStudy = "Human2",
+                    ResultCaseType = ResultCaseEnum.Position,
+                    ResultCaseChange = "Kitchen"
+                }
+            );
+            #endregion
+
+            #endregion
+
             #endregion
 
         }
