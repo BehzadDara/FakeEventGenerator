@@ -42,6 +42,32 @@ namespace FakeEventGenerator.Infrastructure
                     v => (ItemState)Enum.Parse(typeof(ItemState), v)
                     );
 
+            #region safebox
+            var guid201 = Guid.NewGuid();
+            modelBuilder.Entity<ActionAggregate>().HasData(
+                new ActionAggregate
+                {
+                    Id = guid201,
+                    Name = "Open-SafeBox",
+                    Description = "Open SafeBox",
+                    Delay = 1500,
+                    EndPossibility = 0
+                }
+            );
+
+            var guid202 = Guid.NewGuid();
+            modelBuilder.Entity<ActionAggregate>().HasData(
+                new ActionAggregate
+                {
+                    Id = guid202,
+                    Name = "Close-SafeBox",
+                    Description = "Close SafeBox",
+                    Delay = 1000,
+                    EndPossibility = 0
+                }
+            );
+            #endregion
+
             #region Door
             modelBuilder.Entity<Item>().HasData(
                new Item
@@ -338,7 +364,7 @@ namespace FakeEventGenerator.Infrastructure
                    IsMovable = false,
                    MetaData = JsonSerializer.Serialize(new SofaMetaData
                    {
-                       Capacity= 1
+                       Capacity = 1
                    })
                },
                new Item
@@ -470,8 +496,17 @@ namespace FakeEventGenerator.Infrastructure
                    State = ItemState.Off,
                    Location = PartOfHouseEnum.Corridor,
                    IsMovable = false
+               },
+               new Item
+               {
+                   Name = "SafeBox",
+                   Description = "Safe Box",
+                   Type = ItemEnum.Openable,
+                   State = ItemState.Close,
+                   Location = PartOfHouseEnum.Corridor,
+                   IsMovable = false
                }
-            #endregion
+               #endregion
 
             );
             #endregion
@@ -642,7 +677,7 @@ namespace FakeEventGenerator.Infrastructure
                     CaseStudy = "Human1",
                     ResultCaseType = ResultCaseEnum.Position,
                     ResultCaseChange = "Bedroom1"
-                },                
+                },
                 new ActionResult
                 {
                     ActionAggregateId = guid1,
@@ -664,7 +699,7 @@ namespace FakeEventGenerator.Infrastructure
                 }
             );
             #endregion
-            
+
             #region One ActionAggregate
 
             modelBuilder.Entity<ActionCondition>().HasData(
@@ -716,7 +751,7 @@ namespace FakeEventGenerator.Infrastructure
                 }
             );
             #endregion
-            
+
             #region One ActionAggregate
 
             modelBuilder.Entity<ActionCondition>().HasData(
@@ -1038,8 +1073,16 @@ namespace FakeEventGenerator.Infrastructure
                     Id = guid13,
                     ActionAggregateId = guid12,
                     //NumberOfActions = 1,
-                    Possibility = 100,
+                    Possibility = 50,
                     Delay = 200
+                },
+                new NextAction
+                {
+                    Id = guid201,
+                    ActionAggregateId = guid12,
+                    //NumberOfActions = 1,
+                    Possibility = 50,
+                    Delay = 150
                 }
             );
             #endregion
@@ -1215,7 +1258,7 @@ namespace FakeEventGenerator.Infrastructure
                 }
             );
             #endregion
-            
+
             #region One ActionAggregate
 
             modelBuilder.Entity<ActionCondition>().HasData(
@@ -1283,7 +1326,7 @@ namespace FakeEventGenerator.Infrastructure
                 }
             );
             #endregion
-             
+
             #region One ActionAggregate
 
             modelBuilder.Entity<ActionCondition>().HasData(
@@ -1341,7 +1384,7 @@ namespace FakeEventGenerator.Infrastructure
             );
 
             #endregion
-            
+
             #region One ActionAggregate
 
             modelBuilder.Entity<ActionCondition>().HasData(
@@ -1401,7 +1444,7 @@ namespace FakeEventGenerator.Infrastructure
             #endregion
 
             #endregion
-            
+
             #region HumanFeelCold
             var guid25 = Guid.NewGuid();
             modelBuilder.Entity<ActionAggregate>().HasData(
@@ -1509,7 +1552,7 @@ namespace FakeEventGenerator.Infrastructure
                 }
             );
             #endregion
-            
+
             #region One ActionAggregate
 
             modelBuilder.Entity<ActionCondition>().HasData(
@@ -1613,6 +1656,7 @@ namespace FakeEventGenerator.Infrastructure
             #endregion
 
             #endregion
+
 
 
             #region GoToKitchen
@@ -1757,6 +1801,84 @@ namespace FakeEventGenerator.Infrastructure
                 }
             );
             #endregion
+
+            #endregion
+
+            #region SafeBox
+
+            modelBuilder.Entity<ActionCondition>().HasData(
+                new ActionCondition
+                {
+                    ActionAggregateId = guid201,
+                    ConditionType = CaseStudyEnum.HumanPosition,
+                    CaseStudy = "Human2",
+                    ConditionCaseType = ConditionCaseEnum.IsIn,
+                    ConditionCaseExpectation = "Corridor"
+                }
+            );
+
+            modelBuilder.Entity<ActionResult>().HasData(
+                new ActionResult
+                {
+                    ActionAggregateId = guid201,
+                    ResultType = CaseStudyEnum.ItemState,
+                    CaseStudy = "SafeBox",
+                    ResultCaseType = ResultCaseEnum.State,
+                    ResultCaseChange = "Open"
+                }
+            );
+
+            modelBuilder.Entity<NextAction>().HasData(
+                new NextAction
+                {
+                    Id = guid202,
+                    ActionAggregateId = guid201,
+                    //NumberOfActions = 1,
+                    Possibility = 100,
+                    Delay = 1800
+                }
+            );
+
+            modelBuilder.Entity<ActionCondition>().HasData(
+                new ActionCondition
+                {
+                    ActionAggregateId = guid202,
+                    ConditionType = CaseStudyEnum.HumanPosition,
+                    CaseStudy = "Human2",
+                    ConditionCaseType = ConditionCaseEnum.IsIn,
+                    ConditionCaseExpectation = "Corridor"
+                },
+                new ActionCondition
+                {
+                    ActionAggregateId = guid202,
+                    ConditionType = CaseStudyEnum.ItemState,
+                    CaseStudy = "SafeBox",
+                    ConditionCaseType = ConditionCaseEnum.StateIs,
+                    ConditionCaseExpectation = "Open"
+                }
+            );
+
+            modelBuilder.Entity<ActionResult>().HasData(
+                new ActionResult
+                {
+                    ActionAggregateId = guid202,
+                    ResultType = CaseStudyEnum.ItemState,
+                    CaseStudy = "SafeBox",
+                    ResultCaseType = ResultCaseEnum.State,
+                    ResultCaseChange = "Close"
+                }
+            );
+
+            modelBuilder.Entity<NextAction>().HasData(
+                new NextAction
+                {
+                    Id = guid101,
+                    ActionAggregateId = guid202,
+                    //NumberOfActions = 1,
+                    Possibility = 100,
+                    Delay = 600
+                }
+            );
 
             #endregion
 

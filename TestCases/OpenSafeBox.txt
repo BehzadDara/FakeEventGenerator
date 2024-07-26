@@ -1,0 +1,6 @@
+{
+  "resultType": 2,
+  "caseStudy": "SafeBox",
+  "resultCaseType": 3,
+  "resultCaseChange": "Open"
+}

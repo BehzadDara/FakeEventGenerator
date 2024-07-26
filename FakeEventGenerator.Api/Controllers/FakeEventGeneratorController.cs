@@ -75,6 +75,27 @@ namespace FakeEventGenerator.Api.Controllers
                 serviceUndo.UndoHuman22();
             }
 
+            var input4 = new RequirementResultViewModel
+            {
+                ResultType = Domain.Enums.CaseStudyEnum.ItemState,
+                CaseStudy = "SafeBox",
+                ResultCaseType = Domain.Enums.ResultCaseEnum.State,
+                ResultCaseChange = "Open"
+            };
+
+            for (var i = 0; i < 150; i++)
+            {
+                var service = new CoreService(_unitOfWork);
+                var resulttmp = service.Post(input4);
+                result.Add(resulttmp);
+                var serviceUndo = new CoreService(_unitOfWork);
+                serviceUndo.UndoHuman21();
+                serviceUndo.UndoHuman22();
+            }
+
+            var rnd = new Random();
+            result = result.OrderBy(x => rnd.Next()).ToList();
+
             WorkBook workbook = WorkBook.Create(ExcelFileFormat.XLSX);
             var sheet = workbook.CreateWorkSheet("Result Sheet");
 
