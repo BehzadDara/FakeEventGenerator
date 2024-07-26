@@ -29,7 +29,7 @@ namespace FakeEventGenerator.Api.Controllers
                 ResultCaseChange = "Cold"
             };
 
-            for (var i = 0; i < 100; i++)
+            for (var i = 0; i < 1000; i++)
             {
                 var service = new CoreService(_unitOfWork);
                 var resulttmp = service.Post(input);
@@ -47,7 +47,7 @@ namespace FakeEventGenerator.Api.Controllers
                 ResultCaseChange = "35"
             };
 
-            for (var i = 0; i < 30; i++)
+            for (var i = 0; i < 300; i++)
             {
                 var service = new CoreService(_unitOfWork);
                 var resulttmp = service.Post(input2);
@@ -65,7 +65,7 @@ namespace FakeEventGenerator.Api.Controllers
                 ResultCaseChange = "35"
             };
 
-            for (var i = 0; i < 40; i++)
+            for (var i = 0; i < 400; i++)
             {
                 var service = new CoreService(_unitOfWork);
                 var resulttmp = service.Post(input3);
@@ -83,7 +83,7 @@ namespace FakeEventGenerator.Api.Controllers
                 ResultCaseChange = "Open"
             };
 
-            for (var i = 0; i < 150; i++)
+            for (var i = 0; i < 1500; i++)
             {
                 var service = new CoreService(_unitOfWork);
                 var resulttmp = service.Post(input4);
