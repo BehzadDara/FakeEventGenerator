@@ -1,5 +1,6 @@
 ﻿using FakeEventGenerator.Domain.ViewModels;
 using FakeEventGenerator.Infrastructure;
+using IronXL;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FakeEventGenerator.Api.Controllers
@@ -18,7 +19,7 @@ namespace FakeEventGenerator.Api.Controllers
         [HttpGet]
         public void GenerateRealDataAsync()
         {
-            var result = new List<ActionAggregateViewModel>();
+            var result = new List<List<ActionAggregateViewModel>>();
 
             var input = new RequirementResultViewModel
             {
@@ -32,7 +33,7 @@ namespace FakeEventGenerator.Api.Controllers
             {
                 var service = new CoreService(_unitOfWork);
                 var resulttmp = service.Post(input);
-                result.AddRange(resulttmp);
+                result.Add(resulttmp);
                 var serviceUndo = new CoreService(_unitOfWork);
                 serviceUndo.UndoHuman21();
                 serviceUndo.UndoHuman22();
@@ -50,7 +51,7 @@ namespace FakeEventGenerator.Api.Controllers
             {
                 var service = new CoreService(_unitOfWork);
                 var resulttmp = service.Post(input2);
-                result.AddRange(resulttmp);
+                result.Add(resulttmp);
                 var serviceUndo = new CoreService(_unitOfWork);
                 serviceUndo.UndoHuman21();
                 serviceUndo.UndoHuman22();
@@ -68,16 +69,29 @@ namespace FakeEventGenerator.Api.Controllers
             {
                 var service = new CoreService(_unitOfWork);
                 var resulttmp = service.Post(input3);
-                result.AddRange(resulttmp);
+                result.Add(resulttmp);
                 var serviceUndo = new CoreService(_unitOfWork);
                 serviceUndo.UndoHuman21();
                 serviceUndo.UndoHuman22();
             }
 
+            WorkBook workbook = WorkBook.Create(ExcelFileFormat.XLSX);
+            var sheet = workbook.CreateWorkSheet("Result Sheet");
 
+            var row = 1;
+            foreach (var item in result)
+            {
+                var column = 'A';
+                foreach (var action in item)
+                {
+                    sheet[$"{column}{row}"].Value = action.Name;
+                    sheet[$"{(char)(column + 1)}{row}"].Value = action.Time;
+                    column = (char)(column + 2);
+                }
+                row++;
+            }
 
-
-
+            workbook.SaveAs("RealData.xlsx");
 
 
 
