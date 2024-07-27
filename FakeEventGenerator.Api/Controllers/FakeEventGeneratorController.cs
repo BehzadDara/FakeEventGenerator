@@ -120,6 +120,84 @@ namespace FakeEventGenerator.Api.Controllers
 
         }
 
+        [HttpGet]
+        public void GenerateFakeDataAsync()
+        {
+            var input1 = new RequirementResultViewModel
+            {
+                ResultType = Domain.Enums.CaseStudyEnum.HumanFeelToDegree,
+                CaseStudy = "Human2",
+                ResultCaseType = Domain.Enums.ResultCaseEnum.State,
+                ResultCaseChange = "Cold"
+            };
+
+            var input2 = new RequirementResultViewModel
+            {
+                ResultType = Domain.Enums.CaseStudyEnum.Environment,
+                CaseStudy = "Sound",
+                ResultCaseType = Domain.Enums.ResultCaseEnum.Increase,
+                ResultCaseChange = "35"
+            };
+
+            var input3 = new RequirementResultViewModel
+            {
+                ResultType = Domain.Enums.CaseStudyEnum.Environment,
+                CaseStudy = "Sound",
+                ResultCaseType = Domain.Enums.ResultCaseEnum.Decrease,
+                ResultCaseChange = "35"
+            };
+
+            var input = new List<RequirementResultViewModel> { input1, input2, input3 };
+
+            var inputFake = new RequirementResultViewModel
+            {
+                ResultType = Domain.Enums.CaseStudyEnum.ItemState,
+                CaseStudy = "SafeBox",
+                ResultCaseType = Domain.Enums.ResultCaseEnum.State,
+                ResultCaseChange = "Open"
+            };
+
+
+            WorkBook workbook = WorkBook.Create(ExcelFileFormat.XLSX);
+            var sheet = workbook.CreateWorkSheet("Result Sheet");
+            var row = 1;
+
+            for (int i = 0; i < 200; i++)
+            {
+                var result = new List<ActionAggregateViewModel>();
+
+                var rnd = new Random();
+                var randomIndex = rnd.Next(input.Count);
+
+                var service1 = new CoreService(_unitOfWork);
+                result.AddRange(service1.Post(input[randomIndex]));
+                var serviceUndo1 = new CoreService(_unitOfWork);
+                serviceUndo1.UndoHuman21();
+                serviceUndo1.UndoHuman22();
+
+                var service2 = new CoreService(_unitOfWork);
+                result.AddRange(service2.Post(inputFake));
+                var serviceUndo2 = new CoreService(_unitOfWork);
+                serviceUndo2.UndoHuman21();
+                serviceUndo2.UndoHuman22();
+
+                result = result.OrderBy(x => x.Time).ToList();
+
+                var column = 'A';
+                foreach (var action in result)
+                {
+                    sheet[$"{column}{row}"].Value = action.Name;
+                    sheet[$"{column}{row + 1}"].Value = action.Time;
+                    column = (char)(column + 1);
+                }
+
+                row += 2;
+
+            }
+
+            workbook.SaveAs("FakeData.xlsx");
+        }
+
         [HttpPost]
         public List<ActionAggregateViewModel> Post([FromBody] RequirementResultViewModel input)
         {
