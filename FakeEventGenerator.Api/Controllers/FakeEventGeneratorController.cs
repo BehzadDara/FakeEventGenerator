@@ -162,7 +162,7 @@ namespace FakeEventGenerator.Api.Controllers
             var sheet = workbook.CreateWorkSheet("Result Sheet");
             var row = 1;
 
-            for (int i = 0; i < 200; i++)
+            for (int i = 0; i < 300; i++)
             {
                 var result = new List<ActionAggregateViewModel>();
 
@@ -170,13 +170,17 @@ namespace FakeEventGenerator.Api.Controllers
                 var randomIndex = rnd.Next(input.Count);
 
                 var service1 = new CoreService(_unitOfWork);
-                result.AddRange(service1.Post(input[randomIndex]));
+                var tmpResult = service1.Post(input[randomIndex]);
+                tmpResult.ForEach(x => x.Description = "F");
+                result.AddRange(tmpResult);
                 var serviceUndo1 = new CoreService(_unitOfWork);
                 serviceUndo1.UndoHuman21();
                 serviceUndo1.UndoHuman22();
 
                 var service2 = new CoreService(_unitOfWork);
-                result.AddRange(service2.Post(inputFake));
+                var tmpResult2 = service2.Post(inputFake);
+                tmpResult2.ForEach(x => x.Description = "R");
+                result.AddRange(tmpResult2);
                 var serviceUndo2 = new CoreService(_unitOfWork);
                 serviceUndo2.UndoHuman21();
                 serviceUndo2.UndoHuman22();
@@ -188,10 +192,11 @@ namespace FakeEventGenerator.Api.Controllers
                 {
                     sheet[$"{column}{row}"].Value = action.Name;
                     sheet[$"{column}{row + 1}"].Value = action.Time;
+                    sheet[$"{column}{row + 2}"].Value = action.Description;
                     column = (char)(column + 1);
                 }
 
-                row += 2;
+                row += 3;
 
             }
 
