@@ -2,12 +2,15 @@
 {
     public enum PartOfHouseEnum
     {
-        LivingRoom,
+        Outside,
+        Entrance,
         Kitchen,
-        Bedroom1,
-        Bedroom2,
-        Bathroom,
-        Balcony,
-        Corridor
+        Toilet,
+        LivingRoom,
+        Staircase,
+        Walkway,
+        Office,
+        Bedroom,
+        Bathroom
     }
 }
