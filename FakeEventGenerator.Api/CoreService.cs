@@ -1,8 +1,10 @@
-﻿using FakeEventGenerator.Domain.DTOs;
+﻿using CsvHelper;
+using FakeEventGenerator.Domain.DTOs;
 using FakeEventGenerator.Domain.Enums;
 using FakeEventGenerator.Domain.Models;
 using FakeEventGenerator.Domain.ViewModels;
 using FakeEventGenerator.Infrastructure;
+using System.Globalization;
 using System.Text.Json;
 
 namespace FakeEventGenerator.Api;
@@ -685,21 +687,18 @@ public class CoreService
         var result = new List<FinalResult>
         {
             new() {
-                Time = currentDateTime,
+                Time =
                 ItemName = "label",
                 Value = $"START:{action.Name}"
             }
         };
 
-        var listOfDetails = JsonSerializer.Deserialize<List<List<SensorData>>>(action.Details);
+        var listOfDetails = action.ActionDetails;
         var details = listOfDetails![random.Next(0, listOfDetails.Count)];
-        foreach (var detail in details)
+        foreach (var detail in details.SensorDatas)
         {
-            currentDateTime = currentDateTime.AddSeconds(detail.Difference);
-
             result.Add(new FinalResult
             {
-                Time = currentDateTime,
                 ItemName = detail.ItemName,
                 Value = detail.Value
             });
@@ -720,5 +719,94 @@ public class CoreService
         });
 
         return result;
+    }
+
+    public async Task FillDetail()
+    {
+        var actionDetails = ReadCsvFile("FullData.csv");
+
+        Guid guid = new();
+        var tmpList = new List<SensorData>();
+        foreach (var actionDetail in actionDetails)
+        {
+            if (actionDetail.Value.StartsWith("START"))
+            {
+                var tmp = actionDetail.Value[6..];
+                guid = actionAggregates.First(x => x.Name == tmp).Id;
+                /*guid = tmp switch
+                {
+                    "Entrance|Entering" => guid1,
+                    "Staircase|Going_up" => guid2,
+                    "Bathroom|Showering" => guid3,
+                    "Bathroom|Using_the_sink" => guid4,
+                    "Staircase|Going_down" => guid5,
+                    "Living_room|Watching_TV" => guid6,
+                    "Toilet|Using_the_toilet" => guid7,
+                    "Office|Computing" => guid8,
+                    "Kitchen|Preparing" => guid9,
+                    "Kitchen|Cooking" => guid10,
+                    "Living_room|Eating" => guid11,
+                    "Kitchen|Washing_the_dishes" => guid12,
+                    "Living_room|Cleaning" => guid13,
+                    "Living_room|Computing" => guid14,
+                    "Bedroom|Dressing" => guid15,
+                    "Bedroom|Reading" => guid16,
+                    "Bedroom|Napping" => guid17,
+                    "Bathroom|Using_the_toilet" => guid18,
+                    "Office|Watching_TV" => guid19,
+                    "Entrance|Leaving" => guid20,
+                    "Kitchen|Cleaning" => guid21,
+                    "Bathroom|Cleaning" => guid22,
+                    "Bedroom|Cleaning" => guid23,
+                    "Office|Cleaning" => guid24,
+                };*/
+            }
+
+            tmpList.Add(actionDetail);
+
+            if (actionDetail.Value.StartsWith("STOP"))
+            {
+                var hereGUID = Guid.NewGuid();
+
+                var tmp2List = tmpList.Select(x => new SensorDataEntity
+                {
+                    Id = Guid.NewGuid(),
+                    ActionDetailId = hereGUID,
+                    Time = x.Time,
+                    ItemName = x.ItemName,
+                    Value = x.Value
+                }).ToList();
+
+                await _unitOfWork._dBContext.Set<ActionDetail>().AddAsync(new ActionDetail
+                {
+                    Id = hereGUID,
+                    ActionAggregateId = guid
+                });
+
+                foreach (var tmp2 in tmp2List)
+                {
+                    await _unitOfWork._dBContext.Set<SensorDataEntity>().AddAsync(
+                        new SensorDataEntity
+                        {
+                            Id = Guid.NewGuid(),
+                            ActionDetailId = hereGUID,
+                            Time = tmp2.Time,
+                            ItemName = tmp2.ItemName,
+                            Value = tmp2.Value
+                        });
+                }
+
+                tmpList = new List<SensorData>();
+            }
+        }
+
+        _unitOfWork.Complete();
+    }
+
+    static List<SensorData> ReadCsvFile(string filePath)
+    {
+        using var reader = new StreamReader(filePath);
+        using var csv = new CsvReader(reader, CultureInfo.InvariantCulture);
+        return new List<SensorData>(csv.GetRecords<SensorData>());
     }
 }

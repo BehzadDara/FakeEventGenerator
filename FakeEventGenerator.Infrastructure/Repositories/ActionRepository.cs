@@ -15,6 +15,7 @@ namespace FakeEventGenerator.Infrastructure.Repositories
                 .Include(x => x.Conditions)
                 .Include(x => x.Results)
                 .Include(x => x.NextActions)
+                .Include(x => x.ActionDetails).ThenInclude(x => x.SensorDatas)
                 .ToListAsync();
         }
     }

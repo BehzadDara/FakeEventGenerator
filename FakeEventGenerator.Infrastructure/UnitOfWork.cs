@@ -4,7 +4,7 @@ namespace FakeEventGenerator.Infrastructure
 {
     public class UnitOfWork
     {
-        private readonly FakeEventGeneratorDBContext _dBContext;
+        public readonly FakeEventGeneratorDBContext _dBContext;
 
         public UnitOfWork(FakeEventGeneratorDBContext dBContext)
         {

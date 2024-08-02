@@ -19,12 +19,20 @@ namespace FakeEventGenerator.Api.Controllers
 
         }
 
+
+        /*[HttpGet]
+        public async Task FillDetail()
+        {
+            var service = new CoreService(_unitOfWork);
+            await service.FillDetail();
+        }*/
+
         [HttpGet]
         public void GenerateCombined()
         {
             var result = new List<FinalResult2>();
 
-            var t1 = ReadCsvFile("RealOrange.csv");
+            /*var t1 = ReadCsvFile("RealOrange.csv");
             result.AddRange(t1.Select(fr => new FinalResult2
             {
                 Time = fr.Time,
@@ -41,7 +49,7 @@ namespace FakeEventGenerator.Api.Controllers
                 IsReal = false
             }).ToList());
 
-            result = result.OrderBy(x => x.Time.Hour).ThenBy(x => x.Time.Minute).ToList();
+            result = result.OrderBy(x => x.Time.Hour).ThenBy(x => x.Time.Minute).ToList();*/
 
 
 
