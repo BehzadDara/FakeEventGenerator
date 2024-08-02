@@ -9,6 +9,8 @@ namespace FakeEventGenerator.Api;
 
 public class CoreService
 {
+    private DateTime currentDateTime = new(DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day, 7, 58, 0);
+
     private readonly UnitOfWork _unitOfWork;
     private readonly List<EnvironmentVariable> environmentVariables = new();
     private readonly List<Item> items = new();
@@ -16,7 +18,6 @@ public class CoreService
     private readonly List<ActionAggregate> actionAggregates = new();
     private readonly ActionAggregate stopPoint;
     private readonly Random random = new();
-
 
     private readonly List<int> times = new();
     private int iterator = 0;
@@ -29,11 +30,11 @@ public class CoreService
         items = _unitOfWork.ItemRepository.GetAll().Result;
         humans = _unitOfWork.HumanRepository.GetAll().Result;
         actionAggregates = _unitOfWork.ActionRepository.GetAll().Result;
-        stopPoint = actionAggregates.First(x => x.Results.Any(y =>
+        /*stopPoint = actionAggregates.First(x => x.Results.Any(y =>
             y.ResultType.Equals(CaseStudyEnum.HumanPosition) &&
             y.CaseStudy.Equals("Human2") &&
             y.ResultCaseType.Equals(ResultCaseEnum.Position) &&
-            BeResultCaseChange(y.ResultType, y.ResultCaseChange, "Kitchen")));
+            BeResultCaseChange(y.ResultType, y.ResultCaseChange, "Kitchen")));*/
 
     }
 
@@ -651,5 +652,73 @@ public class CoreService
         _unitOfWork.EnvironmentRepository.Update(degree);
 
         _unitOfWork.Complete();
+    }
+
+    public List<FinalResult> GenerateO4H()
+    {
+        var action = actionAggregates.First(x => x.Name == "Entrance|Entering");
+
+        return GenerateRecursively(action);
+    }
+
+    public List<FinalResult> GenerateRecursively(ActionAggregate action)
+    {
+        var result = new List<FinalResult>();
+        result.AddRange(GenerateFinalResult(action));
+
+        var nexts = action.NextActions;
+        if (nexts.Count != 0)
+        {
+            var nextAction = nexts.OrderByDescending(x => x.Possibility + random.Next(0, 100)).First();
+            var choosedAction = actionAggregates.First(x => x.Id == nextAction.Id);
+            var nextResult = GenerateRecursively(choosedAction);
+            result.AddRange(nextResult);
+        }
+
+        return result;
+    }
+
+    public List<FinalResult> GenerateFinalResult(ActionAggregate action)
+    {
+        var startDateTime = currentDateTime;
+
+        var result = new List<FinalResult>
+        {
+            new() {
+                Time = currentDateTime,
+                ItemName = "label",
+                Value = $"START:{action.Name}"
+            }
+        };
+
+        var listOfDetails = JsonSerializer.Deserialize<List<List<SensorData>>>(action.Details);
+        var details = listOfDetails![random.Next(0, listOfDetails.Count)];
+        foreach (var detail in details)
+        {
+            currentDateTime = currentDateTime.AddSeconds(detail.Difference);
+
+            result.Add(new FinalResult
+            {
+                Time = currentDateTime,
+                ItemName = detail.ItemName,
+                Value = detail.Value
+            });
+        }
+
+        var tmpDateTime = startDateTime.AddSeconds(action.Delay);
+
+        if (tmpDateTime > currentDateTime)
+        {
+            currentDateTime = tmpDateTime;
+        }
+
+        result.Add(new FinalResult
+        {
+            Time = currentDateTime,
+            ItemName = "label",
+            Value = $"STOP:{action.Name}"
+        });
+
+        return result;
     }
 }

@@ -1,7 +1,10 @@
-﻿using FakeEventGenerator.Domain.ViewModels;
+﻿using CsvHelper;
+using FakeEventGenerator.Domain.Models;
+using FakeEventGenerator.Domain.ViewModels;
 using FakeEventGenerator.Infrastructure;
 using IronXL;
 using Microsoft.AspNetCore.Mvc;
+using System.Globalization;
 
 namespace FakeEventGenerator.Api.Controllers
 {
@@ -14,6 +17,64 @@ namespace FakeEventGenerator.Api.Controllers
         {
             _unitOfWork = unitOfWork;
 
+        }
+
+        [HttpGet]
+        public void GenerateCombined()
+        {
+            var result = new List<FinalResult2>();
+
+            var t1 = ReadCsvFile("RealOrange.csv");
+            result.AddRange(t1.Select(fr => new FinalResult2
+            {
+                Time = fr.Time,
+                ItemName = fr.ItemName,
+                Value = fr.Value,
+                IsReal = true
+            }).ToList());
+            var t2 = ReadCsvFile("Output.csv");
+            result.AddRange(t2.Select(fr => new FinalResult2
+            {
+                Time = fr.Time,
+                ItemName = fr.ItemName,
+                Value = fr.Value,
+                IsReal = false
+            }).ToList());
+
+            result = result.OrderBy(x => x.Time.Hour).ThenBy(x => x.Time.Minute).ToList();
+
+
+
+            WriteCsvFile2("Combined.csv", result);
+        }
+
+        [HttpGet]
+        public void GenerateFakeDataAsyncO4H()
+        {
+            var service = new CoreService(_unitOfWork);
+            var result = service.GenerateO4H();
+            WriteCsvFile("Output.csv", result);
+        }
+
+        static void WriteCsvFile(string filePath, List<FinalResult> items)
+        {
+            using var writer = new StreamWriter(filePath);
+            using var csv = new CsvWriter(writer, CultureInfo.InvariantCulture);
+            csv.WriteRecords(items);
+        }
+
+        static void WriteCsvFile2(string filePath, List<FinalResult2> items)
+        {
+            using var writer = new StreamWriter(filePath);
+            using var csv = new CsvWriter(writer, CultureInfo.InvariantCulture);
+            csv.WriteRecords(items);
+        }
+
+        static List<FinalResult> ReadCsvFile(string filePath)
+        {
+            using var reader = new StreamReader(filePath);
+            using var csv = new CsvReader(reader, CultureInfo.InvariantCulture);
+            return new List<FinalResult>(csv.GetRecords<FinalResult>());
         }
 
         [HttpGet]

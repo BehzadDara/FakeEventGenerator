@@ -9,5 +9,6 @@
         public List<ActionResult> Results { get; set; } = new();
         public int EndPossibility { get; set; }
         public List<NextAction> NextActions { get; set; } = new();
+        public string Details { get; set; } = string.Empty;
     }
 }

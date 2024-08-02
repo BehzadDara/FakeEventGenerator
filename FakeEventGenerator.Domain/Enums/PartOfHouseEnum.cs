@@ -11,6 +11,10 @@
         Walkway,
         Office,
         Bedroom,
-        Bathroom
+        Bathroom,
+
+
+        Bedroom2,
+        Bedroom1
     }
 }
