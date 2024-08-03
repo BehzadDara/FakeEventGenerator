@@ -682,12 +682,9 @@ public class CoreService
 
     public List<FinalResult> GenerateFinalResult(ActionAggregate action)
     {
-        var startDateTime = currentDateTime;
-
         var result = new List<FinalResult>
         {
             new() {
-                Time =
                 ItemName = "label",
                 Value = $"START:{action.Name}"
             }
@@ -704,16 +701,8 @@ public class CoreService
             });
         }
 
-        var tmpDateTime = startDateTime.AddSeconds(action.Delay);
-
-        if (tmpDateTime > currentDateTime)
-        {
-            currentDateTime = tmpDateTime;
-        }
-
         result.Add(new FinalResult
         {
-            Time = currentDateTime,
             ItemName = "label",
             Value = $"STOP:{action.Name}"
         });

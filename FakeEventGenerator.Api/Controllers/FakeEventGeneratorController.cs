@@ -32,10 +32,9 @@ namespace FakeEventGenerator.Api.Controllers
         {
             var result = new List<FinalResult2>();
 
-            /*var t1 = ReadCsvFile("RealOrange.csv");
+            var t1 = ReadCsvFile("RealOrange.csv");
             result.AddRange(t1.Select(fr => new FinalResult2
             {
-                Time = fr.Time,
                 ItemName = fr.ItemName,
                 Value = fr.Value,
                 IsReal = true
@@ -43,13 +42,12 @@ namespace FakeEventGenerator.Api.Controllers
             var t2 = ReadCsvFile("Output.csv");
             result.AddRange(t2.Select(fr => new FinalResult2
             {
-                Time = fr.Time,
                 ItemName = fr.ItemName,
                 Value = fr.Value,
                 IsReal = false
             }).ToList());
 
-            result = result.OrderBy(x => x.Time.Hour).ThenBy(x => x.Time.Minute).ToList();*/
+            //result = result.OrderBy(x => x.Time.Hour).ThenBy(x => x.Time.Minute).ToList();*/
 
 
 
