@@ -21,6 +21,8 @@ public class CoreService
     private readonly ActionAggregate stopPoint;
     private readonly Random random = new();
 
+    private int counter = 1;
+
     private readonly List<int> times = new();
     private int iterator = 0;
     private int globalTime = 0;
@@ -660,7 +662,30 @@ public class CoreService
     {
         var action = actionAggregates.First(x => x.Name == "Entrance|Entering");
 
-        return GenerateRecursively(action);
+        var result = new List<FinalResult>();
+
+        result.AddRange(GenerateRecursively(action));
+        counter++;
+        /*result.AddRange(GenerateRecursively(action));
+        counter++;
+        result.AddRange(GenerateRecursively(action));
+        counter++;
+        result.AddRange(GenerateRecursively(action));
+        counter++;
+        result.AddRange(GenerateRecursively(action));
+        counter++;
+        result.AddRange(GenerateRecursively(action));
+        counter++;
+        result.AddRange(GenerateRecursively(action));
+        counter++;
+        result.AddRange(GenerateRecursively(action));
+        counter++;
+        result.AddRange(GenerateRecursively(action));
+        counter++;
+        result.AddRange(GenerateRecursively(action));
+        counter++;*/
+
+        return result;
     }
 
     public List<FinalResult> GenerateRecursively(ActionAggregate action)
@@ -686,25 +711,28 @@ public class CoreService
         {
             new() {
                 ItemName = "label",
-                Value = $"START:{action.Name}"
+                Value = $"START:{action.Name}",
+                Day = counter
             }
         };
 
         var listOfDetails = action.ActionDetails;
         var details = listOfDetails![random.Next(0, listOfDetails.Count)];
-        foreach (var detail in details.SensorDatas)
+        foreach (var detail in details.SensorDatas.Where(x => x.ItemName != "label"))
         {
             result.Add(new FinalResult
             {
                 ItemName = detail.ItemName,
-                Value = detail.Value
+                Value = detail.Value,
+                Day = counter
             });
         }
 
         result.Add(new FinalResult
         {
             ItemName = "label",
-            Value = $"STOP:{action.Name}"
+            Value = $"STOP:{action.Name}",
+            Day = counter
         });
 
         return result;

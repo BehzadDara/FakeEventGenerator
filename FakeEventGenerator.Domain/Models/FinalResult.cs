@@ -8,4 +8,6 @@ public class FinalResult
     public string ItemName { get; set; } = string.Empty;
     [Index(1)]
     public string Value { get; set; } = string.Empty;
+    [Index(2)]
+    public int Day { get; set; } = 0;
 }

@@ -32,14 +32,14 @@ namespace FakeEventGenerator.Api.Controllers
         {
             var result = new List<FinalResult2>();
 
-            var t1 = ReadCsvFile("RealOrange.csv");
+            var t1 = ReadCsvFile("TwoDayReal.csv");
             result.AddRange(t1.Select(fr => new FinalResult2
             {
                 ItemName = fr.ItemName,
                 Value = fr.Value,
                 IsReal = true
             }).ToList());
-            var t2 = ReadCsvFile("Output.csv");
+            var t2 = ReadCsvFile("TwoDayFake.csv");
             result.AddRange(t2.Select(fr => new FinalResult2
             {
                 ItemName = fr.ItemName,
@@ -51,7 +51,7 @@ namespace FakeEventGenerator.Api.Controllers
 
 
 
-            WriteCsvFile2("Combined.csv", result);
+            WriteCsvFile2("CombinedV3.csv", result);
         }
 
         [HttpGet]
@@ -59,7 +59,7 @@ namespace FakeEventGenerator.Api.Controllers
         {
             var service = new CoreService(_unitOfWork);
             var result = service.GenerateO4H();
-            WriteCsvFile("Output.csv", result);
+            WriteCsvFile("One1DayFake.csv", result);
         }
 
         static void WriteCsvFile(string filePath, List<FinalResult> items)
