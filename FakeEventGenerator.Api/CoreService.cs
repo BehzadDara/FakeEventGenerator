@@ -666,8 +666,6 @@ public class CoreService
 
         result.AddRange(GenerateRecursively(action));
         counter++;
-        /*result.AddRange(GenerateRecursively(action));
-        counter++;
         result.AddRange(GenerateRecursively(action));
         counter++;
         result.AddRange(GenerateRecursively(action));
@@ -683,7 +681,9 @@ public class CoreService
         result.AddRange(GenerateRecursively(action));
         counter++;
         result.AddRange(GenerateRecursively(action));
-        counter++;*/
+        counter++;
+        result.AddRange(GenerateRecursively(action));
+        counter++;
 
         return result;
     }
@@ -750,33 +750,6 @@ public class CoreService
             {
                 var tmp = actionDetail.Value[6..];
                 guid = actionAggregates.First(x => x.Name == tmp).Id;
-                /*guid = tmp switch
-                {
-                    "Entrance|Entering" => guid1,
-                    "Staircase|Going_up" => guid2,
-                    "Bathroom|Showering" => guid3,
-                    "Bathroom|Using_the_sink" => guid4,
-                    "Staircase|Going_down" => guid5,
-                    "Living_room|Watching_TV" => guid6,
-                    "Toilet|Using_the_toilet" => guid7,
-                    "Office|Computing" => guid8,
-                    "Kitchen|Preparing" => guid9,
-                    "Kitchen|Cooking" => guid10,
-                    "Living_room|Eating" => guid11,
-                    "Kitchen|Washing_the_dishes" => guid12,
-                    "Living_room|Cleaning" => guid13,
-                    "Living_room|Computing" => guid14,
-                    "Bedroom|Dressing" => guid15,
-                    "Bedroom|Reading" => guid16,
-                    "Bedroom|Napping" => guid17,
-                    "Bathroom|Using_the_toilet" => guid18,
-                    "Office|Watching_TV" => guid19,
-                    "Entrance|Leaving" => guid20,
-                    "Kitchen|Cleaning" => guid21,
-                    "Bathroom|Cleaning" => guid22,
-                    "Bedroom|Cleaning" => guid23,
-                    "Office|Cleaning" => guid24,
-                };*/
             }
 
             tmpList.Add(actionDetail);
@@ -787,7 +760,6 @@ public class CoreService
 
                 var tmp2List = tmpList.Select(x => new SensorDataEntity
                 {
-                    Id = Guid.NewGuid(),
                     ActionDetailId = hereGUID,
                     Time = x.Time,
                     ItemName = x.ItemName,
@@ -805,7 +777,6 @@ public class CoreService
                     await _unitOfWork._dBContext.Set<SensorDataEntity>().AddAsync(
                         new SensorDataEntity
                         {
-                            Id = Guid.NewGuid(),
                             ActionDetailId = hereGUID,
                             Time = tmp2.Time,
                             ItemName = tmp2.ItemName,
@@ -825,5 +796,34 @@ public class CoreService
         using var reader = new StreamReader(filePath);
         using var csv = new CsvReader(reader, CultureInfo.InvariantCulture);
         return new List<SensorData>(csv.GetRecords<SensorData>());
+    }
+
+    public void CheckData()
+    {
+        var action = actionAggregates.First(x => x.Name == "Entrance|Entering");
+        var listOfDetails = action.ActionDetails;
+
+        for (var i = 0; i < listOfDetails.Count; i++)
+        {
+            var t1 = listOfDetails[i].SensorDatas.OrderBy(x => x.Time).ToList();
+
+            for (var j = 0; j < t1.Count; j++)
+            {
+                var t2 = t1[j];
+
+                if (t2.ItemName == "entrance_door")
+                {
+                    if (t2.Value == "CLOSED")
+                    {
+
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+            }
+        }
+
     }
 }

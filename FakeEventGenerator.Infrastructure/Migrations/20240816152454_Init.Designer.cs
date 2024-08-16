@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FakeEventGenerator.Infrastructure.Migrations
 {
     [DbContext(typeof(FakeEventGeneratorDBContext))]
-    [Migration("20240802172425_Init")]
+    [Migration("20240816152454_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -52,7 +52,7 @@ namespace FakeEventGenerator.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("09cbb4f4-b294-4e31-98e0-4937c829352a"),
+                            Id = new Guid("7c11b156-8ce9-4fb2-a471-1c9f808432fe"),
                             Delay = 131,
                             Description = "",
                             EndPossibility = 0,
@@ -60,7 +60,7 @@ namespace FakeEventGenerator.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("44337f76-9ff3-422a-84e2-7e8497836844"),
+                            Id = new Guid("422cc46b-b29d-4b94-9824-934605a7abc7"),
                             Delay = 53,
                             Description = "",
                             EndPossibility = 0,
@@ -68,7 +68,7 @@ namespace FakeEventGenerator.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("419963e9-d544-4568-a4a5-566ad8331fc5"),
+                            Id = new Guid("f65cf285-02b7-4af5-af05-d0fb0e68da42"),
                             Delay = 1063,
                             Description = "",
                             EndPossibility = 0,
@@ -76,7 +76,7 @@ namespace FakeEventGenerator.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("24f6ae4b-6f99-4e54-865e-748e8297a25c"),
+                            Id = new Guid("36456171-deb8-43bf-b497-1b56f3efdbdb"),
                             Delay = 207,
                             Description = "",
                             EndPossibility = 0,
@@ -84,7 +84,7 @@ namespace FakeEventGenerator.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("ce2ec480-d55b-498e-bf9c-13147ae3c543"),
+                            Id = new Guid("d0e2f0b7-4f70-409f-a59f-f0a5cc16d909"),
                             Delay = 53,
                             Description = "",
                             EndPossibility = 0,
@@ -92,7 +92,7 @@ namespace FakeEventGenerator.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("bf8b6585-e818-4b69-a52b-7af4955fdf49"),
+                            Id = new Guid("cd2872c3-8575-4025-a803-fa03106f440a"),
                             Delay = 1668,
                             Description = "",
                             EndPossibility = 0,
@@ -100,7 +100,7 @@ namespace FakeEventGenerator.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("0f2f7417-6e6f-4d56-8dec-a0a9dd918154"),
+                            Id = new Guid("5ce04ae0-9dd1-4f69-a464-35e54476a9a3"),
                             Delay = 147,
                             Description = "",
                             EndPossibility = 0,
@@ -108,7 +108,7 @@ namespace FakeEventGenerator.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("59c69ddc-7f2a-4241-be3b-74ccabc8a03a"),
+                            Id = new Guid("baa9e157-fd12-41b5-b7f7-119d006d91d8"),
                             Delay = 9225,
                             Description = "",
                             EndPossibility = 0,
@@ -116,7 +116,7 @@ namespace FakeEventGenerator.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("25deeb4d-2fc1-4a21-9ab5-8cda61cb3eef"),
+                            Id = new Guid("d2acf5db-3126-4491-84e4-f49ee41d1d25"),
                             Delay = 112,
                             Description = "",
                             EndPossibility = 0,
@@ -124,7 +124,7 @@ namespace FakeEventGenerator.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("2c575e89-f134-420f-a5b4-a3c665adc741"),
+                            Id = new Guid("b0000a96-0c63-4c0c-955b-a24b18117ea1"),
                             Delay = 692,
                             Description = "",
                             EndPossibility = 0,
@@ -132,7 +132,7 @@ namespace FakeEventGenerator.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("d4f79c1f-0be2-448d-81a0-c97f135fff22"),
+                            Id = new Guid("3396a6c5-dfd8-43d0-8147-2a8629b2338e"),
                             Delay = 712,
                             Description = "",
                             EndPossibility = 0,
@@ -140,7 +140,7 @@ namespace FakeEventGenerator.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("a2ecbf24-3d6c-4f69-af7b-b977bde05558"),
+                            Id = new Guid("745122e5-347e-4c3f-ac2d-216b7de085f7"),
                             Delay = 381,
                             Description = "",
                             EndPossibility = 0,
@@ -148,7 +148,7 @@ namespace FakeEventGenerator.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("6a064188-f5f4-4c03-82f5-7bc91fb706ca"),
+                            Id = new Guid("6671a582-af36-4e59-8acd-aae99ed53dcd"),
                             Delay = 90,
                             Description = "",
                             EndPossibility = 0,
@@ -156,7 +156,7 @@ namespace FakeEventGenerator.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("0643e948-3429-4782-b163-20e9ea995d2d"),
+                            Id = new Guid("8c62c06f-5b82-456a-9909-be0cd3bba7cb"),
                             Delay = 1882,
                             Description = "",
                             EndPossibility = 0,
@@ -164,7 +164,7 @@ namespace FakeEventGenerator.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("3184275d-3c14-408c-aefa-957fcebbd259"),
+                            Id = new Guid("c4f2f3ae-99a4-417a-be15-2e4bcfba4530"),
                             Delay = 95,
                             Description = "",
                             EndPossibility = 0,
@@ -172,7 +172,7 @@ namespace FakeEventGenerator.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("fc675763-5211-430d-9c19-5b612056cb58"),
+                            Id = new Guid("4c7d5e2c-29b8-4355-ac37-62aafd9e035f"),
                             Delay = 1738,
                             Description = "",
                             EndPossibility = 0,
@@ -180,7 +180,7 @@ namespace FakeEventGenerator.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("9c8ff592-e175-46a3-8d6d-2e63055ee950"),
+                            Id = new Guid("94434109-6779-48d6-a726-4eef79755df9"),
                             Delay = 1646,
                             Description = "",
                             EndPossibility = 0,
@@ -188,7 +188,7 @@ namespace FakeEventGenerator.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("87fc718e-898c-499a-a6f4-03c8405f0808"),
+                            Id = new Guid("b6fe9a9a-01f0-490b-a6b3-b76a5d2fc3ae"),
                             Delay = 222,
                             Description = "",
                             EndPossibility = 0,
@@ -196,7 +196,7 @@ namespace FakeEventGenerator.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("f3bd068d-fb68-4874-8af8-5f2e66ed028d"),
+                            Id = new Guid("7d2af24d-2176-4a63-9cf2-f1123630a71c"),
                             Delay = 1147,
                             Description = "",
                             EndPossibility = 0,
@@ -204,7 +204,7 @@ namespace FakeEventGenerator.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("0c536f44-97c8-4188-a575-b840ca17f2d3"),
+                            Id = new Guid("43f44c50-bebc-4f0d-8701-f30d3fdc3766"),
                             Delay = 89,
                             Description = "",
                             EndPossibility = 100,
@@ -212,7 +212,7 @@ namespace FakeEventGenerator.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("d955fe65-2ace-4631-adc6-9d01b238d787"),
+                            Id = new Guid("5628217c-16af-4e86-b817-f25d746db9c9"),
                             Delay = 119,
                             Description = "",
                             EndPossibility = 0,
@@ -220,7 +220,7 @@ namespace FakeEventGenerator.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("6b6e5e84-ad35-48d7-893e-04a985453ef2"),
+                            Id = new Guid("c855f4c9-6c86-4253-865e-dfeafc3299bb"),
                             Delay = 177,
                             Description = "",
                             EndPossibility = 0,
@@ -228,7 +228,7 @@ namespace FakeEventGenerator.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("36d6c59c-ecea-4838-bf8c-9201202d8aff"),
+                            Id = new Guid("d1a54cf2-e4bc-474c-aadc-fe2d0abe8a90"),
                             Delay = 132,
                             Description = "",
                             EndPossibility = 0,
@@ -236,7 +236,7 @@ namespace FakeEventGenerator.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("e4590636-080a-4fe1-840b-6c81bdcfd06f"),
+                            Id = new Guid("b3056bb2-b38f-4792-ab66-ab7d2cff88e7"),
                             Delay = 152,
                             Description = "",
                             EndPossibility = 0,
@@ -427,337 +427,337 @@ namespace FakeEventGenerator.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("44337f76-9ff3-422a-84e2-7e8497836844"),
-                            ActionAggregateId = new Guid("09cbb4f4-b294-4e31-98e0-4937c829352a"),
+                            Id = new Guid("422cc46b-b29d-4b94-9824-934605a7abc7"),
+                            ActionAggregateId = new Guid("7c11b156-8ce9-4fb2-a471-1c9f808432fe"),
                             Delay = 1,
                             Possibility = 90
                         },
                         new
                         {
-                            Id = new Guid("0f2f7417-6e6f-4d56-8dec-a0a9dd918154"),
-                            ActionAggregateId = new Guid("09cbb4f4-b294-4e31-98e0-4937c829352a"),
+                            Id = new Guid("5ce04ae0-9dd1-4f69-a464-35e54476a9a3"),
+                            ActionAggregateId = new Guid("7c11b156-8ce9-4fb2-a471-1c9f808432fe"),
                             Delay = 1,
                             Possibility = 5
                         },
                         new
                         {
-                            Id = new Guid("bf8b6585-e818-4b69-a52b-7af4955fdf49"),
-                            ActionAggregateId = new Guid("09cbb4f4-b294-4e31-98e0-4937c829352a"),
+                            Id = new Guid("cd2872c3-8575-4025-a803-fa03106f440a"),
+                            ActionAggregateId = new Guid("7c11b156-8ce9-4fb2-a471-1c9f808432fe"),
                             Delay = 1,
                             Possibility = 6
                         },
                         new
                         {
-                            Id = new Guid("419963e9-d544-4568-a4a5-566ad8331fc5"),
-                            ActionAggregateId = new Guid("44337f76-9ff3-422a-84e2-7e8497836844"),
+                            Id = new Guid("f65cf285-02b7-4af5-af05-d0fb0e68da42"),
+                            ActionAggregateId = new Guid("422cc46b-b29d-4b94-9824-934605a7abc7"),
                             Delay = 1,
                             Possibility = 33
                         },
                         new
                         {
-                            Id = new Guid("59c69ddc-7f2a-4241-be3b-74ccabc8a03a"),
-                            ActionAggregateId = new Guid("44337f76-9ff3-422a-84e2-7e8497836844"),
+                            Id = new Guid("baa9e157-fd12-41b5-b7f7-119d006d91d8"),
+                            ActionAggregateId = new Guid("422cc46b-b29d-4b94-9824-934605a7abc7"),
                             Delay = 1,
                             Possibility = 33
                         },
                         new
                         {
-                            Id = new Guid("24f6ae4b-6f99-4e54-865e-748e8297a25c"),
-                            ActionAggregateId = new Guid("44337f76-9ff3-422a-84e2-7e8497836844"),
+                            Id = new Guid("36456171-deb8-43bf-b497-1b56f3efdbdb"),
+                            ActionAggregateId = new Guid("422cc46b-b29d-4b94-9824-934605a7abc7"),
                             Delay = 1,
                             Possibility = 31
                         },
                         new
                         {
-                            Id = new Guid("87fc718e-898c-499a-a6f4-03c8405f0808"),
-                            ActionAggregateId = new Guid("44337f76-9ff3-422a-84e2-7e8497836844"),
+                            Id = new Guid("b6fe9a9a-01f0-490b-a6b3-b76a5d2fc3ae"),
+                            ActionAggregateId = new Guid("422cc46b-b29d-4b94-9824-934605a7abc7"),
                             Delay = 1,
                             Possibility = 3
                         },
                         new
                         {
-                            Id = new Guid("24f6ae4b-6f99-4e54-865e-748e8297a25c"),
-                            ActionAggregateId = new Guid("419963e9-d544-4568-a4a5-566ad8331fc5"),
+                            Id = new Guid("36456171-deb8-43bf-b497-1b56f3efdbdb"),
+                            ActionAggregateId = new Guid("f65cf285-02b7-4af5-af05-d0fb0e68da42"),
                             Delay = 1,
                             Possibility = 100
                         },
                         new
                         {
-                            Id = new Guid("ce2ec480-d55b-498e-bf9c-13147ae3c543"),
-                            ActionAggregateId = new Guid("24f6ae4b-6f99-4e54-865e-748e8297a25c"),
+                            Id = new Guid("d0e2f0b7-4f70-409f-a59f-f0a5cc16d909"),
+                            ActionAggregateId = new Guid("36456171-deb8-43bf-b497-1b56f3efdbdb"),
                             Delay = 1,
                             Possibility = 44
                         },
                         new
                         {
-                            Id = new Guid("3184275d-3c14-408c-aefa-957fcebbd259"),
-                            ActionAggregateId = new Guid("24f6ae4b-6f99-4e54-865e-748e8297a25c"),
+                            Id = new Guid("c4f2f3ae-99a4-417a-be15-2e4bcfba4530"),
+                            ActionAggregateId = new Guid("36456171-deb8-43bf-b497-1b56f3efdbdb"),
                             Delay = 1,
                             Possibility = 39
                         },
                         new
                         {
-                            Id = new Guid("6b6e5e84-ad35-48d7-893e-04a985453ef2"),
-                            ActionAggregateId = new Guid("24f6ae4b-6f99-4e54-865e-748e8297a25c"),
+                            Id = new Guid("c855f4c9-6c86-4253-865e-dfeafc3299bb"),
+                            ActionAggregateId = new Guid("36456171-deb8-43bf-b497-1b56f3efdbdb"),
                             Delay = 1,
                             Possibility = 8
                         },
                         new
                         {
-                            Id = new Guid("59c69ddc-7f2a-4241-be3b-74ccabc8a03a"),
-                            ActionAggregateId = new Guid("24f6ae4b-6f99-4e54-865e-748e8297a25c"),
+                            Id = new Guid("baa9e157-fd12-41b5-b7f7-119d006d91d8"),
+                            ActionAggregateId = new Guid("36456171-deb8-43bf-b497-1b56f3efdbdb"),
                             Delay = 1,
                             Possibility = 6
                         },
                         new
                         {
-                            Id = new Guid("87fc718e-898c-499a-a6f4-03c8405f0808"),
-                            ActionAggregateId = new Guid("24f6ae4b-6f99-4e54-865e-748e8297a25c"),
+                            Id = new Guid("b6fe9a9a-01f0-490b-a6b3-b76a5d2fc3ae"),
+                            ActionAggregateId = new Guid("36456171-deb8-43bf-b497-1b56f3efdbdb"),
                             Delay = 1,
                             Possibility = 3
                         },
                         new
                         {
-                            Id = new Guid("bf8b6585-e818-4b69-a52b-7af4955fdf49"),
-                            ActionAggregateId = new Guid("ce2ec480-d55b-498e-bf9c-13147ae3c543"),
+                            Id = new Guid("cd2872c3-8575-4025-a803-fa03106f440a"),
+                            ActionAggregateId = new Guid("d0e2f0b7-4f70-409f-a59f-f0a5cc16d909"),
                             Delay = 1,
                             Possibility = 29
                         },
                         new
                         {
-                            Id = new Guid("25deeb4d-2fc1-4a21-9ab5-8cda61cb3eef"),
-                            ActionAggregateId = new Guid("ce2ec480-d55b-498e-bf9c-13147ae3c543"),
+                            Id = new Guid("d2acf5db-3126-4491-84e4-f49ee41d1d25"),
+                            ActionAggregateId = new Guid("d0e2f0b7-4f70-409f-a59f-f0a5cc16d909"),
                             Delay = 1,
                             Possibility = 33
                         },
                         new
                         {
-                            Id = new Guid("0c536f44-97c8-4188-a575-b840ca17f2d3"),
-                            ActionAggregateId = new Guid("ce2ec480-d55b-498e-bf9c-13147ae3c543"),
+                            Id = new Guid("43f44c50-bebc-4f0d-8701-f30d3fdc3766"),
+                            ActionAggregateId = new Guid("d0e2f0b7-4f70-409f-a59f-f0a5cc16d909"),
                             Delay = 1,
                             Possibility = 36
                         },
                         new
                         {
-                            Id = new Guid("0f2f7417-6e6f-4d56-8dec-a0a9dd918154"),
-                            ActionAggregateId = new Guid("bf8b6585-e818-4b69-a52b-7af4955fdf49"),
+                            Id = new Guid("5ce04ae0-9dd1-4f69-a464-35e54476a9a3"),
+                            ActionAggregateId = new Guid("cd2872c3-8575-4025-a803-fa03106f440a"),
                             Delay = 1,
                             Possibility = 12
                         },
                         new
                         {
-                            Id = new Guid("44337f76-9ff3-422a-84e2-7e8497836844"),
-                            ActionAggregateId = new Guid("bf8b6585-e818-4b69-a52b-7af4955fdf49"),
+                            Id = new Guid("422cc46b-b29d-4b94-9824-934605a7abc7"),
+                            ActionAggregateId = new Guid("cd2872c3-8575-4025-a803-fa03106f440a"),
                             Delay = 1,
                             Possibility = 88
                         },
                         new
                         {
-                            Id = new Guid("44337f76-9ff3-422a-84e2-7e8497836844"),
-                            ActionAggregateId = new Guid("0f2f7417-6e6f-4d56-8dec-a0a9dd918154"),
+                            Id = new Guid("422cc46b-b29d-4b94-9824-934605a7abc7"),
+                            ActionAggregateId = new Guid("5ce04ae0-9dd1-4f69-a464-35e54476a9a3"),
                             Delay = 1,
                             Possibility = 62
                         },
                         new
                         {
-                            Id = new Guid("0643e948-3429-4782-b163-20e9ea995d2d"),
-                            ActionAggregateId = new Guid("0f2f7417-6e6f-4d56-8dec-a0a9dd918154"),
+                            Id = new Guid("8c62c06f-5b82-456a-9909-be0cd3bba7cb"),
+                            ActionAggregateId = new Guid("5ce04ae0-9dd1-4f69-a464-35e54476a9a3"),
                             Delay = 1,
                             Possibility = 38
                         },
                         new
                         {
-                            Id = new Guid("ce2ec480-d55b-498e-bf9c-13147ae3c543"),
-                            ActionAggregateId = new Guid("59c69ddc-7f2a-4241-be3b-74ccabc8a03a"),
+                            Id = new Guid("d0e2f0b7-4f70-409f-a59f-f0a5cc16d909"),
+                            ActionAggregateId = new Guid("baa9e157-fd12-41b5-b7f7-119d006d91d8"),
                             Delay = 1,
                             Possibility = 47
                         },
                         new
                         {
-                            Id = new Guid("87fc718e-898c-499a-a6f4-03c8405f0808"),
-                            ActionAggregateId = new Guid("59c69ddc-7f2a-4241-be3b-74ccabc8a03a"),
+                            Id = new Guid("b6fe9a9a-01f0-490b-a6b3-b76a5d2fc3ae"),
+                            ActionAggregateId = new Guid("baa9e157-fd12-41b5-b7f7-119d006d91d8"),
                             Delay = 1,
                             Possibility = 13
                         },
                         new
                         {
-                            Id = new Guid("f3bd068d-fb68-4874-8af8-5f2e66ed028d"),
-                            ActionAggregateId = new Guid("59c69ddc-7f2a-4241-be3b-74ccabc8a03a"),
+                            Id = new Guid("7d2af24d-2176-4a63-9cf2-f1123630a71c"),
+                            ActionAggregateId = new Guid("baa9e157-fd12-41b5-b7f7-119d006d91d8"),
                             Delay = 1,
                             Possibility = 30
                         },
                         new
                         {
-                            Id = new Guid("e4590636-080a-4fe1-840b-6c81bdcfd06f"),
-                            ActionAggregateId = new Guid("59c69ddc-7f2a-4241-be3b-74ccabc8a03a"),
+                            Id = new Guid("b3056bb2-b38f-4792-ab66-ab7d2cff88e7"),
+                            ActionAggregateId = new Guid("baa9e157-fd12-41b5-b7f7-119d006d91d8"),
                             Delay = 1,
                             Possibility = 10
                         },
                         new
                         {
-                            Id = new Guid("2c575e89-f134-420f-a5b4-a3c665adc741"),
-                            ActionAggregateId = new Guid("25deeb4d-2fc1-4a21-9ab5-8cda61cb3eef"),
+                            Id = new Guid("b0000a96-0c63-4c0c-955b-a24b18117ea1"),
+                            ActionAggregateId = new Guid("d2acf5db-3126-4491-84e4-f49ee41d1d25"),
                             Delay = 1,
                             Possibility = 100
                         },
                         new
                         {
-                            Id = new Guid("d4f79c1f-0be2-448d-81a0-c97f135fff22"),
-                            ActionAggregateId = new Guid("2c575e89-f134-420f-a5b4-a3c665adc741"),
+                            Id = new Guid("3396a6c5-dfd8-43d0-8147-2a8629b2338e"),
+                            ActionAggregateId = new Guid("b0000a96-0c63-4c0c-955b-a24b18117ea1"),
                             Delay = 1,
                             Possibility = 100
                         },
                         new
                         {
-                            Id = new Guid("a2ecbf24-3d6c-4f69-af7b-b977bde05558"),
-                            ActionAggregateId = new Guid("d4f79c1f-0be2-448d-81a0-c97f135fff22"),
+                            Id = new Guid("745122e5-347e-4c3f-ac2d-216b7de085f7"),
+                            ActionAggregateId = new Guid("3396a6c5-dfd8-43d0-8147-2a8629b2338e"),
                             Delay = 1,
                             Possibility = 100
                         },
                         new
                         {
-                            Id = new Guid("6a064188-f5f4-4c03-82f5-7bc91fb706ca"),
-                            ActionAggregateId = new Guid("a2ecbf24-3d6c-4f69-af7b-b977bde05558"),
+                            Id = new Guid("6671a582-af36-4e59-8acd-aae99ed53dcd"),
+                            ActionAggregateId = new Guid("745122e5-347e-4c3f-ac2d-216b7de085f7"),
                             Delay = 1,
                             Possibility = 100
                         },
                         new
                         {
-                            Id = new Guid("0643e948-3429-4782-b163-20e9ea995d2d"),
-                            ActionAggregateId = new Guid("6a064188-f5f4-4c03-82f5-7bc91fb706ca"),
+                            Id = new Guid("8c62c06f-5b82-456a-9909-be0cd3bba7cb"),
+                            ActionAggregateId = new Guid("6671a582-af36-4e59-8acd-aae99ed53dcd"),
                             Delay = 1,
                             Possibility = 63
                         },
                         new
                         {
-                            Id = new Guid("d955fe65-2ace-4631-adc6-9d01b238d787"),
-                            ActionAggregateId = new Guid("6a064188-f5f4-4c03-82f5-7bc91fb706ca"),
+                            Id = new Guid("5628217c-16af-4e86-b817-f25d746db9c9"),
+                            ActionAggregateId = new Guid("6671a582-af36-4e59-8acd-aae99ed53dcd"),
                             Delay = 1,
                             Possibility = 21
                         },
                         new
                         {
-                            Id = new Guid("0f2f7417-6e6f-4d56-8dec-a0a9dd918154"),
-                            ActionAggregateId = new Guid("6a064188-f5f4-4c03-82f5-7bc91fb706ca"),
+                            Id = new Guid("5ce04ae0-9dd1-4f69-a464-35e54476a9a3"),
+                            ActionAggregateId = new Guid("6671a582-af36-4e59-8acd-aae99ed53dcd"),
                             Delay = 1,
                             Possibility = 16
                         },
                         new
                         {
-                            Id = new Guid("44337f76-9ff3-422a-84e2-7e8497836844"),
-                            ActionAggregateId = new Guid("0643e948-3429-4782-b163-20e9ea995d2d"),
+                            Id = new Guid("422cc46b-b29d-4b94-9824-934605a7abc7"),
+                            ActionAggregateId = new Guid("8c62c06f-5b82-456a-9909-be0cd3bba7cb"),
                             Delay = 1,
                             Possibility = 93
                         },
                         new
                         {
-                            Id = new Guid("0f2f7417-6e6f-4d56-8dec-a0a9dd918154"),
-                            ActionAggregateId = new Guid("0643e948-3429-4782-b163-20e9ea995d2d"),
+                            Id = new Guid("5ce04ae0-9dd1-4f69-a464-35e54476a9a3"),
+                            ActionAggregateId = new Guid("8c62c06f-5b82-456a-9909-be0cd3bba7cb"),
                             Delay = 1,
                             Possibility = 7
                         },
                         new
                         {
-                            Id = new Guid("fc675763-5211-430d-9c19-5b612056cb58"),
-                            ActionAggregateId = new Guid("3184275d-3c14-408c-aefa-957fcebbd259"),
+                            Id = new Guid("4c7d5e2c-29b8-4355-ac37-62aafd9e035f"),
+                            ActionAggregateId = new Guid("c4f2f3ae-99a4-417a-be15-2e4bcfba4530"),
                             Delay = 1,
                             Possibility = 50
                         },
                         new
                         {
-                            Id = new Guid("59c69ddc-7f2a-4241-be3b-74ccabc8a03a"),
-                            ActionAggregateId = new Guid("3184275d-3c14-408c-aefa-957fcebbd259"),
+                            Id = new Guid("baa9e157-fd12-41b5-b7f7-119d006d91d8"),
+                            ActionAggregateId = new Guid("c4f2f3ae-99a4-417a-be15-2e4bcfba4530"),
                             Delay = 1,
                             Possibility = 46
                         },
                         new
                         {
-                            Id = new Guid("87fc718e-898c-499a-a6f4-03c8405f0808"),
-                            ActionAggregateId = new Guid("3184275d-3c14-408c-aefa-957fcebbd259"),
+                            Id = new Guid("b6fe9a9a-01f0-490b-a6b3-b76a5d2fc3ae"),
+                            ActionAggregateId = new Guid("c4f2f3ae-99a4-417a-be15-2e4bcfba4530"),
                             Delay = 1,
                             Possibility = 4
                         },
                         new
                         {
-                            Id = new Guid("9c8ff592-e175-46a3-8d6d-2e63055ee950"),
-                            ActionAggregateId = new Guid("fc675763-5211-430d-9c19-5b612056cb58"),
+                            Id = new Guid("94434109-6779-48d6-a726-4eef79755df9"),
+                            ActionAggregateId = new Guid("4c7d5e2c-29b8-4355-ac37-62aafd9e035f"),
                             Delay = 1,
                             Possibility = 100
                         },
                         new
                         {
-                            Id = new Guid("3184275d-3c14-408c-aefa-957fcebbd259"),
-                            ActionAggregateId = new Guid("9c8ff592-e175-46a3-8d6d-2e63055ee950"),
+                            Id = new Guid("c4f2f3ae-99a4-417a-be15-2e4bcfba4530"),
+                            ActionAggregateId = new Guid("94434109-6779-48d6-a726-4eef79755df9"),
                             Delay = 1,
                             Possibility = 100
                         },
                         new
                         {
-                            Id = new Guid("59c69ddc-7f2a-4241-be3b-74ccabc8a03a"),
-                            ActionAggregateId = new Guid("87fc718e-898c-499a-a6f4-03c8405f0808"),
+                            Id = new Guid("baa9e157-fd12-41b5-b7f7-119d006d91d8"),
+                            ActionAggregateId = new Guid("b6fe9a9a-01f0-490b-a6b3-b76a5d2fc3ae"),
                             Delay = 1,
                             Possibility = 77
                         },
                         new
                         {
-                            Id = new Guid("24f6ae4b-6f99-4e54-865e-748e8297a25c"),
-                            ActionAggregateId = new Guid("87fc718e-898c-499a-a6f4-03c8405f0808"),
+                            Id = new Guid("36456171-deb8-43bf-b497-1b56f3efdbdb"),
+                            ActionAggregateId = new Guid("b6fe9a9a-01f0-490b-a6b3-b76a5d2fc3ae"),
                             Delay = 1,
                             Possibility = 11
                         },
                         new
                         {
-                            Id = new Guid("6b6e5e84-ad35-48d7-893e-04a985453ef2"),
-                            ActionAggregateId = new Guid("87fc718e-898c-499a-a6f4-03c8405f0808"),
+                            Id = new Guid("c855f4c9-6c86-4253-865e-dfeafc3299bb"),
+                            ActionAggregateId = new Guid("b6fe9a9a-01f0-490b-a6b3-b76a5d2fc3ae"),
                             Delay = 1,
                             Possibility = 12
                         },
                         new
                         {
-                            Id = new Guid("ce2ec480-d55b-498e-bf9c-13147ae3c543"),
-                            ActionAggregateId = new Guid("f3bd068d-fb68-4874-8af8-5f2e66ed028d"),
+                            Id = new Guid("d0e2f0b7-4f70-409f-a59f-f0a5cc16d909"),
+                            ActionAggregateId = new Guid("7d2af24d-2176-4a63-9cf2-f1123630a71c"),
                             Delay = 1,
                             Possibility = 100
                         },
                         new
                         {
-                            Id = new Guid("44337f76-9ff3-422a-84e2-7e8497836844"),
-                            ActionAggregateId = new Guid("d955fe65-2ace-4631-adc6-9d01b238d787"),
+                            Id = new Guid("422cc46b-b29d-4b94-9824-934605a7abc7"),
+                            ActionAggregateId = new Guid("5628217c-16af-4e86-b817-f25d746db9c9"),
                             Delay = 1,
                             Possibility = 75
                         },
                         new
                         {
-                            Id = new Guid("0f2f7417-6e6f-4d56-8dec-a0a9dd918154"),
-                            ActionAggregateId = new Guid("d955fe65-2ace-4631-adc6-9d01b238d787"),
+                            Id = new Guid("5ce04ae0-9dd1-4f69-a464-35e54476a9a3"),
+                            ActionAggregateId = new Guid("5628217c-16af-4e86-b817-f25d746db9c9"),
                             Delay = 1,
                             Possibility = 25
                         },
                         new
                         {
-                            Id = new Guid("36d6c59c-ecea-4838-bf8c-9201202d8aff"),
-                            ActionAggregateId = new Guid("6b6e5e84-ad35-48d7-893e-04a985453ef2"),
+                            Id = new Guid("d1a54cf2-e4bc-474c-aadc-fe2d0abe8a90"),
+                            ActionAggregateId = new Guid("c855f4c9-6c86-4253-865e-dfeafc3299bb"),
                             Delay = 1,
                             Possibility = 75
                         },
                         new
                         {
-                            Id = new Guid("59c69ddc-7f2a-4241-be3b-74ccabc8a03a"),
-                            ActionAggregateId = new Guid("6b6e5e84-ad35-48d7-893e-04a985453ef2"),
+                            Id = new Guid("baa9e157-fd12-41b5-b7f7-119d006d91d8"),
+                            ActionAggregateId = new Guid("c855f4c9-6c86-4253-865e-dfeafc3299bb"),
                             Delay = 1,
                             Possibility = 25
                         },
                         new
                         {
-                            Id = new Guid("59c69ddc-7f2a-4241-be3b-74ccabc8a03a"),
-                            ActionAggregateId = new Guid("36d6c59c-ecea-4838-bf8c-9201202d8aff"),
+                            Id = new Guid("baa9e157-fd12-41b5-b7f7-119d006d91d8"),
+                            ActionAggregateId = new Guid("d1a54cf2-e4bc-474c-aadc-fe2d0abe8a90"),
                             Delay = 1,
                             Possibility = 100
                         },
                         new
                         {
-                            Id = new Guid("ce2ec480-d55b-498e-bf9c-13147ae3c543"),
-                            ActionAggregateId = new Guid("e4590636-080a-4fe1-840b-6c81bdcfd06f"),
+                            Id = new Guid("d0e2f0b7-4f70-409f-a59f-f0a5cc16d909"),
+                            ActionAggregateId = new Guid("b3056bb2-b38f-4792-ab66-ab7d2cff88e7"),
                             Delay = 1,
                             Possibility = 100
                         });
@@ -765,9 +765,11 @@ namespace FakeEventGenerator.Infrastructure.Migrations
 
             modelBuilder.Entity("FakeEventGenerator.Domain.Models.SensorDataEntity", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<Guid>("ActionDetailId")
                         .HasColumnType("uniqueidentifier");

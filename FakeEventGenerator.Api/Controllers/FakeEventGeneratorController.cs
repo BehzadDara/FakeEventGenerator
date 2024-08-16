@@ -20,12 +20,12 @@ namespace FakeEventGenerator.Api.Controllers
         }
 
 
-        /*[HttpGet]
+        [HttpGet]
         public async Task FillDetail()
         {
             var service = new CoreService(_unitOfWork);
             await service.FillDetail();
-        }*/
+        }
 
         [HttpGet]
         public void GenerateCombined()
@@ -59,7 +59,14 @@ namespace FakeEventGenerator.Api.Controllers
         {
             var service = new CoreService(_unitOfWork);
             var result = service.GenerateO4H();
-            WriteCsvFile("One1DayFake.csv", result);
+            WriteCsvFile("TenDayFake.csv", result);
+        }
+
+        [HttpGet]
+        public void CheckData()
+        {
+            var service = new CoreService(_unitOfWork);
+            service.CheckData();
         }
 
         static void WriteCsvFile(string filePath, List<FinalResult> items)
