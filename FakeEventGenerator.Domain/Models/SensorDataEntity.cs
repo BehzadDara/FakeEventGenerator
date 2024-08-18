@@ -8,4 +8,6 @@ public class SensorDataEntity// : Entity
     public DateTime Time { get; set; }
     public string ItemName { get; set; } = string.Empty;
     public string Value { get; set; } = string.Empty;
+    public int PreDataId { get; set; }
+    public string PreData { get; set; } = string.Empty;
 }

@@ -720,12 +720,9 @@ public class CoreService
         var details = listOfDetails![random.Next(0, listOfDetails.Count)];
         foreach (var detail in details.SensorDatas.Where(x => x.ItemName != "label"))
         {
-            result.Add(new FinalResult
-            {
-                ItemName = detail.ItemName,
-                Value = detail.Value,
-                Day = counter
-            });
+            var tmp = JsonSerializer.Deserialize<PreData>(detail.PreData);
+
+            result.AddRange(ExtractFinalResultFromPreData(tmp!, counter));
         }
 
         result.Add(new FinalResult
@@ -738,14 +735,40 @@ public class CoreService
         return result;
     }
 
+    private static List<FinalResult> ExtractFinalResultFromPreData(PreData preData, int counter)
+    {
+        var results = new List<FinalResult>();
+
+        var properties = typeof(PreData).GetProperties();
+
+        foreach (var property in properties)
+        {
+            if (property.Name == "id" || property.Name == "activity")
+                continue;
+
+            var result = new FinalResult
+            {
+                ItemName = property.Name,
+                Value = property.GetValue(preData)?.ToString() ?? string.Empty,
+                Day = counter
+            };
+
+            results.Add(result);
+        }
+
+        return results;
+    }
+
     public async Task FillDetail()
     {
-        var actionDetails = ReadCsvFile("FullData.csv");
+        var actionDetails = ReadCsvFile("FullData_Changed.csv");
+        var preDatas = ReadPreCsvFile("FullData_prepped.csv");
 
         Guid guid = new();
         var tmpList = new List<SensorData>();
-        foreach (var actionDetail in actionDetails)
+        foreach (var actionDetail in actionDetails.Where(x => x.Id > 646_095 && x.Id <= 746_764))
         {
+
             if (actionDetail.Value.StartsWith("START"))
             {
                 var tmp = actionDetail.Value[6..];
@@ -756,39 +779,27 @@ public class CoreService
 
             if (actionDetail.Value.StartsWith("STOP"))
             {
-                var hereGUID = Guid.NewGuid();
-
                 var tmp2List = tmpList.Select(x => new SensorDataEntity
                 {
-                    ActionDetailId = hereGUID,
                     Time = x.Time,
                     ItemName = x.ItemName,
-                    Value = x.Value
+                    Value = x.Value,
+                    PreDataId = x.Id,
+                    PreData = JsonSerializer.Serialize(preDatas.First(y => y.id == x.Id))
                 }).ToList();
 
                 await _unitOfWork._dBContext.Set<ActionDetail>().AddAsync(new ActionDetail
                 {
-                    Id = hereGUID,
-                    ActionAggregateId = guid
+                    ActionAggregateId = guid,
+                    SensorDatas = tmp2List
                 });
 
-                foreach (var tmp2 in tmp2List)
-                {
-                    await _unitOfWork._dBContext.Set<SensorDataEntity>().AddAsync(
-                        new SensorDataEntity
-                        {
-                            ActionDetailId = hereGUID,
-                            Time = tmp2.Time,
-                            ItemName = tmp2.ItemName,
-                            Value = tmp2.Value
-                        });
-                }
-
                 tmpList = new List<SensorData>();
+
+                _unitOfWork.Complete();
             }
         }
 
-        _unitOfWork.Complete();
     }
 
     static List<SensorData> ReadCsvFile(string filePath)
@@ -796,6 +807,13 @@ public class CoreService
         using var reader = new StreamReader(filePath);
         using var csv = new CsvReader(reader, CultureInfo.InvariantCulture);
         return new List<SensorData>(csv.GetRecords<SensorData>());
+    }
+
+    static List<PreData> ReadPreCsvFile(string filePath)
+    {
+        using var reader = new StreamReader(filePath);
+        using var csv = new CsvReader(reader, CultureInfo.InvariantCulture);
+        return new List<PreData>(csv.GetRecords<PreData>());
     }
 
     public void CheckData()

@@ -10,4 +10,6 @@ public class SensorData
     public string ItemName { get; set; } = string.Empty;
     [Index(2)]
     public string Value { get; set; } = string.Empty;
+    [Index(3)]
+    public int Id { get; set; }
 }
