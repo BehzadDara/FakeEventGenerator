@@ -55,11 +55,19 @@ namespace FakeEventGenerator.Api.Controllers
         }
 
         [HttpGet]
+        public void GenerateCombineDataAsyncO4H()
+        {
+            var service = new CoreService(_unitOfWork);
+            var result = service.CombineO4H();
+            WriteCsvFile("OneDayCombine_New.csv", result);
+        }
+
+        [HttpGet]
         public void GenerateFakeDataAsyncO4H()
         {
             var service = new CoreService(_unitOfWork);
             var result = service.GenerateO4H();
-            WriteCsvFile("TenDayFake.csv", result);
+            WriteCsvFile("ThreeDayFake_New.csv", result);
         }
 
         [HttpGet]
@@ -69,7 +77,7 @@ namespace FakeEventGenerator.Api.Controllers
             service.CheckData();
         }
 
-        static void WriteCsvFile(string filePath, List<FinalResult> items)
+        static void WriteCsvFile(string filePath, List<PreData> items)
         {
             using var writer = new StreamWriter(filePath);
             using var csv = new CsvWriter(writer, CultureInfo.InvariantCulture);

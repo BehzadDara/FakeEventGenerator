@@ -658,14 +658,19 @@ public class CoreService
         _unitOfWork.Complete();
     }
 
-    public List<FinalResult> GenerateO4H()
+    public List<Predata> CombineO4H()
+    {
+
+    }
+
+    public List<PreData> GenerateO4H()
     {
         var action = actionAggregates.First(x => x.Name == "Entrance|Entering");
 
-        var result = new List<FinalResult>();
+        var result = new List<PreData>();
 
         result.AddRange(GenerateRecursively(action));
-        counter++;
+        /*counter++;
         result.AddRange(GenerateRecursively(action));
         counter++;
         result.AddRange(GenerateRecursively(action));
@@ -683,14 +688,14 @@ public class CoreService
         result.AddRange(GenerateRecursively(action));
         counter++;
         result.AddRange(GenerateRecursively(action));
-        counter++;
+        counter++;*/
 
         return result;
     }
 
-    public List<FinalResult> GenerateRecursively(ActionAggregate action)
+    public List<PreData> GenerateRecursively(ActionAggregate action)
     {
-        var result = new List<FinalResult>();
+        var result = new List<PreData>();
         result.AddRange(GenerateFinalResult(action));
 
         var nexts = action.NextActions;
@@ -705,32 +710,35 @@ public class CoreService
         return result;
     }
 
-    public List<FinalResult> GenerateFinalResult(ActionAggregate action)
+    public List<PreData> GenerateFinalResult(ActionAggregate action)
     {
-        var result = new List<FinalResult>
+        var result = new List<PreData>();
+
+        /*var result = new List<FinalResult>
         {
             new() {
                 ItemName = "label",
                 Value = $"START:{action.Name}",
                 Day = counter
             }
-        };
+        };*/
 
         var listOfDetails = action.ActionDetails;
         var details = listOfDetails![random.Next(0, listOfDetails.Count)];
-        foreach (var detail in details.SensorDatas.Where(x => x.ItemName != "label"))
+        foreach (var detail in details.SensorDatas)//.Where(x => x.ItemName != "label"))
         {
             var tmp = JsonSerializer.Deserialize<PreData>(detail.PreData);
 
-            result.AddRange(ExtractFinalResultFromPreData(tmp!, counter));
+            result.Add(tmp!);
+            //result.AddRange(ExtractFinalResultFromPreData(tmp!, counter));
         }
 
-        result.Add(new FinalResult
+        /*result.Add(new FinalResult
         {
             ItemName = "label",
             Value = $"STOP:{action.Name}",
             Day = counter
-        });
+        });*/
 
         return result;
     }
@@ -761,12 +769,12 @@ public class CoreService
 
     public async Task FillDetail()
     {
-        var actionDetails = ReadCsvFile("FullData_Changed.csv");
+        var actionDetails = ReadCsvFile("FullData.csv");
         var preDatas = ReadPreCsvFile("FullData_prepped.csv");
 
         Guid guid = new();
         var tmpList = new List<SensorData>();
-        foreach (var actionDetail in actionDetails.Where(x => x.Id > 646_095 && x.Id <= 746_764))
+        foreach (var actionDetail in actionDetails.Where(x => x.Id > 416_911))// && x.Id <= 746_764))
         {
 
             if (actionDetail.Value.StartsWith("START"))
