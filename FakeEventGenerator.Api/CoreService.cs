@@ -5,6 +5,7 @@ using FakeEventGenerator.Domain.Models;
 using FakeEventGenerator.Domain.ViewModels;
 using FakeEventGenerator.Infrastructure;
 using System.Globalization;
+using System.Reflection.Metadata.Ecma335;
 using System.Text.Json;
 
 namespace FakeEventGenerator.Api;
@@ -658,9 +659,99 @@ public class CoreService
         _unitOfWork.Complete();
     }
 
-    public List<Predata> CombineO4H()
+    public List<PreData> CombineO4H()
     {
+        var result = new List<PreData>();
 
+        var real = GetO4H(); // 28 activities
+        var fake = MakeO4H();
+
+        var activity = string.Empty;
+        var fakeIndex = -1;
+        //var tmp = new List<PreData>();
+
+        for (var i = 0; i < real.Count; i++)
+        {
+            var realData = JsonSerializer.Deserialize<PreData>(real[i].PreData)!;
+            result.Add(realData);
+
+            if (real[i].Value.StartsWith("START"))
+            {
+                activity = realData.activity;
+            }
+
+            if (real[i].Value.StartsWith("STOP"))
+            {
+                do
+                {
+                    fakeIndex++;
+
+                    var fakeData = JsonSerializer.Deserialize<PreData>(fake[fakeIndex].PreData)!;
+                    fakeData.activity = activity;
+                    result.Add(fakeData);
+
+                } while (!fake[fakeIndex].Value.StartsWith("STOP"));
+
+
+                //tmp = tmp.OrderBy(x => x)
+
+            }
+
+
+        }
+
+        return result;
+    }
+
+    public List<SensorDataEntity> GetO4H()
+    {
+        var result = actionAggregates
+            .SelectMany(x => x.ActionDetails)
+            .SelectMany(x => x.SensorDatas)
+            .Where(x => x.Time.Day == 30)
+            .ToList();
+
+        return result;
+    }
+
+    public List<SensorDataEntity> MakeO4H()
+    {
+        var action = actionAggregates.First(x => x.Name == "Entrance|Entering");
+
+        var result = new List<SensorDataEntity>();
+        var tmp = 0;
+        while(tmp != 28)
+        {
+            result = Generate2Recursively(action);
+            tmp = result.Count(x => x.Value.StartsWith("START:"));
+        }
+
+        return result;
+    }
+
+    public List<SensorDataEntity> Generate2Recursively(ActionAggregate action)
+    {
+        var result = new List<SensorDataEntity>();
+        result.AddRange(Generate2FinalResult(action));
+
+        var nexts = action.NextActions;
+        if (nexts.Count != 0)
+        {
+            var nextAction = nexts.OrderByDescending(x => x.Possibility + random.Next(0, 100)).First();
+            var choosedAction = actionAggregates.First(x => x.Id == nextAction.Id);
+            var nextResult = Generate2Recursively(choosedAction);
+            result.AddRange(nextResult);
+        }
+
+        return result;
+    }
+
+    public List<SensorDataEntity> Generate2FinalResult(ActionAggregate action)
+    {
+        var listOfDetails = action.ActionDetails;
+        var details = listOfDetails![random.Next(0, listOfDetails.Count)];
+
+        return details.SensorDatas;
     }
 
     public List<PreData> GenerateO4H()
