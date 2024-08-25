@@ -55,11 +55,72 @@ namespace FakeEventGenerator.Api.Controllers
         }
 
         [HttpGet]
-        public void GenerateCombineDataAsyncO4H()
+        public void GenerateCombinedDataAsyncO4H()
         {
-            var service = new CoreService(_unitOfWork);
-            var result = service.CombineO4H();
-            WriteCsvFile("OneDayCombine_New.csv", result);
+            var result = new List<PreData>();
+
+            var fake = ReadCsvFile2("OneDayFake_New.csv");
+
+            var counter = 1;
+            var current = "8";
+
+            foreach (var f in fake)
+            {
+                if (f.activity == "24")
+                    continue;
+
+                if (f.activity != current)
+                {
+                    counter++;
+                    current = f.activity;
+                }
+            }
+
+            var real = ReadCsvFile2("FullData_prepped.csv");
+
+            var tmp = new List<PreData>();
+            var counter2 = 1;
+            var current2 = "8";
+            var tmpBool = false;
+
+            foreach (var r in real)
+            {
+                if (tmpBool && r.activity == "8")
+                {
+                    if (counter2 == 69)
+                    {
+                        for (var i = 0; i < tmp.Count; i++)
+                        {
+
+                        }
+                    }
+
+                    counter2 = 1;
+                    current2 = "8";
+                    tmpBool = false;
+                    tmp = new List<PreData>();
+                }
+
+                tmp.Add(r);
+
+                if (r.activity == "9")
+                {
+                    tmpBool = true;
+                }
+
+                if (r.activity == "24")
+                {
+                    continue;
+                }
+
+                if (r.activity != current2)
+                {
+                    counter2++;
+                    current2 = r.activity;
+                }
+            }
+
+            WriteCsvFile("Combined_New.csv", result);
         }
 
         [HttpGet]
@@ -96,6 +157,13 @@ namespace FakeEventGenerator.Api.Controllers
             using var reader = new StreamReader(filePath);
             using var csv = new CsvReader(reader, CultureInfo.InvariantCulture);
             return new List<FinalResult>(csv.GetRecords<FinalResult>());
+        }
+
+        static List<PreData> ReadCsvFile2(string filePath)
+        {
+            using var reader = new StreamReader(filePath);
+            using var csv = new CsvReader(reader, CultureInfo.InvariantCulture);
+            return new List<PreData>(csv.GetRecords<PreData>());
         }
 
         [HttpGet]
