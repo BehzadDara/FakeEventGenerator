@@ -57,6 +57,14 @@ namespace FakeEventGenerator.Api.Controllers
         [HttpGet]
         public void GenerateCombinedDataAsyncO4H()
         {
+            var service = new CoreService(_unitOfWork);
+            var result = service.GenerateCombinedO4H();
+            WriteCsvFile("Combined_New.csv", result);
+        }
+
+        [HttpGet]
+        public void GenerateCombinedDataAsyncO4HDDDDDDDDDD()
+        {
             var result = new List<PreData>();
 
             var fake = ReadCsvFile2("OneDayFake_New.csv");

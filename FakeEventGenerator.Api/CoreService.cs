@@ -801,6 +801,23 @@ public class CoreService
         return result;
     }
 
+    public List<PreData> GenerateRecursivelyCombined(ActionAggregate action)
+    {
+        var result = new List<PreData>();
+        result.AddRange(GenerateFinalResultCombined(action));
+
+        var nexts = action.NextActions;
+        if (nexts.Count != 0)
+        {
+            var nextAction = nexts.OrderByDescending(x => x.Possibility + random.Next(0, 100)).First();
+            var choosedAction = actionAggregates.First(x => x.Id == nextAction.Id);
+            var nextResult = GenerateRecursivelyCombined(choosedAction);
+            result.AddRange(nextResult);
+        }
+
+        return result;
+    }
+
     public List<PreData> GenerateFinalResult(ActionAggregate action)
     {
         var result = new List<PreData>();
@@ -830,6 +847,38 @@ public class CoreService
             Value = $"STOP:{action.Name}",
             Day = counter
         });*/
+
+        return result;
+    }
+
+    public List<PreData> GenerateFinalResultCombined(ActionAggregate action)
+    {
+        var result = new List<PreData>();
+
+        var actionReal = actionAggregates
+            .Where(x => x.Id != action.Id)
+            .OrderBy(x => Guid.NewGuid())
+            .First();
+
+        var listOfDetailsReal = actionReal.ActionDetails;
+        var detailsReal = listOfDetailsReal![random.Next(0, listOfDetailsReal.Count)];
+        foreach (var detailReal in detailsReal.SensorDatas)
+        {
+            var tmp = JsonSerializer.Deserialize<PreData>(detailReal.PreData);
+
+            result.Add(tmp!);
+        }
+        var tmpActivity = JsonSerializer.Deserialize<PreData>(detailsReal.SensorDatas.First().PreData)!.activity;
+
+        var listOfDetails = action.ActionDetails;
+        var details = listOfDetails![random.Next(0, listOfDetails.Count)];
+        foreach (var detail in details.SensorDatas)
+        {
+            var tmp = JsonSerializer.Deserialize<PreData>(detail.PreData)!;
+            tmp.activity = tmpActivity;
+
+            result.Add(tmp);
+        }
 
         return result;
     }
@@ -942,5 +991,16 @@ public class CoreService
             }
         }
 
+    }
+
+    public List<PreData> GenerateCombinedO4H()
+    {
+        var action = actionAggregates.First(x => x.Name == "Entrance|Entering");
+
+        var result = new List<PreData>();
+
+        result.AddRange(GenerateRecursivelyCombined(action));
+
+        return result;
     }
 }
